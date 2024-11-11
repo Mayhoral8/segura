@@ -76,6 +76,7 @@ export default function AuthRegister({ providers, csrfToken }) {
           email: '',
           company: '',
           password: '',
+          confirmPassword: '',
           submit: null
         }}
         validationSchema={Yup.object().shape({
@@ -84,6 +85,11 @@ export default function AuthRegister({ providers, csrfToken }) {
           email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
           password: Yup.string()
             .required('Password is required')
+            .test('no-leading-trailing-whitespace', 'Password cannot start or end with spaces', (value) => value === value.trim())
+            .max(10, 'Password must be less than 10 characters'),
+            confirmPassword: Yup.string()
+            .required('Password confirmation is required')
+            .oneOf([Yup.ref('password'), null], 'Passwords must match')
             .test('no-leading-trailing-whitespace', 'Password cannot start or end with spaces', (value) => value === value.trim())
             .max(10, 'Password must be less than 10 characters')
         })}
@@ -95,6 +101,7 @@ export default function AuthRegister({ providers, csrfToken }) {
             lastname: values.lastname,
             email: trimmedEmail,
             password: values.password,
+            confirmPassword: values.confirmPassword,
             company: values.company,
             callbackUrl: APP_DEFAULT_PATH
           }).then((res) => {
@@ -243,6 +250,55 @@ export default function AuthRegister({ providers, csrfToken }) {
                     </Grid>
                   </Grid>
                 </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <Stack spacing={1}>
+                  <InputLabel htmlFor="confirmPassword-signup">Confirm Password</InputLabel>
+                  <OutlinedInput
+                    fullWidth
+                    error={Boolean(touched.confirmPassword && errors.confirmPassword)}
+                    id="confirmPassword-signup"
+                    type={showPassword ? 'text' : 'confirmPassword'}
+                    value={values.confirmPassword}
+                    name="confirmPassword"
+                    onBlur={handleBlur}
+                    onChange={(e) => {
+                      handleChange(e);
+                      changePassword(e.target.value);
+                    }}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                          color="secondary"
+                        >
+                          {showPassword ? <EyeOutlined /> : <EyeInvisibleOutlined />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    placeholder="Enter password"
+                  />
+                </Stack>
+                {touched.password && errors.password && (
+                  <FormHelperText error id="helper-text-password-signup">
+                    {errors.password}
+                  </FormHelperText>
+                )}
+                {/* <FormControl fullWidth sx={{ mt: 2 }}>
+                  <Grid container spacing={2} alignItems="center">
+                    <Grid item>
+                      <Box sx={{ bgcolor: level?.color, width: 85, height: 8, borderRadius: '7px' }} />
+                    </Grid>
+                    <Grid item>
+                      <Typography variant="subtitle1" fontSize="0.75rem">
+                        {level?.label}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </FormControl> */}
               </Grid>
               <Grid item xs={12} sx={{ mt: -1 }}>
                 <Typography variant="body2">
