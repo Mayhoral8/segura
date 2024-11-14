@@ -14,6 +14,12 @@ import { GoSignOut } from "react-icons/go";
 // import logo from "@/assets/logo.png";
 // import profile from "@/assets/Profile.png"
 
+import SearchIcon from "@mui/icons-material/Search";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import EmailIcon from "@mui/icons-material/Email";
+import Image from "next/image";
+
+import Avatar from "../../avatar.png";
 // if (userRole === "Employer") {
 
 export default function DashboardLayout({
@@ -117,8 +123,8 @@ export default function DashboardLayout({
     dispatch({ type });
   };
   return (
-    <main className="">
-      <section className="hidden lg:flex bg-white text-gray-600 border-solid mt-10 fixed z-30 lg:h-full shadow-md  flex-col text-3xl h-20 bottom-0  w-full lg:w-[16%]  lg:px-4 ">
+    <main className="w-screen">
+      <section className="hidden lg:flex bg-white text-gray-600 border-solid mt-10 fixed z-30 lg:h-full shadow-md flex-col text-3xl h-20 bottom-0  w-full lg:w-[16%] lg:px-4 ">
         <article className="lg:h-[70%] lg:items-start flex flex-row lg:flex-col justify-start my-8 items-center h-full w-full border-b">
           <div className="flex-row items-center gap-x-1 lg:flex hidden">
             {/* <img alt="GroPay" src={logo.src} className="h-11 w-auto" /> */}
@@ -200,8 +206,39 @@ export default function DashboardLayout({
           </div>
         </article>
       </section>
-
-      {children}
+      <div className="flex flex-col lg:w-[84%] relative lg:left-[16%]">
+        <div className="lg:w-[84%] h-20 bg-white shadow-[0_4px_10px_-5px_rgba(0,0,0,0.1)] text-white fixed top-0 z-50 px-10">
+          <div className="h-full w-full flex justify-between items-center">
+            <div className="">
+              <div className="w-[200px] h-[40px] border-[2px] bg-[#2C698D7A] rounded-md border-[#2C698D] flex justify-between items-center pl-2">
+                <SearchIcon className="text-[#2C698D]" />
+                <input
+                  type="text"
+                  className="h-full w-[85%] bg-transparent text-[#2C698D] outline-none placeholder:text-[#2C698D]"
+                  placeholder="Search"
+                />
+              </div>
+            </div>
+            <div className="flex items-center gap-5">
+              <NotificationsIcon className="text-[#2C698D]" />
+              <EmailIcon className="text-[#2C698D]" />
+              <div className="flex items-center">
+                <Image
+                  src={Avatar}
+                  alt=""
+                  height={40}
+                  width={40}
+                  className="rounded-full mr-2"
+                />
+                <div className="text-[#2C698D] text-lg font-semibold">
+                  JWT User
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="relative top-20">{children}</div>
+      </div>
     </main>
   );
 }
