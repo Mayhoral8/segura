@@ -14,18 +14,11 @@ import { GoSignOut } from "react-icons/go";
 // import logo from "@/assets/logo.png";
 // import profile from "@/assets/Profile.png"
 
-
-
-
-
 // if (userRole === "Employer") {
 
 export default function DashboardLayout({
   children, // will be a page or nested layout
-
-  
-})
- {
+}) {
   const navigate = useRouter();
   // const { logout, userRole } = useContext(CreateContext).auth;
   const pathname = usePathname();
@@ -106,9 +99,7 @@ export default function DashboardLayout({
   };
 
   useEffect(() => {
-    if (
-      pathname === "/corporate/"
-    ) {
+    if (pathname === "/corporate/") {
       return dispatch({ type: "DASHBOARD" });
     } else if (pathname === "/corporate/verify") {
       return dispatch({ type: "VERIFY" });
@@ -133,61 +124,57 @@ export default function DashboardLayout({
             {/* <img alt="GroPay" src={logo.src} className="h-11 w-auto" /> */}
             <p className="font-semibold text-base text-primary-500">SEGURA</p>
           </div>
-          <section className="flex flex-row lg:flex-col justify-evenly lg:gap-y-4 w-full lg:mt-4">    
-          
-          <Link
-            href="/corporate"
-            onClick={() => handleDispatch("DASHBOARD")}
-            className={`w-full lg:h-8 flex items-center lg:rounded-md lg:px-2 justify-center ${
-              state.dashboard.isActive &&
-              "bg-[#2c698d] text-white"
-            } `}
-          >
-            <div className="flex flex-col w-full lg:text-sm text-[12px] gap-x-1 lg:flex-row items-center  ">
-              <MdDashboard className="text-lg " />
-              <span className="">Dashboard</span>
-            </div>
-          </Link>
-          <Link
-            href="/corporate/verify"
-            onClick={() => handleDispatch("VERIFY")}
-            className={`w-full lg:h-8 flex items-center lg:rounded-md lg:px-2 justify-center ${
-              state.verify.isActive &&
-              "bg-[#2c698d] text-white"
-            } `}
-          >
-            <div className="flex flex-col w-full lg:text-sm text-[12px] gap-x-1 lg:flex-row items-center">
-              <MdInsertChart className="text-lg" />
-              <span className="">Verify</span>
-            </div>
-          </Link>
-          <Link
-            href="/corporate/manage-users"
-            onClick={() => handleDispatch("MANAGE_USERS")}
-            className={`w-full lg:h-8 flex items-center lg:rounded-md lg:px-2 justify-center ${
-              state.manageUsers.isActive &&
-              "bg-[#2c698d] text-white"
-            } `}
-          >
-            <div className=" w-full flex flex-col lg:text-sm text-[12px] gap-x-1 lg:flex-row  items-center">
-              <BiSolidUserRectangle className="text-lg" />
-              <span className="">Manage users</span>
-            </div>
-          </Link>
+          <section className="flex flex-row lg:flex-col justify-evenly lg:gap-y-4 w-full lg:mt-4">
+            <Link
+              href="/corporate"
+              onClick={() => handleDispatch("DASHBOARD")}
+              className={`w-full lg:h-8 flex items-center lg:rounded-md lg:px-2 justify-center ${
+                state.dashboard.isActive && "bg-[#2c698d] text-white"
+              } `}
+            >
+              <div className="flex flex-col w-full lg:text-sm text-[12px] gap-x-1 lg:flex-row items-center  ">
+                <MdDashboard className="text-lg " />
+                <span className="">Dashboard</span>
+              </div>
+            </Link>
+            <Link
+              href="/corporate/verify"
+              onClick={() => handleDispatch("VERIFY")}
+              className={`w-full lg:h-8 flex items-center lg:rounded-md lg:px-2 justify-center ${
+                state.verify.isActive && "bg-[#2c698d] text-white"
+              } `}
+            >
+              <div className="flex flex-col w-full lg:text-sm text-[12px] gap-x-1 lg:flex-row items-center">
+                <MdInsertChart className="text-lg" />
+                <span className="">Verify</span>
+              </div>
+            </Link>
+            <Link
+              href="/corporate/manage-users"
+              onClick={() => handleDispatch("MANAGE_USERS")}
+              className={`w-full lg:h-8 flex items-center lg:rounded-md lg:px-2 justify-center ${
+                state.manageUsers.isActive && "bg-[#2c698d] text-white"
+              } `}
+            >
+              <div className=" w-full flex flex-col lg:text-sm text-[12px] gap-x-1 lg:flex-row  items-center">
+                <BiSolidUserRectangle className="text-lg" />
+                <span className="">Manage users</span>
+              </div>
+            </Link>
 
-          <Link
-            href="corporate-manage-billers"
-            onClick={() => handleDispatch("JOBS")}
-            className={`w-full lg:h-8 flex items-center lg:rounded-md lg:px-2 justify-center ${
-              state.jobs.isActive &&
-              "text-PrimaryPurple lg:text-white lg:bg-PrimaryPurple"
-            } `}
-          >
-            <div className="flex flex-col w-full lg:text-sm text-[12px] gap-x-1 lg:flex-row items-center">
-              <RiFileList2Fill className="text-lg" />
-              <span className="">Settings</span>
-            </div>
-          </Link>
+            <Link
+              href="corporate-manage-billers"
+              onClick={() => handleDispatch("JOBS")}
+              className={`w-full lg:h-8 flex items-center lg:rounded-md lg:px-2 justify-center ${
+                state.jobs.isActive &&
+                "text-PrimaryPurple lg:text-white lg:bg-PrimaryPurple"
+              } `}
+            >
+              <div className="flex flex-col w-full lg:text-sm text-[12px] gap-x-1 lg:flex-row items-center">
+                <RiFileList2Fill className="text-lg" />
+                <span className="">Settings</span>
+              </div>
+            </Link>
           </section>
           {/* <Link
           onClick={() => handleDispatch("CREDENTIALS")}
@@ -205,7 +192,10 @@ export default function DashboardLayout({
         <article className="lg:block hidden  mt-auto py-2">
           <div className="hover:lg:bg-PrimaryPurple cursor-pointer rounded-md h-8 px-2 flex flex-col w-full text-sm gap-x-1 lg:flex-row items-center">
             {/* <img src={profile.src} className="h-10 w-10"/> */}
-            <span className="text-xs ">ABC Company <br/>corporate </span>
+            <span className="text-xs ">
+              ABC Company <br />
+              corporate{" "}
+            </span>
             <GoSignOut className="text-lg" />
           </div>
         </article>
