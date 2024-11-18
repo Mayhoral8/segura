@@ -6,7 +6,7 @@ import { createContext } from 'react';
 // project import
 import defaultConfig from '@/config';
 import useLocalStorage from '@/hooks/useLocalStorage';
-
+import { useState } from 'react';
 // initial state
 const initialState = {
   ...defaultConfig,
@@ -26,6 +26,7 @@ const initialState = {
 const ConfigContext = createContext(initialState);
 
 function ConfigProvider({ children }) {
+  const [showSignOutModal, setShowSignOutModal] = useState(false)
   const [config, setConfig] = useLocalStorage('mantis-react-next-ts-config', initialState);
 
   const onChangeContainer = (container) => {
@@ -91,6 +92,9 @@ function ConfigProvider({ children }) {
       fontFamily
     });
   };
+  const check = ()=>{
+    console.log("yes");
+  }
 
   return (
     <ConfigContext.Provider
@@ -104,7 +108,10 @@ function ConfigProvider({ children }) {
         onChangeMiniDrawer,
         onChangeThemeLayout,
         onChangeMenuOrientation,
-        onChangeFontFamily
+        onChangeFontFamily,
+        showSignOutModal,
+        setShowSignOutModal,
+        check
       }}
     >
       {children}
