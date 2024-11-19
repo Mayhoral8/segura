@@ -25,11 +25,12 @@ import Autocomplete from "@mui/material/Autocomplete";
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import Radio from "@mui/material/Radio";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { FaCloudUploadAlt } from "react-icons/fa";
 
 import { useFormik } from "formik";
 import _ from "lodash";
 import * as Yup from "yup";
+
 
 const Verify = () => {
   const allStatus = [
@@ -40,6 +41,10 @@ const Verify = () => {
 
   const getInitialValues = () => {
     const newCustomer = {
+      firstName: "",
+      lastName: "",
+      name: "",
+      email: "",
       firstName: "",
       lastName: "",
       name: "",
@@ -56,10 +61,18 @@ const Verify = () => {
       country: "",
       location: "",
       about: "",
+      orderStatus: "",
+      contact: "",
+      country: "",
+      location: "",
+      about: "",
       // skills: [],
       time: ["just now"],
       date: "",
+      time: ["just now"],
+      date: "",
     };
+
 
     return newCustomer;
   };
@@ -88,6 +101,7 @@ const Verify = () => {
     status: Yup.string().required("Status is required"),
     location: Yup.string().max(500),
     about: Yup.string().max(500),
+    about: Yup.string().max(500),
   });
 
   const formik = useFormik({
@@ -95,8 +109,10 @@ const Verify = () => {
     validationSchema: CustomerSchema,
     enableReinitialize: true,
     // onSubmit:
+    enableReinitialize: true,
+    // onSubmit:
   });
-
+  
   const {
     errors,
     touched,
@@ -106,6 +122,7 @@ const Verify = () => {
     setFieldValue,
   } = formik;
   const theme = useTheme();
+
   return (
     <main className="my-10 flex flex-col justify-center lg:px-10 items-center gap-y-10 w-full">
       <div className="">
@@ -331,7 +348,7 @@ const Verify = () => {
                     role={undefined}
                     variant="contained"
                     tabIndex={-1}
-                    startIcon={<CloudUploadIcon />}
+                    startIcon={<FaCloudUploadAlt />}
                     className="bg-[#2C698D]"
                   >
                     Upload files
@@ -353,7 +370,7 @@ const Verify = () => {
                     role={undefined}
                     variant="contained"
                     tabIndex={-1}
-                    startIcon={<CloudUploadIcon />}
+                    startIcon={<FaCloudUploadAlt />}
                     className="bg-[#2C698D]"
                   >
                     Upload files
@@ -375,7 +392,7 @@ const Verify = () => {
                     role={undefined}
                     variant="contained"
                     tabIndex={-1}
-                    startIcon={<CloudUploadIcon />}
+                    startIcon={<FaCloudUploadAlt />}
                     className="bg-[#2C698D]"
                   >
                     Upload files
@@ -397,7 +414,7 @@ const Verify = () => {
                     role={undefined}
                     variant="contained"
                     tabIndex={-1}
-                    startIcon={<CloudUploadIcon />}
+                    startIcon={<FaCloudUploadAlt />}
                     className="bg-[#2C698D]"
                   >
                     Upload files
@@ -532,7 +549,7 @@ const Verify = () => {
                     role={undefined}
                     variant="contained"
                     tabIndex={-1}
-                    startIcon={<CloudUploadIcon />}
+                    startIcon={<FaCloudUploadAlt />}
                     className="bg-[#2C698D]"
                   >
                     Upload files
@@ -555,7 +572,7 @@ const Verify = () => {
                     role={undefined}
                     variant="contained"
                     tabIndex={-1}
-                    startIcon={<CloudUploadIcon />}
+                    startIcon={<FaCloudUploadAlt />}
                     className="bg-[#2C698D]"
                   >
                     Upload files
@@ -577,7 +594,7 @@ const Verify = () => {
                     role={undefined}
                     variant="contained"
                     tabIndex={-1}
-                    startIcon={<CloudUploadIcon />}
+                    startIcon={<FaCloudUploadAlt />}
                     className="bg-[#2C698D]"
                   >
                     Upload files
@@ -599,7 +616,7 @@ const Verify = () => {
                     role={undefined}
                     variant="contained"
                     tabIndex={-1}
-                    startIcon={<CloudUploadIcon />}
+                    startIcon={<FaCloudUploadAlt />}
                     className="bg-[#2C698D]"
                   >
                     Upload files
@@ -619,4 +636,6 @@ const Verify = () => {
   );
 };
 
+
 export default Verify;
+

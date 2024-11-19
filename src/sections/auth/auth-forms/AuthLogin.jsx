@@ -22,6 +22,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import { useRouter } from "next/navigation";
 
 // third party
 import * as Yup from "yup";
@@ -47,6 +48,7 @@ const Google = "/assets/images/icons/google.svg";
 // ============================|| AWS CONNITO - LOGIN ||============================ //
 
 export default function AuthLogin({ providers, csrfToken }) {
+  const router = useRouter()
   const downSM = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const [checked, setChecked] = useState(false);
   const { data: session } = useSession();
@@ -93,18 +95,19 @@ export default function AuthLogin({ providers, csrfToken }) {
         })}
         onSubmit={(values, { setErrors, setSubmitting }) => {
           const trimmedEmail = values.email.trim();
-          signIn("login", {
+          signIn("credentials", {
             redirect: false,
             email: trimmedEmail,
             password: values.password,
-            callbackUrl: APP_DEFAULT_PATH,
           }).then(
             (res) => {
               if (res?.error) {
                 setErrors({ submit: res.error });
+                console.log("Login failed:", res.error);
                 setSubmitting(false);
               } else {
-                preload("api/menu/dashboard", fetcher); // load menu on login success
+                // preload("api/menu/dashboard", fetcher); // load menu on login success
+                router.push("/corporate");
                 setSubmitting(false);
               }
             },

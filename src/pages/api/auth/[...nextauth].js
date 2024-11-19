@@ -14,7 +14,7 @@ export default NextAuth({
       async authorize(credentials) {
         try {
           // Make a POST request to your custom backend's authentication endpoint
-          const response = await fetch("http://your-backend-url/api/auth/login", {
+          const response = await fetch("https://illusion-6ga5.onrender.com/api/login/", {
             method: "POST",
             body: JSON.stringify({email: credentials?.email,
               password: credentials?.password,}),
@@ -25,7 +25,7 @@ export default NextAuth({
           });
 
           // Extract user data from response (adjust based on your backend’s response structure)
-          const user = response.data.user;
+          const user = await response.json();
 
           if (user) {
             // Return user data if login is successful
@@ -41,12 +41,13 @@ export default NextAuth({
     }),
   ],
   pages: {
-    signIn: '/auth/signin',
-    signOut: '/auth/signout',
+    signIn: '/auth/login',
+    signOut: '/auth/login',
     error: '/auth/error', // Error page if authentication fails
   },
   session: {
     strategy: "jwt", // Storing session as a JWT
+    maxAge: 24 * 60 * 60
   },
   callbacks: {
     async jwt({ token, user }) {
