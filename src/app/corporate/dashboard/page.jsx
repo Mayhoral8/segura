@@ -1,5 +1,5 @@
-import React from "react";
-import { IoEyeOutline } from "react-icons/io5";
+"use client"
+import React, {useState, useEffect} from "react";
 import Paper from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -7,37 +7,24 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { FiSend } from "react-icons/fi";
 import { HiMiniUser } from "react-icons/hi2";
 import { FaCoins } from "react-icons/fa";
 import { CiCreditCard1 } from "react-icons/ci";
 import { FaClock } from "react-icons/fa";
-import { LineChart } from "@mui/x-charts/LineChart";
 import { BarChart } from "@mui/x-charts/BarChart";
+
+import Modal from '@/components/modal'
 
 const Dashboard = () => {
   function createData(date, senderReceiver, amount, description, status) {
     return { date, senderReceiver, amount, description, status };
   }
+  const [showModal, setShowModal] = useState(false)
+  
 
-  const generateRandomData = () => {
-    return Math.floor(Math.random() * (100 - 20 + 1)) + 20;
-  };
-
-  const dataset = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
+  useEffect(()=>{
+    setShowModal(true)
+},[])
 
   const rows = [
     createData("Nov 14", "Mayowa", "-$7", "Transfer", "Successful"),
@@ -54,10 +41,11 @@ const Dashboard = () => {
 
   return (
     <div className="px-10 w-full">
+      { showModal && <Modal setShowModal={setShowModal}/>}
       <section className="flex flex-row lg:justify-between mt-4 justify-center gap-y-2 lg:gap-y-0 gap-x-4 flex-wrap lg:flex-nowrap just">
         <article className=" bg-white flex flex-row border lg:w-[25%] w-[45%]  h-24 items-center px-4 gap-x-4">
-          <div className="bg-[#4a89571a] border rounded-full h-10 w-10 justify-center flex items-center">
-            <HiMiniUser className="text-[#4A8957]" />
+          <div className="bg-[#bae8e8] border rounded-full h-10 w-10 justify-center flex items-center">
+            <HiMiniUser className="text-[#2C698D]" />
           </div>
           <div className="]">
             <h2 className="font-bold text-base">500,000</h2>

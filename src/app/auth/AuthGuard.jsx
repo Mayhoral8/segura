@@ -8,8 +8,7 @@ const AuthGuard = ({ children }) => {
   const { data: session, status } = useSession();
 
   useEffect(() => {
-    // Redirect to login page if unauthenticated
-    console.log(status);
+  
     if (status === "unauthenticated") {
       router.push("/auth/login");
     }
@@ -20,7 +19,7 @@ const AuthGuard = ({ children }) => {
   if (status === "loading") {
     return (
       <div className="fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center bg-[#00000061]">
-        <ImSpinner8 className="animate-spin text-3xl text-black" />
+        <ImSpinner8 className="animate-spin text-3xl text-[#2c698d]" />
       </div>
     );
   }

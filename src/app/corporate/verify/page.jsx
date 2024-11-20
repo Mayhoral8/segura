@@ -1,30 +1,21 @@
 "use client";
 
 import React from "react";
-import { Box, FormHelperText } from "@mui/material";
+import { FormHelperText } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
-import FormLabel from "@mui/material/FormLabel";
 import { useTheme } from "@mui/material";
-import { ThemeMode, Gender } from "@/config";
-import CameraOutlined from "@ant-design/icons/CameraOutlined";
+import { Gender } from "@/config";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import InputLabel from "@mui/material/InputLabel";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import ListItemText from "@mui/material/ListItemText";
 import { styled } from "@mui/material/styles";
-import Switch from "@mui/material/Switch";
-import Tooltip from "@mui/material/Tooltip";
-import Autocomplete from "@mui/material/Autocomplete";
-import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
-import Radio from "@mui/material/Radio";
 import { FaCloudUploadAlt } from "react-icons/fa";
 
 import { useFormik } from "formik";
@@ -349,7 +340,7 @@ const Verify = () => {
                     variant="contained"
                     tabIndex={-1}
                     startIcon={<FaCloudUploadAlt />}
-                    className="bg-[#2C698D]"
+                    className="bg-[#2C698D] hover:bg-[#204d67]"
                   >
                     Upload files
                     <VisuallyHiddenInput
@@ -371,7 +362,7 @@ const Verify = () => {
                     variant="contained"
                     tabIndex={-1}
                     startIcon={<FaCloudUploadAlt />}
-                    className="bg-[#2C698D]"
+                    className="bg-[#2C698D] hover:bg-[#204d67]"
                   >
                     Upload files
                     <VisuallyHiddenInput
@@ -393,7 +384,7 @@ const Verify = () => {
                     variant="contained"
                     tabIndex={-1}
                     startIcon={<FaCloudUploadAlt />}
-                    className="bg-[#2C698D]"
+                    className="bg-[#2C698D] hover:bg-[#204d67]"
                   >
                     Upload files
                     <VisuallyHiddenInput
@@ -415,7 +406,7 @@ const Verify = () => {
                     variant="contained"
                     tabIndex={-1}
                     startIcon={<FaCloudUploadAlt />}
-                    className="bg-[#2C698D]"
+                    className="bg-[#2C698D] hover:bg-[#204d67]"
                   >
                     Upload files
                     <VisuallyHiddenInput
@@ -550,7 +541,7 @@ const Verify = () => {
                     variant="contained"
                     tabIndex={-1}
                     startIcon={<FaCloudUploadAlt />}
-                    className="bg-[#2C698D]"
+                    className="bg-[#2C698D] hover:bg-[#204d67]"
                   >
                     Upload files
                     <VisuallyHiddenInput
@@ -573,7 +564,7 @@ const Verify = () => {
                     variant="contained"
                     tabIndex={-1}
                     startIcon={<FaCloudUploadAlt />}
-                    className="bg-[#2C698D]"
+                    className="bg-[#2C698D] hover:bg-[#204d67]"
                   >
                     Upload files
                     <VisuallyHiddenInput
@@ -595,7 +586,7 @@ const Verify = () => {
                     variant="contained"
                     tabIndex={-1}
                     startIcon={<FaCloudUploadAlt />}
-                    className="bg-[#2C698D]"
+                    className="bg-[#2C698D] hover:bg-[#204d67] hover:bg-[#204d67] "
                   >
                     Upload files
                     <VisuallyHiddenInput
@@ -617,7 +608,7 @@ const Verify = () => {
                     variant="contained"
                     tabIndex={-1}
                     startIcon={<FaCloudUploadAlt />}
-                    className="bg-[#2C698D]"
+                    className="bg-[#2C698D] hover:bg-[#204d67]"
                   >
                     Upload files
                     <VisuallyHiddenInput

@@ -27,7 +27,7 @@ export default function SignIn() {
 
   useEffect(()=>{
     if(status === "authenticated"){
-      return router.push("/corporate")
+      return router.push("/corporate/dashboard")
     }
   }, [status, router])
 
@@ -55,7 +55,7 @@ export default function SignIn() {
               passHref
               legacyBehavior
             >
-              <Link variant="body1" color="primary">
+              <Link variant="body1" className="text-[#2c698d]">
                 Don&apos;t have an account?
               </Link>
             </NextLink>

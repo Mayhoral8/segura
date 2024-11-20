@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useReducer, useEffect, useState } from "react";
+import React, { useReducer, useEffect, useState, useContext } from "react";
 // import { CreateContext } from "../../Context/Context";
 import { MdDashboard } from "react-icons/md";
 import { MdInsertChart } from "react-icons/md";
@@ -9,23 +9,24 @@ import { RiFileList2Fill } from "react-icons/ri";
 import { GoSignOut } from "react-icons/go";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { ConfigContext } from "@/contexts/ConfigContext";
 // import logo from "@/assets/logo.png";
 // import profile from "@/assets/Profile.png"
 
-import { CiSearch } from 'react-icons/ci'
-import { IoIosNotificationsOutline } from "react-icons/io";
-import { MdOutlineMail } from "react-icons/md";
-import Image from "next/image";
+import SignOutModal from "@/app/auth/signoutModal";
 
-
-import Avatar from "../../avatar.png";
-// if (userRole === "Employer") {
+import TopBar from "@/app/corporate/topbar";
 
 export default function DashboardLayout({
   children, // will be a page or nested layout
 }) {
-  const navigate = useRouter();
-  // const { logout, userRole } = useContext(CreateContext).auth;
+  const { setShowSignOutModal } = useContext(ConfigContext);
+
+  const handleSignOutModal = () => {
+    console.log("d");
+    setShowSignOutModal(true);
+  };
+
   const pathname = usePathname();
 
   const initialState = {
@@ -128,6 +129,8 @@ export default function DashboardLayout({
   };
   return (
     <main className="w-screen">
+      <SignOutModal />
+      <TopBar />
       <section className="hidden lg:flex bg-white text-gray-600 border-solid mt-10 fixed z-30 lg:h-full shadow-md flex-col text-3xl h-20 bottom-0  w-full lg:w-[16%] lg:px-4 ">
         <article className="lg:h-[70%] lg:items-start flex flex-row lg:flex-col justify-start my-8 items-center h-full w-full border-b">
           <div className="flex-row items-center gap-x-1 lg:flex hidden">
@@ -185,7 +188,6 @@ export default function DashboardLayout({
               </div>
             </Link>
           </section>
-          
         </article>
         <article className="lg:block hidden  mt-auto py-2">
           <div className="hover:lg:bg-PrimaryPurple cursor-pointer rounded-md h-8 px-2 flex flex-col w-full text-sm gap-x-1 lg:flex-row items-center">
@@ -194,43 +196,11 @@ export default function DashboardLayout({
               ABC Company <br />
               corporate{" "}
             </span>
-            <GoSignOut className="text-lg" />
+            <GoSignOut onClick={handleSignOutModal} className="text-lg" />
           </div>
         </article>
       </section>
-      <div className="flex flex-col lg:w-[84%] relative lg:left-[16%]">
-        <div className="lg:w-[84%] h-20 bg-white shadow-[0_4px_10px_-5px_rgba(0,0,0,0.1)] text-white fixed top-0 z-50 px-10">
-          <div className="h-full w-full flex justify-between items-center">
-            <div className="">
-              <div className="w-[200px] h-[40px] border-[2px] rounded-md bg-white flex justify-between items-center pl-2">
-                <CiSearch className="text-[#2C698D]" />
-                <input
-                  type="text"
-                  className="h-full w-[85%] bg-transparent text-[#2C698D] outline-none placeholder:text-[#2C698D]"
-                  placeholder="Search"
-                />
-              </div>
-            </div>
-            <div className="flex items-center gap-5">
-              <IoIosNotificationsOutline className="text-[#2C698D]" />
-              <MdOutlineMail className="text-[#2C698D]" />
-              <div className="flex items-center">
-                <Image
-                  src={Avatar}
-                  alt=""
-                  height={40}
-                  width={40}
-                  className="rounded-full mr-2"
-                />
-                <div className="text-[#2C698D] text-lg font-semibold">
-                  JWT User
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="relative top-20">{children}</div>
-      </div>
+      <div className="mt-24 ml-[16%]">{children}</div>
     </main>
   );
 }
