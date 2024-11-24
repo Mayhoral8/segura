@@ -1,6 +1,6 @@
 "use client"
 import React, {useState, useEffect} from "react";
-import Paper from "@mui/material";
+import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -16,6 +16,7 @@ import { BarChart } from "@mui/x-charts/BarChart";
 import Modal from '@/components/modal'
 
 const Dashboard = () => {
+  
   function createData(date, senderReceiver, amount, description, status) {
     return { date, senderReceiver, amount, description, status };
   }

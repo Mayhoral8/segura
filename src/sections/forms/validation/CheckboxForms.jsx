@@ -8,9 +8,9 @@ import FormHelperText from '@mui/material/FormHelperText';
 import Stack from '@mui/material/Stack';
 
 // project imports
-import MainCard from 'components/MainCard';
-import AnimateButton from 'components/@extended/AnimateButton';
-import { openSnackbar } from 'api/snackbar';
+import MainCard from '@/components/MainCard';
+import AnimateButton from '@/components/@extended/AnimateButton';
+import { openSnackbar } from '@/api/snackbar';
 
 // third-party
 import { useFormik } from 'formik';

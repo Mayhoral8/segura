@@ -1,5 +1,7 @@
 import React from "react";
 import Link from "next/link";
+import AnimateButton from "./@extended/AnimateButton";
+
 const Modal = ({ setShowModal }) => {
   const handleModal = () => {
     setShowModal(false);
@@ -18,16 +20,20 @@ const Modal = ({ setShowModal }) => {
         </p>
         <div className="flex flex-row gap-x-4 justify-end">
           <Link href="/corporate/verify">
-            <button className="h-10 w-24 rounded-md hover:w-28  transition-all border bg-[#2c698d] text-white">
-              Start Now!
-            </button>
+            <AnimateButton>
+              <button className="h-10 w-24 rounded-md  border bg-[#2c698d] text-white">
+                Start Now!
+              </button>
+            </AnimateButton>
           </Link>
-          <button
-            className="h-10 w-24 rounded-md border bg-[#272643]  text-white"
-            onClick={handleModal}
-          >
-            Maybe later
-          </button>
+          <AnimateButton>
+            <button
+              className="h-10 w-24 rounded-md border bg-[#272643]  text-white"
+              onClick={handleModal}
+            >
+              Maybe later
+            </button>
+          </AnimateButton>
         </div>
       </div>
     </section>
