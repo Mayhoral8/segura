@@ -28,6 +28,7 @@ const ConfigContext = createContext(initialState);
 function ConfigProvider({ children }) {
   const [showSignOutModal, setShowSignOutModal] = useState(false)
   const [config, setConfig] = useLocalStorage('mantis-react-next-ts-config', initialState);
+  const [showAccountDetailsModal, setShowAccountDetailsModal] = useState(false)
 
   const onChangeContainer = (container) => {
     setConfig({
@@ -111,7 +112,9 @@ function ConfigProvider({ children }) {
         onChangeFontFamily,
         showSignOutModal,
         setShowSignOutModal,
-        check
+        check,
+        showAccountDetailsModal,
+        setShowAccountDetailsModal
       }}
     >
       {children}

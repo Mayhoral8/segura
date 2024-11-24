@@ -107,7 +107,8 @@ export default function AuthLogin({ providers, csrfToken }) {
                 setSubmitting(false);
               } else {
                 // preload("api/menu/dashboard", fetcher); // load menu on login success
-                router.push("/corporate");
+                console.log("f");
+                router.push("/corporate/dashboard");
                 setSubmitting(false);
               }
             },
@@ -256,7 +257,7 @@ export default function AuthLogin({ providers, csrfToken }) {
                     size="large"
                     type="submit"
                     variant="contained"
-                    color="primary"
+                    className="hover:bg-[#245674] bg-[#2c698d]"
                   >
                     Login
                   </Button>
@@ -267,7 +268,7 @@ export default function AuthLogin({ providers, csrfToken }) {
         )}
       </Formik>
 
-      {providers && (
+      {/* {providers && (
         <Stack
           direction="row"
           spacing={{ xs: 1, sm: 2 }}
@@ -354,7 +355,7 @@ export default function AuthLogin({ providers, csrfToken }) {
         <Box sx={{ mt: 3 }}>
           <FirebaseSocial />
         </Box>
-      )}
+      )} */}
     </>
   );
 }
