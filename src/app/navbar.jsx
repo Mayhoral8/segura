@@ -11,20 +11,19 @@ import { useRouter } from "next/navigation";
 import { RxCaretDown } from "react-icons/rx";
 import { RxCaretUp } from "react-icons/rx";
 
-
 const Navbar = () => {
   const pathname = usePathname();
   const [openNavBar, setOpenNavBar] = useState(false);
   const [portalMenuOpen, setPortalMenuOpen] = useState(false);
-  const router = useRouter()
+  const router = useRouter();
 
-  const handleLogout = ()=>{
+  const handleLogout = () => {
     console.log("dswe");
-    
-    localStorage.removeItem("authData")
-    localStorage.removeItem("ResultUrl")
-    router.push("/portals/login")
-  }
+
+    localStorage.removeItem("authData");
+    localStorage.removeItem("ResultUrl");
+    router.push("/portals/login");
+  };
 
   const initialState = {
     admissionsIsActive: false,
@@ -77,8 +76,6 @@ const Navbar = () => {
     }
   };
 
-  
-  
   const [state, dispatch] = useReducer(reducerFunc, initialState);
 
   const navBarHandler = (type) => {
@@ -115,11 +112,18 @@ const Navbar = () => {
 
   return (
     <section
-      className="lg:px-24 lg:h-16 lg:items-center pt-2 flex lg:flex-row flex-col lg:justify-between fixed top-0 left-0 right-0 z-30 bg-white shadow-md items-center"
+      className={`${
+        openNavBar ? "bg-[#2c698d]" : "bg-white"
+      } xl:bg-white xl:bg-opacity-[0.05] xl:backdrop-blur-sm flex justify-center py-5 xl:h-28 lg:items-center fixed top-0 left-0 right-0 z-30 items-center`}
     >
-      <div className="px-4 lg:px-0 lg:w-1/4 flex flex-row justify-between items-center w-full">
-        <div className="flex flex-row gap-x-2 items-center">
-          {/* <Link href="/">
+      <div className="xl:border-2 xl:bg-opacity-50 xl:backdrop-blur-md xl:border-[#2c698d] xl:h-[60px] w-full h-full xl:w-[88%] xl:bg-white flex lg:flex-row flex-col lg:justify-between items-center lg:rounded-[20px] lg:px-2">
+        <div className="px-4 xl:px-0 lg:w-max flex flex-row justify-between items-center w-full">
+          <div
+            className={`${
+              openNavBar ? "text-white" : "text-black"
+            } flex flex-row items-center lg:text-black font-bold text-2xl`}
+          >
+            {/* <Link href="/">
             <Image
               src={primaryLogo}
               width={60}
@@ -129,38 +133,40 @@ const Navbar = () => {
               onClick={() => navBarHandler("home")}
             />
           </Link> */}
-          SEGURA
+            SEGURA.
+          </div>
+
+          <div className="lg:hidden cursor-pointer text-2xl">
+            {openNavBar ? (
+              <FaXmark
+                onClick={() => navBarHandler("")}
+                className="text-white"
+              />
+            ) : (
+              <GiHamburgerMenu onClick={() => navBarHandler("")} />
+            )}
+          </div>
         </div>
 
-        <div className="lg:hidden cursor-pointer text-2xl">
-          {openNavBar ? (
-            <FaXmark  onClick={() => navBarHandler("")} />
-          ) : (
-            <GiHamburgerMenu onClick={() => navBarHandler("")} />
-          )}
-        </div>
-      </div>
-
-
-      <div
-        className={`${
-          openNavBar ? "bg-[#2c698d] h-screen text-gray-950 " : " h-0"
-        } shadow-md transition-all delay-400 duration-300 lg:h-full lg:shadow-none w-full   lg:text-black lg:bg-white overflow-y-scroll lg:overflow-hidden relative`}
-      >
-        <ul className="flex  lg:px-2  lg:justify-end lg:gap-x-20 lg:items-center items-center gap-y-8 lg:gap-y-0 justify-center  lg:text-sm flex-col lg:flex-row  h-full relative text-xl">
-          <Link href="#" className="">
-            <li
-              className={`${
-                openNavBar ? "visible" : "hidden"
-              } hover:lg:bg-[#2c698d]  hover:lg:text-white lg:block ${
-                state.aboutIsActive && "lg:bg-[#2c698d]  lg:text-gray-950 "
-              } text-white lg:text-gray-900 lg:h-8 lg:w-20 lg:text-center lg:flex lg:items-center lg:justify-center transition-all delay-400 duration-300 ml-2 lg:ml-0`}
-              onClick={() => navBarHandler("about")}
-            >
-              About Us
-            </li>
-          </Link>
-          <Link href="#">
+        <div
+          className={`${
+            openNavBar ? "bg-[#2c698d] h-screen text-gray-950 " : " h-0"
+          } shadow-md transition-all delay-400 duration-300 lg:h-full lg:shadow-none w-full lg:w-max lg:text-black overflow-y-scroll lg:overflow-hidden relative`}
+        >
+          <ul className="flex lg:px-2 items-center gap-y-8 lg:gap-y-0 justify-center  lg:text-sm flex-col lg:flex-row h-full relative text-xl lg:gap-10 font-semibold">
+            <Link href="#" className="">
+              <li
+                className={`${
+                  openNavBar ? "visible" : "hidden"
+                } hover:lg:bg-[#2c698d]  hover:lg:text-white lg:block ${
+                  state.aboutIsActive && "lg:bg-[#2c698d]  lg:text-gray-950 "
+                } text-white lg:text-gray-900 lg:h-8 lg:w-20 lg:text-center lg:flex lg:items-center lg:justify-center transition-all delay-400 duration-300 ml-2 lg:ml-0`}
+                onClick={() => navBarHandler("about")}
+              >
+                About Us
+              </li>
+            </Link>
+            <Link href="#">
               <div
                 className={`${openNavBar ? "visible" : "hidden"}  lg:block ${
                   state.portalsIsActive && "lg:bg-[#2c698d]  lg:text-gray-950 "
@@ -168,51 +174,54 @@ const Navbar = () => {
                 onClick={() => navBarHandler("portal")}
               >
                 Products
-              
-            </div>
-          </Link>
+              </div>
+            </Link>
 
-          <Link href="#" className="">
+            <Link href="#" className="">
+              <li
+                className={`${
+                  openNavBar ? "visible" : "hidden"
+                } hover:lg:bg-[#2c698d]  hover:lg:text-white lg:block ${
+                  state.admissionsIsActive &&
+                  "lg:bg-[#2c698d]  lg:text-gray-950"
+                } lg:text-gray-900 text-white lg:h-8 lg:w-20 lg:text-center lg:flex lg:items-center lg:justify-center transition-all delay-400 duration-300`}
+                onClick={() => navBarHandler("admissions")}
+              >
+                Company
+              </li>
+            </Link>
+
+            <Link href="#" className="">
+              <li
+                className={`${
+                  openNavBar ? "visible" : "hidden"
+                } hover:lg:bg-[#2c698d]  hover:lg:text-white lg:block ${
+                  state.contactIsActive && "lg:bg-[#2c698d]  lg:text-gray-950"
+                } lg:text-gray-900 text-white lg:h-8 lg:w-20 lg:text-center lg:flex lg:items-center lg:justify-center transition-all delay-400 duration-300 relative`}
+                onClick={() => navBarHandler("contact")}
+              >
+                Resources
+              </li>
+            </Link>
+
             <li
-              className={`${
-                openNavBar ? "visible" : "hidden"
-              } hover:lg:bg-[#2c698d]  hover:lg:text-white lg:block ${
-                state.admissionsIsActive && "lg:bg-[#2c698d]  lg:text-gray-950"
-              } lg:text-gray-900 text-white lg:h-8 lg:w-20 lg:text-center lg:flex lg:items-center lg:justify-center transition-all delay-400 duration-300`}
-              onClick={() => navBarHandler("admissions")}
+              className={`${openNavBar ? "visible" : "hidden"} ${
+                pathname === "/portals/result" ? "visible" : "hidden lg:hidden"
+              } hover:lg:bg-[#2c698d]  hover:lg:text-white  lg:text-gray-900 text-white lg:h-8 lg:w-20 lg:text-center lg:flex lg:items-center lg:justify-center transition-all delay-400 duration-300 relative cursor-pointer`}
+              onClick={handleLogout}
             >
-              Company
+              Logout
             </li>
-          </Link>
-
-          <Link href="#" className="">
-            <li
-              className={`${
-                openNavBar  ? "visible" : "hidden"
-              } hover:lg:bg-[#2c698d]  hover:lg:text-white lg:block ${
-                state.contactIsActive && "lg:bg-[#2c698d]  lg:text-gray-950"
-              } lg:text-gray-900 text-white lg:h-8 lg:w-20 lg:text-center lg:flex lg:items-center lg:justify-center transition-all delay-400 duration-300 relative`}
-              onClick={() => navBarHandler("contact")}
-            >
-              Resources
-            </li>
-          </Link>
-
-          <li
-            className={`${
-              openNavBar 
-                ? "visible"
-                : "hidden"
-            } ${pathname === "/portals/result" ? "visible" : "hidden lg:hidden"} hover:lg:bg-[#2c698d]  hover:lg:text-white  lg:text-gray-900 text-white lg:h-8 lg:w-20 lg:text-center lg:flex lg:items-center lg:justify-center transition-all delay-400 duration-300 relative cursor-pointer`}
-            onClick={handleLogout}
-          >
-            Logout
-          </li>
-        </ul>
-      </div>
-      <div className="hidden lg:flex flex-row gap-x-2">
-        <button className="border-[#2c698d] border w-20 h-7 rounded-sm ">Login</button>
-        <button className="bg-[#2c698d] w-28 h-7 rounded-sm px-2 text-white">Get Started</button>
+          </ul>
+        </div>
+        <div className="hidden lg:flex flex-row gap-x-2">
+          <button className="border-[#2c698d] text-[#2c698d] tracking-[0.5px] font-semibold border-2 hover:bg-[#2c698d] lg:px-3 xl:px-0 xl:w-[140px] h-[40px] rounded-[10px] ">
+            Login
+          </button>
+          <button className="bg-[#2c698d] lg:px-3 xl:px-0 xl:w-[140px] h-[40px] rounded-[10px] tracking-[0.5px] font-semibold text-white">
+            Get Started
+          </button>
+        </div>
       </div>
     </section>
   );
