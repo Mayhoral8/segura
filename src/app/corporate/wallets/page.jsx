@@ -12,6 +12,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { useRouter } from "next/navigation";
+import { FaEuroSign, FaPoundSign } from "react-icons/fa";
+import { FaNairaSign } from "react-icons/fa6";
 
 const Wallets = () => {
   const router = useRouter()
@@ -69,8 +71,9 @@ const Wallets = () => {
                 <IoEyeOutline />
               </div>
             </div>
-            <div>
-              <span className="text-xl font-bold">GBP500</span>
+            <div className="flex items-center text-xl font-bold">
+              <FaPoundSign/>
+              <span className="">500</span>
             </div>
 
             <article className="flex flex-row justify-between items-center text-sm">
@@ -87,7 +90,7 @@ const Wallets = () => {
           </section>
         </article>
         <article className="flex flex-col py-2 gap-y-2  h-[180px]  w-[300px] px-4 text-gray-950  bg-[#bae8e8] rounded-md shadow-sm cursor-pointer" title="Click to view details" onClick={viewWallet}>
-          <Avatar src="https://img.freepik.com/premium-vector/united-kingdom-flag-button-uk-flag-icon_97458-16.jpg?w=740" />
+          <Avatar src="https://img.freepik.com/premium-vector/european-union-logo-vector-illustration-glossy-button_118339-2135.jpg?w=740" />
           <section className="flex flex-col gap-y-4">
             <div className="w-full flex flex-row justify-between ">
               <div className="flex items-center gap-x-1">
@@ -95,8 +98,9 @@ const Wallets = () => {
                 <IoEyeOutline />
               </div>
             </div>
-            <div>
-              <span className="text-xl font-bold">E500</span>
+            <div className="flex items-center text-xl font-bold">
+              <FaEuroSign/>
+              <span className="">500</span>
             </div>
 
             <article className="flex flex-row justify-between items-center text-sm">
@@ -104,11 +108,6 @@ const Wallets = () => {
                 <span>Acct No</span>
                 <span>745658999809</span>
               </div>
-              {/* <div>
-                <button className="bg-white text-xs px-2 rounded-md py-1 text-gray-900">
-                  Add Funds+
-                </button>
-              </div> */}
             </article>
           </section>
         </article>
@@ -121,8 +120,9 @@ const Wallets = () => {
                 <IoEyeOutline />
               </div>
             </div>
-            <div>
-              <span className="text-xl font-bold">#30,050.56</span>
+            <div className="flex items-center text-xl font-bold">
+              <FaNairaSign/>
+              <span className="">30,050.56</span>
             </div>
 
             <article className="flex flex-row justify-between items-center text-sm">
