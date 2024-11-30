@@ -8,6 +8,8 @@ import { TbCurrencyPound } from "react-icons/tb";
 import { IoEyeOutline } from "react-icons/io5";
 import { FaRegCopy } from "react-icons/fa";
 import { HiSwitchHorizontal } from "react-icons/hi";
+import { AnimateDropdown } from "@/components/Animate";
+import RequestFundingFormWrapper from "../RequestFundingFormWrapper";
 
 type State = {
   dollar: {
@@ -28,6 +30,7 @@ type Action = {
 };
 const Page = () => {
   const [showWallets, setShowWallets] = useState<boolean>(false);
+  const [showReqFundForm, setShowReqFundForm] = useState<boolean>(false)
 
   const handleShowWallets = () => {
     setShowWallets(!showWallets);
@@ -96,6 +99,10 @@ const Page = () => {
     dispatch({ type });
   };
 
+  const handleRequestForm = ()=>{
+    setShowReqFundForm(true)
+  }
+
   // const
   return (
     <main className="px-10">
@@ -128,7 +135,7 @@ const Page = () => {
                 state.dollar.isActive
                   ? "https://img.freepik.com/premium-vector/united-states-america-flag-usa-flag-button_97458-15.jpg?w=740"
                   : state.euro.isActive
-                  ? "https://img.freepik.com/premium-vector/united-kingdom-flag-button-uk-flag-icon_97458-16.jpg?w=740"
+                  ? "https://img.freepik.com/premium-vector/european-union-logo-vector-illustration-glossy-button_118339-2135.jpg?w=740"
                   : state.pounds.isActive
                   ? "https://img.freepik.com/premium-vector/united-kingdom-flag-button-uk-flag-icon_97458-16.jpg?w=740"
                   : "https://img.freepik.com/premium-vector/nigeria-flag-round-circle-vector-icon_601748-26416.jpg?w=740"
@@ -148,13 +155,9 @@ const Page = () => {
             <HiSwitchHorizontal />
           </div>
 
-          <article
-            className={`${
-              showWallets ? "flex h-[161px]" : "hidden h-0"
-            } absolute border mt-12 text-sm flex-col rounded-md w-[222px] bg-white  transition-transform shadow-sm z-10`}
-          >
+          <AnimateDropdown isVisible={showWallets}>
             <div
-              className="flex flex-row  items-center hover:bg-[#e3f6f5] cursor-pointer"
+              className="flex flex-row  items-center hover:bg-[#e3f6f5] cursor-pointer text-xs"
               onClick={() => {
                 handleDispatch("DOLLAR"), handleShowWallets();
               }}
@@ -163,27 +166,27 @@ const Page = () => {
               <span>Us Dollar ($)</span>
             </div>
             <div
-              className="flex flex-row  items-center hover:bg-[#e3f6f5] cursor-pointer"
+              className="flex flex-row  items-center hover:bg-[#e3f6f5] cursor-pointer text-xs"
               onClick={() => {
                 handleDispatch("EURO"), handleShowWallets();
               }}
             >
-              <Avatar src="https://img.freepik.com/premium-vector/united-kingdom-flag-button-uk-flag-icon_97458-16.jpg?w=740" />
-              <span>British Pound</span>
+              <Avatar src="https://img.freepik.com/premium-vector/european-union-logo-vector-illustration-glossy-button_118339-2135.jpg?w=740" />
+              <span>Euro</span>
               (<TbCurrencyPound /> )
             </div>
             <div
-              className="flex flex-row  items-center hover:bg-[#e3f6f5] cursor-pointer"
+              className="flex flex-row  items-center hover:bg-[#e3f6f5] cursor-pointer text-xs"
               onClick={() => {
                 handleDispatch("POUNDS"), handleShowWallets();
               }}
             >
               <Avatar src="https://img.freepik.com/premium-vector/united-kingdom-flag-button-uk-flag-icon_97458-16.jpg?w=740" />
-              <span>Euro</span>
+              <span>British Pound</span>
               (<FaEuroSign />)
             </div>
             <div
-              className="flex flex-row  items-center hover:bg-[#e3f6f5] cursor-pointer"
+              className="flex flex-row  items-center hover:bg-[#e3f6f5] cursor-pointer text-xs"
               onClick={() => {
                 handleDispatch("NAIRA"), handleShowWallets();
               }}
@@ -192,7 +195,8 @@ const Page = () => {
               <span>Nigeria Naira</span>
               (<FaNairaSign />)
             </div>
-          </article>
+          </AnimateDropdown>
+
           <div className="flex flex-col">
             <div className="flex flex-row items-center mt-4 gap-x-2">
               <div className="flex flex-row text-2xl items-center ">
@@ -213,7 +217,7 @@ const Page = () => {
           </div>
 
           <div>
-            <button className="border bg-[#2c698d] text-white py2 px-2 rounded-sm">
+            <button className="border px-2 py-2 bg-[#2c698d] text-white rounded-md">
               Generate Account Statement
             </button>
           </div>
@@ -221,7 +225,7 @@ const Page = () => {
         <article className="bg-white border h-72 w-64 px-4 py-4 flex flex-col gap-y-4">
           <h2>Receiving Account</h2>
           {state.dollar.isActive ? (
-            <div className="">
+            <div className="flex flex-col">
               <div className="flex flex-col">
                 <div className="flex flex-row items-center gap-x-4">
                   <span className="text-gray-950">John Doe Robert </span>
@@ -251,6 +255,9 @@ const Page = () => {
                 </div>
                 <span className="text-gray-400">Routing Number</span>
               </div>
+              <button className="border px-2 py-2 bg-[#2c698d] text-white rounded-md">
+                View details
+              </button>
             </div>
           ) : (
             <div className="flex flex-col justify-between items-center h-full">
@@ -259,9 +266,10 @@ const Page = () => {
                 Receive money from people and businesses with your account
                 details
               </p>
-              <button className="border px-2 py-2 bg-[#2c698d] text-white rounded-md">
+              <button className="border px-2 py-2 bg-[#2c698d] text-white rounded-md" onClick={handleRequestForm}>
                 Request funding account
               </button>
+              <RequestFundingFormWrapper showReqFundForm={showReqFundForm} setShowReqFundForm={setShowReqFundForm}/>
             </div>
           )}
         </article>

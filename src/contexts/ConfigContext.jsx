@@ -27,6 +27,7 @@ const ConfigContext = createContext(initialState);
 
 function ConfigProvider({ children }) {
   const [showSignOutModal, setShowSignOutModal] = useState(false)
+  const [showReqFundingForm, setShowRequestFundingForm] = useState(false)
   const [config, setConfig] = useLocalStorage('mantis-react-next-ts-config', initialState);
   const [showAccountDetailsModal, setShowAccountDetailsModal] = useState(false)
 
@@ -114,7 +115,9 @@ function ConfigProvider({ children }) {
         setShowSignOutModal,
         check,
         showAccountDetailsModal,
-        setShowAccountDetailsModal
+        setShowAccountDetailsModal,
+        showReqFundingForm,
+        setShowRequestFundingForm
       }}
     >
       {children}
