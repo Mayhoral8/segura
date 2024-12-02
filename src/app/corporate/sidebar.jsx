@@ -1,7 +1,6 @@
 import React, { useEffect, useReducer, useContext, useState } from "react";
 import Link from "next/link";
 import { ConfigContext } from "@/contexts/ConfigContext";
-import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 import { MdDashboard } from "react-icons/md";
 import { GoSignOut } from "react-icons/go";
@@ -11,8 +10,10 @@ import { CiWallet } from "react-icons/ci";
 import { FaUsers } from "react-icons/fa6";
 import { IoMdSettings } from "react-icons/io";
 import { RxCaretDown, RxCaretUp } from "react-icons/rx";
+import { useSearchParams } from "next/navigation";
 
 const Sidebar = () => {
+  const searchParams = useSearchParams()
   const { setShowSignOutModal, check } = useContext(ConfigContext);
   const [showDropdown, setShowDropDown] = useState(false);
 
@@ -24,26 +25,26 @@ const Sidebar = () => {
     setShowSignOutModal(true);
   };
 
-  const navigate = useRouter();
   // const { logout, userRole } = useContext(CreateContext).auth;
   const pathname = usePathname();
 
   const initialState = {
     dashboard: {
-      isActive: true,
-    },
-    settings: {
-      isActive: false,
-    },
-    userManagement: {
-      isActive: false,
+      isActive: true
     },
     accounts: {
-      isActive: false,
+      isActive: false
     },
     wallets: {
-      isActive: false,
+      isActive: false
     },
+    userManagement: {
+      isActive: false
+    },
+    settings: {
+      isActive: false
+    }
+    
   };
 
   const reducerFunc = (state, action) => {
@@ -79,6 +80,7 @@ const Sidebar = () => {
         };
       }
       case "ACCOUNTS": {
+        console.log("fgd");
         return {
           ...state,
           dashboard: { isActive: false },
@@ -112,8 +114,10 @@ const Sidebar = () => {
         return state;
     }
   };
+  const [state, dispatch] = useReducer(reducerFunc, initialState);
 
   useEffect(() => {
+    
     if (pathname === "/corporate/dashboard") {
       return dispatch({ type: "DASHBOARD" });
     } else if (pathname.includes("/corporate/settings")) {
@@ -122,14 +126,15 @@ const Sidebar = () => {
     } else if (pathname === "/corporate/user-management") {
       return dispatch({ type: "USER_MANAGEMENT" });
     } else if (pathname.includes("/corporate/accounts")) {
+      
       return dispatch({ type: "ACCOUNTS" });
     } else if (pathname.includes("/corporate/wallets")) {
       return dispatch({ type: "WALLETS" });
-    } else if (pathname.includes("/corporate/my-account")) {
-      return dispatch({ type: "ACCOUNTS" });
     }
-  }, [pathname]);
-  const [state, dispatch] = useReducer(reducerFunc, initialState);
+   
+  }, [pathname, searchParams]);
+
+
 
   const handleDispatch = (type) => {
     dispatch({ type });
@@ -138,6 +143,8 @@ const Sidebar = () => {
   useEffect(() => {
     showDropdown === false && handleDispatch("DEFAULT");
   }, [showDropdown]);
+
+  
   return (
     <section className="hidden lg:flex flex-col justify-between bg-white text-gray-600 border-solid mt-10 fixed z-30 lg:h-full shadow-md  text-3xl h-20 bottom-0  w-full lg:w-[16%]  ">
       <div className="flex-row items-center gap-x-1 lg:flex hidden border h-[100px] justify-center lg:px-4">
@@ -149,9 +156,9 @@ const Sidebar = () => {
         <Link
           href="/corporate/dashboard"
           onClick={() => handleDispatch("DASHBOARD")}
-          className={`w-full  flex items-center lg:rounded-md lg:px-2 justify-center ${
-            state.dashboard.isActive && "bg-[#2c698d] text-white"
-          } `}
+          className={`w-full  flex items-center lg:rounded-md lg:px-2 justify-center  ${
+            state.dashboard.isActive  ? "bg-[#2c698d] text-white"
+            : "hover:bg-[#e3f6f5]"} `}
         >
           <div className="flex flex-col w-full text-[12px] gap-x-1 lg:flex-row items-center  ">
             <MdDashboard className="text-lg " />
@@ -162,9 +169,9 @@ const Sidebar = () => {
         <Link
           href="/corporate/accounts"
           onClick={() => handleDispatch("ACCOUNTS")}
-          className={`w-full  flex items-center lg:rounded-md lg:px-2 justify-center ${
-            state.accounts.isActive && "bg-[#2c698d] text-white"
-          } `}
+          className={`w-full flex items-center lg:rounded-md lg:px-2 justify-center  ${
+            state.accounts.isActive  ? "bg-[#2c698d] text-white"
+            : "hover:bg-[#e3f6f5]"} `}
         >
           <div className="flex flex-col w-full text-[12px] gap-x-1 lg:flex-row items-center  ">
             <FaUsers className="text-lg " />
@@ -175,9 +182,9 @@ const Sidebar = () => {
         <Link
           href="/corporate/wallets"
           onClick={() => handleDispatch("WALLETS")}
-          className={`w-full  flex items-center lg:rounded-md lg:px-2 justify-center ${
-            state.wallets.isActive && "bg-[#2c698d] text-white"
-          } `}
+          className={`w-full  flex items-center lg:rounded-md lg:px-2 justify-center  ${
+            state.wallets.isActive  ? "bg-[#2c698d] text-white"
+            : "hover:bg-[#e3f6f5]"} `}
         >
           <div className="flex flex-col w-full text-[12px] gap-x-1 lg:flex-row items-center  ">
             <CiWallet className="text-lg " />
@@ -186,11 +193,11 @@ const Sidebar = () => {
         </Link>
 
         <Link
-          href="/corporate/manage-users"
+          href="/corporate/user-management"
           onClick={() => handleDispatch("USER_MANAGEMENT")}
-          className={`w-full  flex items-center lg:rounded-md lg:px-2 justify-center ${
-            state.userManagement.isActive && "bg-[#2c698d] text-white"
-          } `}
+          className={`w-full  flex items-center lg:rounded-md lg:px-2 justify-center  ${
+            state.userManagement.isActive ? "bg-[#2c698d] text-white"
+          : "hover:bg-[#e3f6f5]"} `}
         >
           <div className=" w-full flex flex-col  text-[12px] gap-x-1 lg:flex-row  items-center">
             <MdManageAccounts className="text-lg" />

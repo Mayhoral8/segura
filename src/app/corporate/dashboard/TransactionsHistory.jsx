@@ -48,7 +48,7 @@ const TransactionsHistory = () => {
                   <TableCell align="center">{row.senderReceiver}</TableCell>
                   <TableCell align="right">{row.amount}</TableCell>
                   <TableCell align="right">{row.description}</TableCell>
-                  <TableCell sx={{color: row.status === "Failed" ? "red" : row.status === "Pending" ? "yellow" : "green"}} align="right">{row.status}</TableCell>
+                  <TableCell sx={{color: row.status === "Failed" ? "red" : row.status === "Pending" ? "amber" : "green"}} align="right">{row.status}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
