@@ -13,7 +13,7 @@ stages:
 
 - stage: build_for_dev
   displayName: Build artifact for dev environment
-  condition: and(always(), eq(variables['Build.SourceBranch'], 'uat'))
+  condition: and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/docker-config'))
   jobs:
   - job: build_dev
     displayName: 'Develop build for develop branch'
