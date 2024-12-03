@@ -34,7 +34,7 @@ stages:
     - task: Docker@2
       inputs:
         containerRegistry: 'acr-connection'
-        repository: 'api-gateway'
+        repository: 'segura-web'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
         tags: $(Build.BuildId)
@@ -46,7 +46,7 @@ stages:
         SourceFolder: '$(system.defaultworkingdirectory)/manifests'
         Contents: '**/*.yml'
         TargetFolder: '$(build.artifactstagingdirectory)'
-        condition: succeededOrFailed()
+        
 
     - task: PublishBuildArtifacts@1
       inputs:
