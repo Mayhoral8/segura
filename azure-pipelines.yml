@@ -13,7 +13,7 @@ stages:
 
 - stage: build_for_dev
   displayName: Build artifact for dev environment
-  condition: and(always(), eq(variables['Build.SourceBranch'], 'uat'))
+  condition: and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/docker-config'))
   jobs:
   - job: build_dev
     displayName: 'Develop build for develop branch'
@@ -27,14 +27,14 @@ stages:
         workingDirectory: $(System.DefaultWorkingDirectory)
         script:  |
           touch .env
-          echo -e "NEXTAUTH_URL=http://segura-web-dev.segura-pay.com /n NEXT_PUBLIC_API_BASE_URL=https://api-dev.segura-pay.com"
+          echo -e "NEXTAUTH_URL=http://segura-web-dev.segura-pay.com\nNEXT_PUBLIC_API_BASE_URL=https://api-dev.segura-pay.com"
           cat .env
     
   
     - task: Docker@2
       inputs:
         containerRegistry: 'acr-connection'
-        repository: 'api-gateway'
+        repository: 'segura-web'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
         tags: $(Build.BuildId)
@@ -46,7 +46,7 @@ stages:
         SourceFolder: '$(system.defaultworkingdirectory)/manifests'
         Contents: '**/*.yml'
         TargetFolder: '$(build.artifactstagingdirectory)'
-        condition: succeededOrFailed()
+        
 
     - task: PublishBuildArtifacts@1
       inputs:
