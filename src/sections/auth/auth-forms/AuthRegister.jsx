@@ -4,14 +4,14 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 
 // next
-import Image from "next/legacy/image";
+// import Image from "next/legacy/image";
 import NextLink from "next/link";
 import { signIn } from "next-auth/react";
 
 // material-ui
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Button from "@mui/material/Button";
-import Divider from "@mui/material/Divider";
+// import Divider from "@mui/material/Divider";
 import FormHelperText from "@mui/material/FormHelperText";
 import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
@@ -28,36 +28,35 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 
 // project import
-import FirebaseSocial from "./FirebaseSocial";
 import IconButton from "@/components/@extended/IconButton";
 import AnimateButton from "@/components/@extended/AnimateButton";
 
-import { APP_DEFAULT_PATH } from "@/config";
+// import { APP_DEFAULT_PATH } from "@/config";
 import { strengthColor, strengthIndicator } from "@/utils/password-strength";
 
 // assets
 import EyeOutlined from "@ant-design/icons/EyeOutlined";
 import EyeInvisibleOutlined from "@ant-design/icons/EyeInvisibleOutlined";
 
-const Auth0 = "/assets/images/icons/auth0.svg";
-const Cognito = "/assets/images/icons/aws-cognito.svg";
-const Google = "/assets/images/icons/google.svg";
+// const Auth0 = "/assets/images/icons/auth0.svg";
+// const Cognito = "/assets/images/icons/aws-cognito.svg";
+// const Google = "/assets/images/icons/google.svg";
 
 // ============================|| AWS CONNITO - LOGIN ||============================ //
 
 export default function AuthRegister({ providers, csrfToken }) {
-  const downSM = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  // const downSM = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
   const [level, setLevel] = useState();
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleClickShowConfirmPassword = ()=>{
-    setShowConfirmPassword(!showConfirmPassword)
-  }
+  const handleClickShowConfirmPassword = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
@@ -72,6 +71,8 @@ export default function AuthRegister({ providers, csrfToken }) {
     changePassword("");
   }, []);
 
+  console.log(process.env.NEXT_PUBLIC_API_BASE_URL);
+
   return (
     <>
       <Formik
@@ -80,7 +81,6 @@ export default function AuthRegister({ providers, csrfToken }) {
           lastname: "",
           username: "",
           email: "",
-          homeAddress: "",
           officeAddress: "",
           phoneNumber: "",
           company: "",
@@ -96,9 +96,9 @@ export default function AuthRegister({ providers, csrfToken }) {
             .email("Must be a valid email")
             .max(255)
             .required("Email is required"),
-          homeAddress: Yup.string()
-            .max(255)
-            .required("Home address is required"),
+          // homeAddress: Yup.string()
+          //   .max(255)
+          //   .required("Home address is required"),
           officeAddress: Yup.string()
             .max(255)
             .required("Office address is required"),
@@ -120,26 +120,44 @@ export default function AuthRegister({ providers, csrfToken }) {
         })}
         onSubmit={async (values, { setErrors, setSubmitting }) => {
           const trimmedEmail = values.email.trim();
-          signIn("register", {
-            redirect: false,
-            firstname: values.firstname,
-            lastname: values.lastname,
-            email: trimmedEmail,
-            username: values.username,
-            phoneNumber: values.phoneNumber,
-            homeAddress: values.homeAddress,
-            officeAddress: values.officeAddress,
-            department: values.department,
-            password: values.password,
-            confirmPassword: values.confirmPassword,
-            company: values.company,
-            callbackUrl: APP_DEFAULT_PATH,
-          }).then((res) => {
-            if (res?.error) {
-              setErrors({ submit: res.error });
-              setSubmitting(false);
+          const response = await fetch(
+            "https://api-dev.segura-pay.com/api/v1/auth/registerCorporateAdmin",
+            {
+              method: "POST",
+              body: JSON.stringify({
+                firstName: values.firstname,
+                lastName: values.lastname,
+                email: trimmedEmail,
+                username: values.username,
+                phoneNumber: values.phoneNumber,
+                officeAddress: values.officeAddress,
+                password: values.password,
+                confirmPassword: values.confirmPassword,
+                permissionLists: ["PERMISSION_ACCOUNT_CREATE"],
+                corporateId: "12345",
+                isCorporate: "true",
+                isVerified: "false",
+                userStatus: "INACTIVE",
+              }),
+              headers: {
+                "Content-Type": "application/json",
+              },
             }
-          });
+          );
+          if (response.ok) {
+            const responseData = await response.json();
+            console.log(responseData);
+            signIn("login", {
+              redirect: false,
+              username: values.username,
+              password: values.password
+            }).then((res) => {
+              if (res?.error) {
+                setErrors({ submit: res.error });
+                setSubmitting(false);
+              }
+            });
+          }
         }}
       >
         {({
@@ -155,7 +173,7 @@ export default function AuthRegister({ providers, csrfToken }) {
           <form noValidate onSubmit={handleSubmit}>
             <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
             <Grid container spacing={3}>
-            <Grid item xs={6}>
+              <Grid item xs={6}>
                 <Stack spacing={1}>
                   <InputLabel htmlFor="firstname-signup">
                     First Name*
@@ -200,11 +218,9 @@ export default function AuthRegister({ providers, csrfToken }) {
                   </FormHelperText>
                 )}
               </Grid>
-            <Grid item xs={6}>
+              <Grid item xs={6}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="username-signup">
-                    Username*
-                  </InputLabel>
+                  <InputLabel htmlFor="username-signup">Username*</InputLabel>
                   <OutlinedInput
                     id="username-signup"
                     type="username"
@@ -268,35 +284,17 @@ export default function AuthRegister({ providers, csrfToken }) {
                   </FormHelperText>
                 )}
               </Grid>
-             
-              <Grid item xs={12}>
-                <Stack spacing={1}>
-                  <InputLabel htmlFor="homeAddress-signup">Home Address</InputLabel>
-                  <OutlinedInput
-                    fullWidth
-                    error={Boolean(touched.homeAddress && errors.homeAddress)}
-                    id="homeAddress-signup"
-                    value={values.homeAddress}
-                    name="homeAddress"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    placeholder="Enter your home address"
-                    inputProps={{}}
-                  />
-                </Stack>
-                {touched.homeAddress && errors.homeAddress && (
-                  <FormHelperText error id="helper-text-homeAddress-signup">
-                    {errors.homeAddress}
-                  </FormHelperText>
-                )}
-              </Grid>
 
               <Grid item xs={12}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="officeAddress-signup">Office Address</InputLabel>
+                  <InputLabel htmlFor="officeAddress-signup">
+                    Office Address
+                  </InputLabel>
                   <OutlinedInput
                     fullWidth
-                    error={Boolean(touched.officeAddress && errors.officeAddress)}
+                    error={Boolean(
+                      touched.officeAddress && errors.officeAddress
+                    )}
                     id="officeAddress-signup"
                     value={values.officeAddress}
                     name="officeAddress"
@@ -312,28 +310,7 @@ export default function AuthRegister({ providers, csrfToken }) {
                   </FormHelperText>
                 )}
               </Grid>
-              <Grid item xs={12}>
-                <Stack spacing={1}>
-                  <InputLabel htmlFor="department-signup">Department</InputLabel>
-                  <OutlinedInput
-                    fullWidth
-                    error={Boolean(touched.department && errors.department)}
-                    id="department-signup"
-                    value={values.department}
-                    name="department"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    placeholder="Enter your office address"
-                    inputProps={{}}
-                  />
-                </Stack>
-                {touched.department && errors.department && (
-                  <FormHelperText error id="helper-text-department-signup">
-                    {errors.department}
-                  </FormHelperText>
-                )}
-              </Grid>
-          
+
               <Grid item xs={12}>
                 <Stack spacing={1}>
                   <InputLabel htmlFor="password-signup">Password</InputLabel>
@@ -487,7 +464,7 @@ export default function AuthRegister({ providers, csrfToken }) {
         )}
       </Formik>
 
-      {providers && (
+      {/* {providers && (
         <Stack
           direction="row"
           spacing={{ xs: 1, sm: 2 }}
@@ -568,12 +545,8 @@ export default function AuthRegister({ providers, csrfToken }) {
             );
           })}
         </Stack>
-      )}
-      {!providers && (
-        <Box sx={{ mt: 3 }}>
-          <FirebaseSocial />
-        </Box>
-      )}
+      )} */}
+      
     </>
   );
 }
