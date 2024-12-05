@@ -1,0 +1,98 @@
+# Maven
+# Build your Java project and run tests with Apache Maven.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/java
+
+trigger:
+- master
+- uat
+- feature/*
+
+
+stages:
+
+- stage: build_for_dev
+  displayName: Build artifact for dev environment
+  condition: and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/uat'))
+  jobs:
+  - job: build_dev
+    displayName: 'Develop build for develop branch'
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: Bash@3
+      displayName: "intall env package for develop"
+      inputs:
+        targetType: "inline"
+        workingDirectory: $(System.DefaultWorkingDirectory)
+        script:  |
+          touch .env
+          echo -e "NEXTAUTH_URL=http://segura-web-dev.segura-pay.com\nNEXT_PUBLIC_API_BASE_URL=https://api-dev.segura-pay.com\nNEXTAUTH_SECRET=H21wSC9aRWtzjUmyTVYnmHEW8VUHBYaqabpivffY/8E="
+          cat .env
+    
+  
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'acr-connection'
+        repository: 'segura-web'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
+        tags: $(Build.BuildId)
+
+
+    - task: CopyFiles@2
+      displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+      inputs:
+        SourceFolder: '$(system.defaultworkingdirectory)/manifests'
+        Contents: '**/*.yml'
+        TargetFolder: '$(build.artifactstagingdirectory)'
+        
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
+
+- stage: build_for_prod
+  displayName: 'Build artifact for prod environment'
+  condition: and(always(), eq(variables['Build.SourceBranch'], 'master'))
+  jobs:
+  - job: Create_build_for_production_environment
+    displayName: 'Build for production environment'
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: Bash@3
+      displayName: "intall env package for develop"
+      inputs:
+        targetType: "inline"
+        workingDirectory: $(System.DefaultWorkingDirectory)
+        script:  |
+          touch .env
+          echo -e "NEXTAUTH_URL=http://segura-web-dev.segura-pay.com /n NEXT_PUBLIC_API_BASE_URL=https://api-dev.segura-pay.com"
+          cat .env
+    
+  
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'acr-connection'
+        repository: 'api-gateway'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
+        tags: $(Build.BuildId)
+
+
+    - task: CopyFiles@2
+      displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+      inputs:
+        SourceFolder: '$(system.defaultworkingdirectory)/manifests'
+        Contents: '**/*.yml'
+        TargetFolder: '$(build.artifactstagingdirectory)'
+        condition: succeededOrFailed()
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'

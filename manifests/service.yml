@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: $(project.name)
+  namespace: "segura"
+spec:
+  type: ClusterIP
+  selector:
+    name: $(project.name)
+    app: $(project.name)
+  ports:
+    - name: http
+      port: 3000
+      targetPort: 3000
