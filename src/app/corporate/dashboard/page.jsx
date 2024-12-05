@@ -12,11 +12,14 @@ import { FaCoins } from "react-icons/fa";
 import { CiCreditCard1 } from "react-icons/ci";
 import { FaClock } from "react-icons/fa";
 import { BarChart } from "@mui/x-charts/BarChart";
+import { useSession } from "next-auth/react"
 
 import Modal from '@/components/modal'
 
 const Dashboard = () => {
-  
+  const { data: session, status } = useSession()
+
+  console.log(session);
   function createData(date, senderReceiver, amount, description, status) {
     return { date, senderReceiver, amount, description, status };
   }
