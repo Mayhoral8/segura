@@ -19,7 +19,6 @@ const Navbar = () => {
 
   const handleLogout = () => {
     console.log("dswe");
-
     localStorage.removeItem("authData");
     localStorage.removeItem("ResultUrl");
     router.push("/portals/login");
@@ -123,16 +122,6 @@ const Navbar = () => {
               openNavBar ? "text-white" : "text-black"
             } flex flex-row items-center lg:text-black font-bold text-2xl`}
           >
-            {/* <Link href="/">
-            <Image
-              src={primaryLogo}
-              width={60}
-              height={30}
-              className="items-center"
-              alt="Segura Logo"
-              onClick={() => navBarHandler("home")}
-            />
-          </Link> */}
             SEGURA.
           </div>
 
@@ -215,9 +204,11 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="hidden lg:flex flex-row gap-x-2">
-          <button className="border-[#2c698d] text-[#2c698d] tracking-[0.5px] font-semibold border-2 hover:bg-[#2c698d] lg:px-3 xl:px-0 xl:w-[140px] h-[40px] rounded-[10px] ">
-            Login
-          </button>
+          <Link href="/auth/login">
+            <button className="border-[#2c698d] text-[#2c698d] tracking-[0.5px] font-semibold border-2 hover:bg-[#2c698d] hover:text-white lg:px-3 xl:px-0 xl:w-[140px] h-[40px] rounded-[10px] ">
+              Login
+            </button>
+          </Link>
           <button className="bg-[#2c698d] lg:px-3 xl:px-0 xl:w-[140px] h-[40px] rounded-[10px] tracking-[0.5px] font-semibold text-white">
             Get Started
           </button>
