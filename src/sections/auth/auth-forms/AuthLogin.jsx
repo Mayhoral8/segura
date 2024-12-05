@@ -75,15 +75,14 @@ export default function AuthLogin({ providers, csrfToken }) {
     <>
       <Formik
         initialValues={{
-          email: "info@codedthemes.com",
+          username: "omar",
           password: "123456",
           submit: null,
         }}
         validationSchema={Yup.object().shape({
-          email: Yup.string()
-            .email("Must be a valid email")
+          username: Yup.string()
             .max(255)
-            .required("Email is required"),
+            .required("Username is required"),
           password: Yup.string()
             .required("Password is required")
             .test(
@@ -91,13 +90,13 @@ export default function AuthLogin({ providers, csrfToken }) {
               "Password cannot start or end with spaces",
               (value) => value === value.trim()
             )
-            .max(10, "Password must be less than 10 characters"),
+            .max(20, "Password must be less than 20 characters"),
         })}
         onSubmit={(values, { setErrors, setSubmitting }) => {
-          const trimmedEmail = values.email.trim();
+          const trimmedUsername = values.username.trim();
           signIn("credentials", {
             redirect: false,
-            email: trimmedEmail,
+            username: trimmedUsername,
             password: values.password,
           }).then(
             (res) => {
@@ -107,7 +106,7 @@ export default function AuthLogin({ providers, csrfToken }) {
                 setSubmitting(false);
               } else {
                 // preload("api/menu/dashboard", fetcher); // load menu on login success
-                console.log("f");
+                console.log(res);
                 router.push("/corporate/dashboard");
                 setSubmitting(false);
               }
@@ -133,25 +132,25 @@ export default function AuthLogin({ providers, csrfToken }) {
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="email-login">Email Address</InputLabel>
+                  <InputLabel htmlFor="username-login">Username</InputLabel>
                   <OutlinedInput
-                    id="email-login"
-                    type="email"
-                    value={values.email}
-                    name="email"
+                    id="username-login"
+                    type="username"
+                    value={values.username}
+                    name="username"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    placeholder="Enter email address"
+                    placeholder="Enter username"
                     fullWidth
-                    error={Boolean(touched.email && errors.email)}
+                    error={Boolean(touched.username && errors.username)}
                   />
                 </Stack>
-                {touched.email && errors.email && (
+                {touched.username && errors.username && (
                   <FormHelperText
                     error
-                    id="standard-weight-helper-text-email-login"
+                    id="standard-weight-helper-text-username-login"
                   >
-                    {errors.email}
+                    {errors.username}
                   </FormHelperText>
                 )}
               </Grid>
