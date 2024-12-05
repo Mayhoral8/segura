@@ -1,12 +1,13 @@
 'use client';
 import PropTypes from 'prop-types';
 
-import { createContext } from 'react';
+import { createContext, useEffect } from 'react';
 
 // project import
 import defaultConfig from '@/config';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 // initial state
 const initialState = {
   ...defaultConfig,
@@ -26,10 +27,29 @@ const initialState = {
 const ConfigContext = createContext(initialState);
 
 function ConfigProvider({ children }) {
+  const pathname = usePathname()
+  function createData(id, accNo, name, accBalance, currency, status) {
+    return { id, accNo, name, accBalance, currency, status };
+  }
+
+  const initialAccounts = [
+    createData(1, "1234567890", "Mayowa", 50000, "NGN", "Active"),
+    createData(2, "9876543210", "Jane Doe", 20000, "NGN", "Blocked"),
+    createData(3, "1122334455", "John Smith", 135000, "NGN", "Active"),
+    createData(4, "6677889900", "David Mark", 42300, "NGN", "Active"),
+    createData(5, "4433221100", "Alex Johnson", 50000, "NGN", "Blocked"),
+    createData(6, "9988776655", "Mary Jane", 31000, "NGN", "Active"),
+    createData(7, "5566778899", "Mike Brown", 8600, "NGN", "Active"),
+    createData(8, "3344556677", "Anna Lee", 10000, "NGN", "Blocked"),
+    createData(9, "2233445566", "Chris Paul", 44000, "NGN", "Active"),
+    createData(10, "7788990011", "Tim Cook", 73200, "NGN", "Active"),
+  ];
+
   const [showSignOutModal, setShowSignOutModal] = useState(false)
   const [showReqFundingForm, setShowRequestFundingForm] = useState(false)
   const [config, setConfig] = useLocalStorage('mantis-react-next-ts-config', initialState);
   const [showAccountDetailsModal, setShowAccountDetailsModal] = useState(false)
+  const [accounts, setAccounts] = useState(initialAccounts);
 
   const onChangeContainer = (container) => {
     setConfig({
@@ -98,6 +118,13 @@ function ConfigProvider({ children }) {
     console.log("yes");
   }
 
+  useEffect(()=>{
+    console.log(process.env.NEXT_PUBLIC_TEST)
+  }, [])
+
+
+  
+
   return (
     <ConfigContext.Provider
       value={{
@@ -117,7 +144,12 @@ function ConfigProvider({ children }) {
         showAccountDetailsModal,
         setShowAccountDetailsModal,
         showReqFundingForm,
-        setShowRequestFundingForm
+        setShowRequestFundingForm,
+        accountsContext: {
+          accounts,
+          setAccounts,
+          initialAccounts
+        }
       }}
     >
       {children}

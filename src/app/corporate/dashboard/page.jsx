@@ -12,11 +12,14 @@ import { FaCoins } from "react-icons/fa";
 import { CiCreditCard1 } from "react-icons/ci";
 import { FaClock } from "react-icons/fa";
 import { BarChart } from "@mui/x-charts/BarChart";
+import { useSession } from "next-auth/react"
 
 import Modal from '@/components/modal'
 
 const Dashboard = () => {
-  
+  const { data: session, status } = useSession()
+
+  console.log(session);
   function createData(date, senderReceiver, amount, description, status) {
     return { date, senderReceiver, amount, description, status };
   }
@@ -182,7 +185,7 @@ const Dashboard = () => {
                   <TableCell align="center">{row.senderReceiver}</TableCell>
                   <TableCell align="right">{row.amount}</TableCell>
                   <TableCell align="right">{row.description}</TableCell>
-                  <TableCell sx={{color: row.status === "Failed" ? "red" : row.status === "Pending" ? "yellow" : "green"}} align="right">{row.status}</TableCell>
+                  <TableCell sx={{color: row.status === "Failed" ? "red" : row.status === "Pending" ? "orange" : "green"}} align="right">{row.status}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

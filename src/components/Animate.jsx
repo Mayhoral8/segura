@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ConfigContext } from "@/contexts/ConfigContext";
 
 export const AnimateModal = ({ children, isVisible }) => {
   return (
@@ -19,10 +20,19 @@ export const AnimateModal = ({ children, isVisible }) => {
 };
 
 export const AnimateRightModal = ({ children, isVisible }) => {
+  const { setShowAccountDetailsModal } = useContext(ConfigContext);
+  const modalRef = useRef();
+  const handleClickOutside = (e) => {
+    if (modalRef && !modalRef.current.contains(e.target.value)) {
+      setShowAccountDetailsModal(false);
+    }
+  };
   return (
     <AnimatePresence>
       {isVisible && (
         <motion.div
+          ref={modalRef}
+          onClick={handleClickOutside}
           initial={{ x: "50%", opacity: 0 }}
           animate={{ x: "0%", opacity: 1 }}
           exit={{ x: "50%", opacity: 0 }}
@@ -67,22 +77,18 @@ export const AnimateSlide = ({ children, direction, currFormIndex }) => {
     }),
   };
   return (
-    
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={currFormIndex}
-          custom={direction} 
-          variants={variants}
-          initial="enter"
-          animate="center"
-          exit="exit"
-          transition={{ duration: 0.2 }}
-        >
-          {children}
-        </motion.div>
-      </AnimatePresence>
-    
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={currFormIndex}
+        custom={direction}
+        variants={variants}
+        initial="enter"
+        animate="center"
+        exit="exit"
+        transition={{ duration: 0.2 }}
+      >
+        {children}
+      </motion.div>
+    </AnimatePresence>
   );
 };
-
-

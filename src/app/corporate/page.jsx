@@ -4,7 +4,7 @@ import Modal from '@/components/modal'
 import SignOutModal from '../auth/signoutModal'
 import AuthGuard from '../auth/AuthGuard'
 
-const page = () => {
+const Page = () => {
 
   const [showModal, setShowModal] = useState(false)
   
@@ -23,4 +23,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
