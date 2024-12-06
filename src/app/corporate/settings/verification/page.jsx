@@ -16,7 +16,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import ListItemText from "@mui/material/ListItemText";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
-import { FaCloudUploadAlt } from "react-icons/fa";
+// import { FaCloudUploadAlt } from "react-icons/fa";
 
 import { useFormik } from "formik";
 import _ from "lodash";
@@ -339,7 +339,7 @@ const Verify = () => {
                     role={undefined}
                     variant="contained"
                     tabIndex={-1}
-                    startIcon={<FaCloudUploadAlt />}
+                    // startIcon={<FaCloudUploadAlt />}
                     className="bg-[#2C698D] hover:bg-[#204d67]"
                   >
                     Upload files
@@ -361,7 +361,7 @@ const Verify = () => {
                     role={undefined}
                     variant="contained"
                     tabIndex={-1}
-                    startIcon={<FaCloudUploadAlt />}
+                    // startIcon={<FaCloudUploadAlt />}
                     className="bg-[#2C698D] hover:bg-[#204d67]"
                   >
                     Upload files
@@ -383,7 +383,7 @@ const Verify = () => {
                     role={undefined}
                     variant="contained"
                     tabIndex={-1}
-                    startIcon={<FaCloudUploadAlt />}
+                    // startIcon={<FaCloudUploadAlt />}
                     className="bg-[#2C698D] hover:bg-[#204d67]"
                   >
                     Upload files
@@ -405,7 +405,7 @@ const Verify = () => {
                     role={undefined}
                     variant="contained"
                     tabIndex={-1}
-                    startIcon={<FaCloudUploadAlt />}
+                    // startIcon={<FaCloudUploadAlt />}
                     className="bg-[#2C698D] hover:bg-[#204d67]"
                   >
                     Upload files
@@ -540,7 +540,7 @@ const Verify = () => {
                     role={undefined}
                     variant="contained"
                     tabIndex={-1}
-                    startIcon={<FaCloudUploadAlt />}
+                    // startIcon={<FaCloudUploadAlt />}
                     className="bg-[#2C698D] hover:bg-[#204d67]"
                   >
                     Upload files
@@ -563,7 +563,7 @@ const Verify = () => {
                     role={undefined}
                     variant="contained"
                     tabIndex={-1}
-                    startIcon={<FaCloudUploadAlt />}
+                    // startIcon={<FaCloudUploadAlt />}
                     className="bg-[#2C698D] hover:bg-[#204d67]"
                   >
                     Upload files
@@ -585,8 +585,8 @@ const Verify = () => {
                     role={undefined}
                     variant="contained"
                     tabIndex={-1}
-                    startIcon={<FaCloudUploadAlt />}
-                    className="bg-[#2C698D] hover:bg-[#204d67] hover:bg-[#204d67] "
+                    // startIcon={<FaCloudUploadAlt />}
+                    className="bg-[#2C698D] hover:bg-[#204d67] "
                   >
                     Upload files
                     <VisuallyHiddenInput
@@ -607,7 +607,7 @@ const Verify = () => {
                     role={undefined}
                     variant="contained"
                     tabIndex={-1}
-                    startIcon={<FaCloudUploadAlt />}
+                    // startIcon={<FaCloudUploadAlt />}
                     className="bg-[#2C698D] hover:bg-[#204d67]"
                   >
                     Upload files

@@ -3,7 +3,7 @@
 import React, { useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { ImSpinner8 } from "react-icons/im";
+// import { ImSpinner8 } from "react-icons/im";
 
 const AuthGuard = ({ children }) => {
   const router = useRouter();

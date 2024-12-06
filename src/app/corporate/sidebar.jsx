@@ -2,14 +2,14 @@ import React, { useEffect, useReducer, useContext, useState } from "react";
 import Link from "next/link";
 import { ConfigContext } from "@/contexts/ConfigContext";
 import { usePathname } from "next/navigation";
-import { MdDashboard } from "react-icons/md";
-import { GoSignOut } from "react-icons/go";
-import { FaCircleXmark } from "react-icons/fa6";
-import { MdManageAccounts } from "react-icons/md";
-import { CiWallet } from "react-icons/ci";
-import { FaUsers } from "react-icons/fa6";
-import { IoMdSettings } from "react-icons/io";
-import { RxCaretDown, RxCaretUp } from "react-icons/rx";
+// import { MdDashboard } from "react-icons/md";
+// import { GoSignOut } from "react-icons/go";
+// import { FaCircleXmark } from "react-icons/fa6";
+// import { MdManageAccounts } from "react-icons/md";
+// import { CiWallet } from "react-icons/ci";
+// import { FaUsers } from "react-icons/fa6";
+// import { IoMdSettings } from "react-icons/io";
+// import { RxCaretDown, RxCaretUp } from "react-icons/rx";
 import { useSearchParams } from "next/navigation";
 
 const Sidebar = () => {
@@ -161,7 +161,7 @@ const Sidebar = () => {
             : "hover:bg-[#e3f6f5]"} `}
         >
           <div className="flex flex-col w-full text-[12px] gap-x-1 lg:flex-row items-center  ">
-            <MdDashboard className="text-lg " />
+            {/* <MdDashboard className="text-lg " /> */}
             <span className="">Dashboard</span>
           </div>
         </Link>
@@ -174,7 +174,7 @@ const Sidebar = () => {
             : "hover:bg-[#e3f6f5]"} `}
         >
           <div className="flex flex-col w-full text-[12px] gap-x-1 lg:flex-row items-center  ">
-            <FaUsers className="text-lg " />
+            {/* <FaUsers className="text-lg " /> */}
             <span className="">Accounts</span>
           </div>
         </Link>
@@ -187,7 +187,7 @@ const Sidebar = () => {
             : "hover:bg-[#e3f6f5]"} `}
         >
           <div className="flex flex-col w-full text-[12px] gap-x-1 lg:flex-row items-center  ">
-            <CiWallet className="text-lg " />
+            {/* <CiWallet className="text-lg " /> */}
             <span className="">Wallets</span>
           </div>
         </Link>
@@ -200,7 +200,7 @@ const Sidebar = () => {
           : "hover:bg-[#e3f6f5]"} `}
         >
           <div className=" w-full flex flex-col  text-[12px] gap-x-1 lg:flex-row  items-center">
-            <MdManageAccounts className="text-lg" />
+            {/* <MdManageAccounts className="text-lg" /> */}
             <span className="">User Management</span>
           </div>
         </Link>
@@ -216,14 +216,14 @@ const Sidebar = () => {
             }`}
           >
             <div className="flex items-center gap-x-1">
-              <IoMdSettings className="text-lg " />
+              {/* <IoMdSettings className="text-lg " /> */}
               <span>Settings</span>
             </div>
-            {showDropdown ? (
+            {/* {showDropdown ? (
               <RxCaretUp className="text-lg " />
             ) : (
               <RxCaretDown className="text-lg " />
-            )}
+            )} */}
           </div>
           <article
             className={`flex flex-col ${
@@ -258,7 +258,7 @@ const Sidebar = () => {
           <span className="font-light">Status:</span>
           <div className="flex items-center gap-x-1">
             <span>Unverified</span>
-            <FaCircleXmark className="text-red-400" />
+            {/* <FaCircleXmark className="text-red-400" /> */}
           </div>
         </div>
         <div className="hover:lg:bg-PrimaryPurple cursor-pointer rounded-md h-8  flex flex-col w-full text-sm gap-x-1 lg:flex-row items-center justify-between">
@@ -266,7 +266,7 @@ const Sidebar = () => {
             ABC Company <br />
             corporate{" "}
           </span>
-          <GoSignOut onClick={handleSignOutModal} className="text-lg" />
+          {/* <GoSignOut onClick={handleSignOutModal} className="text-lg" /> */}
         </div>
       </article>
     </section>

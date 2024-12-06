@@ -1,8 +1,8 @@
 import React from 'react'
 import Image from 'next/image'
-import { CiSearch } from 'react-icons/ci'
-import { IoIosNotificationsOutline } from "react-icons/io";
-import { MdOutlineMail } from "react-icons/md";
+// import { CiSearch } from 'react-icons/ci'
+// import { IoIosNotificationsOutline } from "react-icons/io";
+// import { MdOutlineMail } from "react-icons/md";
 import Avatar from "../../avatar.png";
 
 const TopBar = () => {
@@ -12,7 +12,7 @@ const TopBar = () => {
       <div className="h-full w-full flex justify-between items-center">
         <div className="">
           <div className="w-[200px] h-[40px] border-[2px] rounded-md bg-white flex justify-between items-center pl-2">
-            <CiSearch className="text-[#2C698D]" />
+            {/* <CiSearch className="text-[#2C698D]" /> */}
             <input
               type="text"
               className="h-full w-[85%] bg-transparent text-[#2C698D] outline-none placeholder:text-[#2C698D]"
@@ -21,8 +21,8 @@ const TopBar = () => {
           </div>
         </div>
         <div className="flex items-center gap-5">
-          <IoIosNotificationsOutline className="text-[#2C698D]" />
-          <MdOutlineMail className="text-[#2C698D]" />
+          {/* <IoIosNotificationsOutline className="text-[#2C698D]" /> */}
+          {/* <MdOutlineMail className="text-[#2C698D]" /> */}
           <div className="flex items-center">
             <Image
               src={Avatar}

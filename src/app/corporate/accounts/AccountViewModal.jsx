@@ -1,6 +1,6 @@
 "use client";
 import React, { useContext } from "react";
-import { HiMiniXMark } from "react-icons/hi2";
+// import { HiMiniXMark } from "react-icons/hi2";
 import { ConfigContext } from "@/contexts/ConfigContext";
 import { useRouter } from "next/navigation";
 import { AnimateRightModal } from "../../../components/Animate";
@@ -26,10 +26,10 @@ const AccountViewModal = () => {
       <section className="absolute h-full w-[600px] bg-white overflow-y-scroll">
         <div className="flex flex-row justify-between px-4 items-center text-lg fixed bg-white top-0 w-[600px] z-10 shadow-sm py-2">
           <span className=" font-semibold">Account Details</span>
-          <HiMiniXMark
+          {/* <HiMiniXMark
             onClick={hideModal}
             className="border text-2xl rounded-md cursor-pointer"
-          />
+          /> */}
         </div>
 
         <section className="flex flex-col gap-y-2  mt-10">

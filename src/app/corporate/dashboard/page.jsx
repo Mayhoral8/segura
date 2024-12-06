@@ -7,10 +7,10 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { HiMiniUser } from "react-icons/hi2";
-import { FaCoins } from "react-icons/fa";
-import { CiCreditCard1 } from "react-icons/ci";
-import { FaClock } from "react-icons/fa";
+// import { HiMiniUser } from "react-icons/hi2";
+// import { FaCoins } from "react-icons/fa";
+// import { CiCreditCard1 } from "react-icons/ci";
+// import { FaClock } from "react-icons/fa";
 import { BarChart } from "@mui/x-charts/BarChart";
 import { useSession } from "next-auth/react"
 
@@ -49,7 +49,7 @@ const Dashboard = () => {
       <section className="flex flex-row lg:justify-between mt-4 justify-center gap-y-2 lg:gap-y-0 gap-x-4 flex-wrap lg:flex-nowrap just">
         <article className=" bg-white flex flex-row border lg:w-[25%] w-[45%]  h-24 items-center px-4 gap-x-4">
           <div className="bg-[#bae8e8] border rounded-full h-10 w-10 justify-center flex items-center">
-            <HiMiniUser className="text-[#2C698D]" />
+            {/* <HiMiniUser className="text-[#2C698D]" /> */}
           </div>
           <div className="]">
             <h2 className="font-bold text-base">500,000</h2>
@@ -62,7 +62,7 @@ const Dashboard = () => {
         </article>
         <article className=" bg-white flex flex-row border lg:w-[25%] w-[45%] h-24 items-center px-4 gap-x-4">
           <div className="bg-[#ffc22736]   border rounded-full h-10 w-10 justify-center flex items-center">
-            <FaCoins className="text-[#FFC327]" />
+            {/* <FaCoins className="text-[#FFC327]" /> */}
           </div>
           <div className="]">
             <h2 className="font-bold text-base">500,000</h2>
@@ -75,7 +75,7 @@ const Dashboard = () => {
         </article>
         <article className="bg-white flex flex-row border lg:w-[25%] w-[45%] h-24 items-center px-4 gap-x-4">
           <div className="bg-[#f292392d]   border rounded-full h-10 w-10 justify-center flex items-center">
-            <FaClock className="text-[#F29339]" />
+            {/* <FaClock className="text-[#F29339]" /> */}
           </div>
           <div className="]">
             <h2 className="font-bold text-base">20,000</h2>
@@ -88,7 +88,7 @@ const Dashboard = () => {
         </article>
         <article className=" bg-white flex flex-row border lg:w-[25%] w-[45%] h-24 items-center px-4 gap-x-4">
           <div className="bg-[#4a89571a]   border rounded-full h-10 w-10 justify-center flex items-center">
-            <CiCreditCard1 className="text-[#4A8957]" />
+            {/* <CiCreditCard1 className="text-[#4A8957]" /> */}
           </div>
           <div className="]">
             <h2 className="font-bold text-base">20+</h2>

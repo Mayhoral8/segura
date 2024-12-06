@@ -3,7 +3,7 @@ import React, { useEffect, useContext, useState } from "react";
 import { ConfigContext } from "@/contexts/ConfigContext";
 import { useFilterTable } from "@/hooks/useFilterTable";
 import { useSearchParams } from "next/navigation";
-import { IoFilterOutline } from "react-icons/io5";
+// import { IoFilterOutline } from "react-icons/io5";
 
 const AccountTableOperations = () => {
   const { filterTable } = useFilterTable();
@@ -87,7 +87,7 @@ const AccountTableOperations = () => {
     <main>
       <div className="flex items-center gap-x-1">
         <h2>Filters</h2>
-        <IoFilterOutline />
+        {/* <IoFilterOutline /> */}
       </div>
 
       <section className="flex gap-x-10 items-center">

@@ -1,6 +1,6 @@
 import React from "react";
 import { Avatar } from "@mui/material";
-import { PiPencilLineThin } from "react-icons/pi";
+// import { PiPencilLineThin } from "react-icons/pi";
 
 const page = () => {
   return (
@@ -20,7 +20,7 @@ const page = () => {
             <div className=" border rounded-md  px-1 flex justify-between items-center bg-[#efefef] h-10 ">
               <span className=" ">John Doe</span>
 
-              <PiPencilLineThin />
+              {/* <PiPencilLineThin /> */}
             </div>
           </div>
           <div className="flex flex-col gap-x-2  w-1/2 gap-y-1">
@@ -28,7 +28,7 @@ const page = () => {
             <div className=" border rounded-md  px-1 flex justify-between items-center bg-[#efefef] h-10 ">
               <span className=" ">Roberts</span>
 
-              <PiPencilLineThin />
+              {/* <PiPencilLineThin /> */}
             </div>
           </div>
         </article>
@@ -38,7 +38,7 @@ const page = () => {
             <div className=" border rounded-md  px-1 flex justify-between items-center bg-[#efefef] h-10 ">
               <span className=" ">john.doe@example.com</span>
 
-              <PiPencilLineThin />
+              {/* <PiPencilLineThin /> */}
             </div>
           </div>
           <div className="flex flex-col gap-x-2  w-1/2 gap-y-1">
@@ -46,7 +46,7 @@ const page = () => {
             <div className=" border rounded-md  px-1 flex justify-between items-center bg-[#efefef] h-10 ">
               <span className=" ">+23409876624</span>
 
-              <PiPencilLineThin />
+              {/* <PiPencilLineThin /> */}
             </div>
           </div>
         </article>
@@ -58,7 +58,7 @@ const page = () => {
             <div className=" border rounded-md  px-1 flex justify-between items-center bg-[#efefef] h-10 ">
               <span className=" ">1990-10-01</span>
 
-              <PiPencilLineThin />
+              {/* <PiPencilLineThin /> */}
             </div>
           </div>
           <div className="flex flex-col gap-x-2  w-1/2 gap-y-1">
@@ -66,7 +66,7 @@ const page = () => {
             <div className=" border rounded-md  px-1 flex justify-between items-center bg-[#efefef] h-10 ">
               <span className=" ">Nigeria</span>
 
-              <PiPencilLineThin />
+              {/* <PiPencilLineThin /> */}
             </div>
           </div>
         </article>
@@ -76,7 +76,7 @@ const page = () => {
             <div className=" border rounded-md  px-1 flex justify-between items-center bg-[#efefef] h-10 ">
               <span className=" ">Ikeja, Lagos</span>
 
-              <PiPencilLineThin />
+              {/* <PiPencilLineThin /> */}
             </div>
           </div>
           <div className="flex flex-col gap-x-2  w-1/2 gap-y-1">
@@ -84,7 +84,7 @@ const page = () => {
             <div className=" border rounded-md  px-1 flex justify-between items-center bg-[#efefef] h-10 ">
               <span className=" ">2399991993</span>
 
-              <PiPencilLineThin />
+              {/* <PiPencilLineThin /> */}
             </div>
           </div>
         </article>

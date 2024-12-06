@@ -1,9 +1,9 @@
 "use client"
 
 import React from "react";
-import { IoEyeOutline } from "react-icons/io5";
+// import { IoEyeOutline } from "react-icons/io5";
 import { Avatar } from "@mui/material";
-import { FiSend } from "react-icons/fi";
+// import { FiSend } from "react-icons/fi";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -12,8 +12,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { useRouter } from "next/navigation";
-import { FaEuroSign, FaPoundSign } from "react-icons/fa";
-import { FaNairaSign } from "react-icons/fa6";
+// import { FaEuroSign, FaPoundSign } from "react-icons/fa";
+// import { FaNairaSign } from "react-icons/fa6";
 
 const Wallets = () => {
   const router = useRouter()
@@ -40,7 +40,7 @@ const Wallets = () => {
             <div className="w-full flex flex-row justify-between ">
               <div className="flex items-center gap-x-1">
                 <span>Available Balance</span>
-                <IoEyeOutline />
+                {/* <IoEyeOutline /> */}
               </div>
             </div>
             <div>
@@ -68,11 +68,11 @@ const Wallets = () => {
             <div className="w-full flex flex-row justify-between ">
               <div className="flex items-center gap-x-1">
                 <span>Available Balance</span>
-                <IoEyeOutline />
+                {/* <IoEyeOutline /> */}
               </div>
             </div>
             <div className="flex items-center text-xl font-bold">
-              <FaPoundSign/>
+              {/* <FaPoundSign/> */}
               <span className="">500</span>
             </div>
 
@@ -95,11 +95,11 @@ const Wallets = () => {
             <div className="w-full flex flex-row justify-between ">
               <div className="flex items-center gap-x-1">
                 <span>Available Balance</span>
-                <IoEyeOutline />
+                {/* <IoEyeOutline /> */}
               </div>
             </div>
             <div className="flex items-center text-xl font-bold">
-              <FaEuroSign/>
+              {/* <FaEuroSign/> */}
               <span className="">500</span>
             </div>
 
@@ -117,11 +117,11 @@ const Wallets = () => {
             <div className="w-full flex flex-row justify-between ">
               <div className="flex items-center gap-x-1">
                 <span>Available Balance</span>
-                <IoEyeOutline />
+                {/* <IoEyeOutline /> */}
               </div>
             </div>
             <div className="flex items-center text-xl font-bold">
-              <FaNairaSign/>
+              {/* <FaNairaSign/> */}
               <span className="">30,050.56</span>
             </div>
 
@@ -144,19 +144,19 @@ const Wallets = () => {
         <article className=" rounded-md flex flex-row gap-x-4">
           <div className="flex flex-row items-center justify-center gap-x-2 border px-2 rounded-sm h-16 w-40 ">
             <span>Send Money</span>
-            <FiSend />
+            {/* <FiSend /> */}
           </div>
           <div className="flex flex-row items-center justify-center gap-x-2 border px-2 rounded-sm h-16 w-40 ">
             <span>Add Funds</span>
-            <FiSend />
+            {/* <FiSend /> */}
           </div>
           <div className="flex flex-row items-center justify-center gap-x-2 border px-2 rounded-sm h-16 w-40 ">
             <span>Convert Funds</span>
-            <FiSend />
+            {/* <FiSend /> */}
           </div>
           <div className="flex flex-row items-center justify-center gap-x-2 border px-2 rounded-sm h-16 w-40 ">
             <span>Send Money</span>
-            <FiSend />
+            {/* <FiSend /> */}
           </div>
         </article>
       </section>

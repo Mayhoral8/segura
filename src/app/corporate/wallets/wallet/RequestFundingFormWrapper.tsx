@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { AnimateModal } from "@/components/Animate";
 import RequestFundingForm from "./RequestFundingForm";
-import { HiMiniXMark } from "react-icons/hi2";
+// import { HiMiniXMark } from "react-icons/hi2";
 import RequestFundingInfo from "./RequestFundingInfo";
 import { AnimateSlide } from "@/components/Animate";
 
@@ -28,10 +28,10 @@ const RequestFundingFormWrapper = ({ showReqFundForm, setShowReqFundForm }) => {
   return (
     <AnimateModal isVisible={showReqFundForm}>
       <main className="bg-white w-[500px] h-[500px] px-10 py-2 gap-y-2 border over flex flex-col items-center overflow-hidden">
-        <HiMiniXMark
+        {/* <HiMiniXMark
           onClick={handleCloseForm}
           className="text-3xl ml-auto cursor-pointer border rounded-md"
-        />
+        /> */}
         <span className="text-lg border px-2 py-1 rounded-xl inline-block font-light">
           Step {currFormIndex} of 2
         </span>

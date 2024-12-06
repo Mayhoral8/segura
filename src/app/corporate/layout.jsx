@@ -3,7 +3,7 @@
 import React from "react";
 
 import SignOutModal from "@/app/auth/signoutModal";
-import { RiVerifiedBadgeFill } from "react-icons/ri";
+// import { RiVerifiedBadgeFill } from "react-icons/ri";
 import Sidebar from "./sidebar";
 import TopBar from "@/app/corporate/topbar";
 

@@ -16,7 +16,7 @@ import Typography from "@mui/material/Typography";
 import AuthWrapper from "@/sections/auth/AuthWrapper";
 import AuthLogin from "@/sections/auth/auth-forms/AuthLogin";
 
-import { ImSpinner8 } from "react-icons/im";
+// import { ImSpinner8 } from "react-icons/im";
 
 export default function SignIn() {
   const { data: session, status } = useSession();
@@ -33,7 +33,7 @@ export default function SignIn() {
   if (status === "loading") {
     return (
       <div className="fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center bg-[#00000061]">
-        <ImSpinner8 className="animate-spin text-3xl text-black" />
+        {/* <ImSpinner8 className="animate-spin text-3xl text-black" /> */}
       </div>
     );
   }

@@ -8,7 +8,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { FaNairaSign } from "react-icons/fa6";
+// import { FaNairaSign } from "react-icons/fa6";
 
 const AccountTable = () => {
   
@@ -74,7 +74,7 @@ const AccountTable = () => {
                     className="cursor-pointer flex items-center justify-center"
                     align="center"
                   >
-                    <FaNairaSign /> {row.accBalance}
+                    {/* <FaNairaSign /> {row.accBalance} */}
                   </TableCell>
                   <TableCell
                     title="Click to view details"
