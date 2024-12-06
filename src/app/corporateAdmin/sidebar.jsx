@@ -191,8 +191,8 @@ const Sidebar = () => {
           </div>
         </Link>
 
-        {/* <Link
-          href="/corporate/user-management"
+        <Link
+          href="/corporateAdmin/managemeusers"
           onClick={() => handleDispatch("USER_MANAGEMENT")}
           className={`w-full  flex items-center lg:rounded-md lg:px-2 justify-center  ${
             state.userManagement.isActive
@@ -204,7 +204,7 @@ const Sidebar = () => {
             <ManageAccountsIcon className="text-lg" />
             <span className="">User Management</span>
           </div>
-        </Link> */}
+        </Link>
 
         <article
           className="w-full flex items-center lg:rounded-md justify-center flex-col cursor-pointer"
