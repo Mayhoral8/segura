@@ -1,13 +1,13 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-import './globals.css';
+import "./globals.css";
 
 // PROJECT IMPORTS
-import ProviderWrapper from './ProviderWrapper';
+import ProviderWrapper from "./ProviderWrapper";
 
 export const metadata = {
-  title: 'Mantis Material UI React Dashboard Template',
-  description: 'Mantis Material UI React Dashboard Template'
+  title: "Segura",
+  description: "",
 };
 
 export default function RootLayout({ children }) {

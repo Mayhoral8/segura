@@ -1,11 +1,68 @@
+"use client";
 import { Checkbox } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 
-const page = () => {
+const Page = () => {
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    firstName: "",
+    lastName: "",
+    officeAddress: "",
+    department: "",
+    phoneNumber: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent page reload
+
+    const form = {
+      ...formData,
+      permissionLists: ["PERMISSION_ACCOUNT_CREATE", "PERMISSION_ACCOUNT_VIEW"], // Example for permissions
+    };
+
+    const registerUser = async () => {
+      try {
+        const response = await fetch(
+          "https://api-dev.segura-pay.com/api/v1/users/registerCorporateUser",
+          {
+            method: "POST",
+            body: JSON.stringify(form),
+            headers: {
+              authorization: `Bearer eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJvbWFyIiwicm9sZSI6IlJPTEVfT01BUiIsInBlcm1pc3Npb25zIjpbIlBFUk1JU1NJT05fQ09SUE9SQVRFX0NSRUFURSIsIlBFUk1JU1NJT05fVVNFUl9DUkVBVEUiLCJST0xFX09NQVIiXSwiZXhwIjoxNzMzNTAxMjY5LCJpYXQiOjE3MzM0Nzk2NjksInVzZXJuYW1lIjoib21hciJ9.mbVza-lXpGUKUp1ybIXJOp3svMwcilN4iiVUu4eI-lJFQiUNmlBjEnKpXbbgIUq4QgQdjYKeGg7akK1A56mCCM8Bml87sKIL14nHFOBa1GEYEjo28lE0thRRUytMG2Hn1qp3bPlTufbt6UZYoKaQGhUn4IIYg5BeEz-Oz5YmSax4f_WWGdcVFqaxZfX2DGPsS4mcSQfxgbRg3a6tEmEcqmFPuDYnUMjpzSno5lQEqiOClEwEuIMb60zbe8Nl9xjDt68LPjitAOXf4jzfzeMDj-53aytfdwCiYaAkpcSDubYluuFPB17nzIOUhGNFcM24OpGWKM4qv5DrPFVWKsK-pg`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (response.ok) {
+          const responseData = await response.json();
+          console.log(responseData);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    registerUser();
+  };
+
+  console.log(formData);
+
   return (
     <div className="px-10 py-5">
       <h2 className="text-2xl font-semibold">Add new users</h2>
       <form
+        onSubmit={handleSubmit}
         action=""
         className="my-6 py-10 px-10 border-2 border-[#2C698D1A] border-dashed bg-white"
       >
@@ -14,6 +71,8 @@ const page = () => {
             Username
           </label>
           <input
+            onChange={handleChange}
+            name="username"
             type="text"
             placeholder="First Name"
             className="h-10 px-3 border-2 rounded-md"
@@ -24,6 +83,8 @@ const page = () => {
             email
           </label>
           <input
+            onChange={handleChange}
+            name="email"
             type="text"
             placeholder="Last name"
             className="h-10 px-3 border-2 rounded-md"
@@ -34,7 +95,9 @@ const page = () => {
             password
           </label>
           <input
-            type="email"
+            onChange={handleChange}
+            name="password"
+            type="password"
             placeholder="Email"
             className="h-10 px-3 border-2 rounded-md"
           />
@@ -44,8 +107,10 @@ const page = () => {
             confirm password
           </label>
           <input
-            type="number"
-            placeholder="Phone number"
+            onChange={handleChange}
+            name="confirmPassword"
+            type="password"
+            placeholder="confirm password"
             className="h-10 px-3 border-2 rounded-md"
           />
         </div>
@@ -54,8 +119,10 @@ const page = () => {
             first name
           </label>
           <input
-            type="number"
-            placeholder="Phone number"
+            onChange={handleChange}
+            name="firstName"
+            type="text"
+            placeholder="first name"
             className="h-10 px-3 border-2 rounded-md"
           />
         </div>
@@ -64,17 +131,21 @@ const page = () => {
             last name
           </label>
           <input
-            type="number"
-            placeholder="Phone number"
+            onChange={handleChange}
+            name="lastName"
+            type="text"
+            placeholder="last name"
             className="h-10 px-3 border-2 rounded-md"
           />
         </div>
         <div className="flex flex-col mb-5">
           <label htmlFor="" className="font-medium">
-            office address
+            officeAddress
           </label>
           <input
-            type="number"
+            onChange={handleChange}
+            name="officeAddress"
+            type="text"
             placeholder="Phone number"
             className="h-10 px-3 border-2 rounded-md"
           />
@@ -84,8 +155,10 @@ const page = () => {
             department
           </label>
           <input
-            type="number"
-            placeholder="Phone number"
+            onChange={handleChange}
+            name="department"
+            type="text"
+            placeholder="department"
             className="h-10 px-3 border-2 rounded-md"
           />
         </div>
@@ -94,7 +167,9 @@ const page = () => {
             phone number
           </label>
           <input
-            type="number"
+            onChange={handleChange}
+            name="phoneNumber"
+            type="text"
             placeholder="Phone number"
             className="h-10 px-3 border-2 rounded-md"
           />
@@ -113,8 +188,6 @@ const page = () => {
               <div className="flex flex-col w-full  bg-white">
                 <article className="flex flex-row justify-between w-full">
                   <div className="flex flex-col gap-y-4">
-                    <span>Lorem</span>
-                    <span>Lorem</span>
                     <span>Lorem</span>
                     <span>Lorem</span>
                   </div>
@@ -138,189 +211,22 @@ const page = () => {
                         }}
                       />
                     </div>
-                    <div className="flex flex-row gap-x-4 text-2xl">
-                      <Checkbox
-                        sx={{
-                          "&.Mui-checked": {
-                            color: "#2c698d",
-                          },
-                        }}
-                      />
-                    </div>
-                    <div className="flex flex-row gap-x-4 text-2xl">
-                      <Checkbox
-                        sx={{
-                          "&.Mui-checked": {
-                            color: "#2c698d",
-                          },
-                        }}
-                      />
-                    </div>
-                  </article>
-                </article>
-              </div>
-              <div className="flex flex-col w-full  bg-white">
-                {/* <span className="font-bold text-lg color-[#272643]">
-                  Account
-                </span> */}
-                <article className="flex flex-row justify-between w-full">
-                  <div className="flex flex-col gap-y-4">
-                    <span>Lorem</span>
-                    <span>Lorem</span>
-                    <span>Lorem</span>
-                    <span>Lorem</span>
-                  </div>
-                  <article className="flex flex-col">
-                    <div className="flex flex-row gap-x-4 text-2xl">
-                      <Checkbox
-                        sx={{
-                          "&.Mui-checked": {
-                            color: "#2c698d",
-                          },
-                        }}
-                      />
-                    </div>
-                    <div className="flex flex-row gap-x-4 text-2xl">
-                      <Checkbox
-                        sx={{
-                          "&.Mui-checked": {
-                            color: "#2c698d",
-                          },
-                        }}
-                      />
-                    </div>
-                    <div className="flex flex-row gap-x-4 text-2xl">
-                      <Checkbox
-                        sx={{
-                          "&.Mui-checked": {
-                            color: "#2c698d",
-                          },
-                        }}
-                      />
-                    </div>
-                    <div className="flex flex-row gap-x-4 text-2xl">
-                      <Checkbox
-                        sx={{
-                          "&.Mui-checked": {
-                            color: "#2c698d",
-                          },
-                        }}
-                      />
-                    </div>
-                  </article>
-                </article>
-              </div>
-              <div className="flex flex-col w-full  bg-white">
-                {/* <span className="font-bold text-lg color-[#272643]">
-                  Wallets
-                </span> */}
-                <article className="flex flex-row justify-between w-full">
-                  <div className="flex flex-col gap-y-4">
-                    <span>Lorem</span>
-                    <span>Lorem</span>
-                    <span>Lorem</span>
-                    <span>Lorem</span>
-                  </div>
-                  <article className="flex flex-col">
-                    <div className="flex flex-row gap-x-4 text-2xl">
-                      <Checkbox
-                        sx={{
-                          "&.Mui-checked": {
-                            color: "#2c698d",
-                          },
-                        }}
-                      />
-                    </div>
-                    <div className="flex flex-row gap-x-4 text-2xl">
-                      <Checkbox
-                        sx={{
-                          "&.Mui-checked": {
-                            color: "#2c698d",
-                          },
-                        }}
-                      />
-                    </div>
-                    <div className="flex flex-row gap-x-4 text-2xl">
-                      <Checkbox
-                        sx={{
-                          "&.Mui-checked": {
-                            color: "#2c698d",
-                          },
-                        }}
-                      />
-                    </div>
-                    <div className="flex flex-row gap-x-4 text-2xl">
-                      <Checkbox
-                        sx={{
-                          "&.Mui-checked": {
-                            color: "#2c698d",
-                          },
-                        }}
-                      />
-                    </div>
-                  </article>
-                </article>
-              </div>
-              <div className="flex flex-col w-full  bg-white">
-                {/* <span className="font-bold text-lg color-[#272643]">
-                  Transaction
-                </span> */}
-                <article className="flex flex-row justify-between w-full">
-                  <div className="flex flex-col gap-y-4">
-                    <span>Lorem</span>
-                    <span>Lorem</span>
-                    <span>Lorem</span>
-                    <span>Lorem</span>
-                  </div>
-                  <article className="flex flex-col">
-                    <div className="flex flex-row gap-x-4 text-2xl">
-                      <Checkbox
-                        sx={{
-                          "&.Mui-checked": {
-                            color: "#2c698d",
-                          },
-                        }}
-                      />
-                    </div>
-                    <div className="flex flex-row gap-x-4 text-2xl">
-                      <Checkbox
-                        sx={{
-                          "&.Mui-checked": {
-                            color: "#2c698d",
-                          },
-                        }}
-                      />
-                    </div>
-                    <div className="flex flex-row gap-x-4 text-2xl">
-                      <Checkbox
-                        sx={{
-                          "&.Mui-checked": {
-                            color: "#2c698d",
-                          },
-                        }}
-                      />
-                    </div>
-                    <div className="flex flex-row gap-x-4 text-2xl">
-                      <Checkbox
-                        sx={{
-                          "&.Mui-checked": {
-                            color: "#2c698d",
-                          },
-                        }}
-                      />
-                    </div>
                   </article>
                 </article>
               </div>
             </div>
           </div>
         </div>
+
+        <button
+          type="submit"
+          className="bg-[#2C698D] text-white py-2 px-4 rounded-md flex items-center"
+        >
+          <span className="text-2xl mr-2">+</span> Add User
+        </button>
       </form>
-      <button className="bg-[#2C698D] text-white py-2 px-4 rounded-md flex items-center">
-        <span className="text-2xl mr-2">+</span> Add User
-      </button>
     </div>
   );
 };
 
-export default page;
+export default Page;
