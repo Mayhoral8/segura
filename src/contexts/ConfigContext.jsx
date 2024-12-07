@@ -1,33 +1,21 @@
-'use client';
-import PropTypes from 'prop-types';
+"use client";
+import PropTypes from "prop-types";
 
-import { createContext, useEffect } from 'react';
+import { createContext, useEffect } from "react";
 
 // project import
-import defaultConfig from '@/config';
-import useLocalStorage from '@/hooks/useLocalStorage';
-import { useState } from 'react';
-import { usePathname } from 'next/navigation';
+// import defaultConfig from '@/config';
+import useLocalStorage from "../hooks/useLocalStorage";
+import { useState } from "react";
+import { usePathname } from "next/navigation";
 // initial state
-const initialState = {
-  ...defaultConfig,
-  onChangeContainer: () => {},
-  onChangeLocalization: () => {},
-  onChangeMode: () => {},
-  onChangePresetColor: () => {},
-  onChangeDirection: () => {},
-  onChangeMiniDrawer: () => {},
-  onChangeThemeLayout: () => {},
-  onChangeMenuOrientation: () => {},
-  onChangeFontFamily: () => {}
-};
 
 // ==============================|| CONFIG CONTEXT & PROVIDER ||============================== //
 
-const ConfigContext = createContext(initialState);
+const ConfigContext = createContext();
 
 function ConfigProvider({ children }) {
-  const pathname = usePathname()
+  const pathname = usePathname();
   function createData(id, accNo, name, accBalance, currency, status) {
     return { id, accNo, name, accBalance, currency, status };
   }
@@ -45,51 +33,52 @@ function ConfigProvider({ children }) {
     createData(10, "7788990011", "Tim Cook", 73200, "NGN", "Active"),
   ];
 
-  const [showSignOutModal, setShowSignOutModal] = useState(false)
-  const [showReqFundingForm, setShowRequestFundingForm] = useState(false)
-  const [config, setConfig] = useLocalStorage('mantis-react-next-ts-config', initialState);
-  const [showAccountDetailsModal, setShowAccountDetailsModal] = useState(false)
+  const [showSignOutModal, setShowSignOutModal] = useState(false);
+  const [showReqFundingForm, setShowRequestFundingForm] = useState(false);
+  const [showAccountDetailsModal, setShowAccountDetailsModal] = useState(false);
   const [accounts, setAccounts] = useState(initialAccounts);
+  const [showCorporateDetails, setShowCorporateDetails] = useState(false);
+  const [userInView, setUserInView] = useState({});
 
   const onChangeContainer = (container) => {
     setConfig({
       ...config,
-      container: container
+      container: container,
     });
   };
 
   const onChangeLocalization = (lang) => {
     setConfig({
       ...config,
-      i18n: lang
+      i18n: lang,
     });
   };
 
   const onChangeMode = (mode) => {
     setConfig({
       ...config,
-      mode
+      mode,
     });
   };
 
   const onChangePresetColor = (theme) => {
     setConfig({
       ...config,
-      presetColor: theme
+      presetColor: theme,
     });
   };
 
   const onChangeDirection = (direction) => {
     setConfig({
       ...config,
-      themeDirection: direction
+      themeDirection: direction,
     });
   };
 
   const onChangeMiniDrawer = (miniDrawer) => {
     setConfig({
       ...config,
-      miniDrawer
+      miniDrawer,
     });
   };
 
@@ -97,50 +86,36 @@ function ConfigProvider({ children }) {
     setConfig({
       ...config,
       miniDrawer,
-      themeDirection: direction
+      themeDirection: direction,
     });
   };
 
   const onChangeMenuOrientation = (layout) => {
     setConfig({
       ...config,
-      menuOrientation: layout
+      menuOrientation: layout,
     });
   };
 
   const onChangeFontFamily = (fontFamily) => {
     setConfig({
       ...config,
-      fontFamily
+      fontFamily,
     });
   };
-  const check = ()=>{
+  const check = () => {
     console.log("yes");
-  }
+  };
 
-  useEffect(()=>{
-    console.log(process.env.NEXT_PUBLIC_TEST)
-  }, [])
-
-
-  
+  useEffect(() => {
+    console.log(process.env.NEXT_PUBLIC_TEST);
+  }, []);
 
   return (
     <ConfigContext.Provider
       value={{
-        ...config,
-        onChangeContainer,
-        onChangeLocalization,
-        onChangeMode,
-        onChangePresetColor,
-        onChangeDirection,
-        onChangeMiniDrawer,
-        onChangeThemeLayout,
-        onChangeMenuOrientation,
-        onChangeFontFamily,
         showSignOutModal,
         setShowSignOutModal,
-        check,
         showAccountDetailsModal,
         setShowAccountDetailsModal,
         showReqFundingForm,
@@ -148,8 +123,15 @@ function ConfigProvider({ children }) {
         accountsContext: {
           accounts,
           setAccounts,
-          initialAccounts
-        }
+          initialAccounts,
+        },
+        showCorporateDetails,
+        setShowCorporateDetails,
+
+        userContext: {
+          userInView,
+          setUserInView,
+        },
       }}
     >
       {children}

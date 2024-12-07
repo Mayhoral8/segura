@@ -1,9 +1,6 @@
 {
   "compilerOptions": {
     "target": "ES2017",
-    "paths": {
-      "@/*": ["./src/*"]
-    },
     "lib": [
       "dom",
       "dom.iterable",
@@ -31,7 +28,8 @@
     "next-env.d.ts",
     ".next/types/**/*.ts",
     "**/*.ts",
-    "**/*.tsx"
+    "**/*.tsx",
+    "src/app/reactqueryProvider.jsx"
   ],
   "exclude": [
     "node_modules"

@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import Link from "next/link";
-import { ConfigContext } from "@/contexts/ConfigContext";
+import { ConfigContext } from "../../contexts/ConfigContext";
 import { signOut } from "next-auth/react";
-import AnimateButton from "@/components/@extended/AnimateButton";
+import AnimateButton from "../../components/@extended/AnimateButton";
 import { AnimateModal } from "../../components/Animate";
 
 const SignOutModal = () => {

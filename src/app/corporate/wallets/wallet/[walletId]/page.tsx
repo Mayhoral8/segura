@@ -1,14 +1,14 @@
 "use client";
-import React, { useState, useReducer } from "react";
-import { FiSend } from "react-icons/fi";
+import { useReducer, useState } from "react";
+// import { FiSend } from "react-icons/fi";
 import { Avatar } from "@mui/material";
-import { FaEuroSign, FaPoundSign } from "react-icons/fa";
-import { FaNairaSign } from "react-icons/fa6";
-import { TbCurrencyPound } from "react-icons/tb";
-import { IoEyeOutline } from "react-icons/io5";
-import { FaRegCopy } from "react-icons/fa";
-import { HiSwitchHorizontal } from "react-icons/hi";
-import { AnimateDropdown } from "@/components/Animate";
+// import { FaEuroSign, FaPoundSign } from "react-icons/fa";
+// import { FaNairaSign } from "react-icons/fa6";
+// import { TbCurrencyPound } from "react-icons/tb";
+// import { IoEyeOutline } from "react-icons/io5";
+// import { FaRegCopy } from "react-icons/fa";
+// import { HiSwitchHorizontal } from "react-icons/hi";
+import { AnimateDropdown } from "../../../../../components/Animate";
 import RequestFundingFormWrapper from "../RequestFundingFormWrapper";
 
 type State = {
@@ -109,19 +109,19 @@ const Page = () => {
       <article className=" rounded-md flex flex-row gap-x-4">
         <div className="flex flex-row items-center justify-center gap-x-2 border px-2 rounded-sm h-16 w-40 ">
           <span>Send Money</span>
-          <FiSend />
+          {/* <FiSend /> */}
         </div>
         <div className="flex flex-row items-center justify-center gap-x-2 border px-2 rounded-sm h-16 w-40 ">
           <span>Add Funds</span>
-          <FiSend />
+          {/* <FiSend /> */}
         </div>
         <div className="flex flex-row items-center justify-center gap-x-2 border px-2 rounded-sm h-16 w-40 ">
           <span>Convert Funds</span>
-          <FiSend />
+          {/* <FiSend /> */}
         </div>
         <div className="flex flex-row items-center justify-center gap-x-2 border px-2 rounded-sm h-16 w-40 ">
           <span>Send Money</span>
-          <FiSend />
+          {/* <FiSend /> */}
         </div>
       </article>
       <section className="mt-4 flex flex-row w-full border gap-x-4">
@@ -152,7 +152,7 @@ const Page = () => {
             </span>
 
             <span>Switch</span>
-            <HiSwitchHorizontal />
+            {/* <HiSwitchHorizontal /> */}
           </div>
 
           <AnimateDropdown isVisible={showWallets}>
@@ -173,7 +173,7 @@ const Page = () => {
             >
               <Avatar src="https://img.freepik.com/premium-vector/european-union-logo-vector-illustration-glossy-button_118339-2135.jpg?w=740" />
               <span>Euro</span>
-              (<TbCurrencyPound /> )
+              {/* (<TbCurrencyPound /> ) */}
             </div>
             <div
               className="flex flex-row  items-center hover:bg-[#e3f6f5] cursor-pointer text-xs"
@@ -183,7 +183,7 @@ const Page = () => {
             >
               <Avatar src="https://img.freepik.com/premium-vector/united-kingdom-flag-button-uk-flag-icon_97458-16.jpg?w=740" />
               <span>British Pound</span>
-              (<FaEuroSign />)
+              {/* (<FaEuroSign />) */}
             </div>
             <div
               className="flex flex-row  items-center hover:bg-[#e3f6f5] cursor-pointer text-xs"
@@ -193,25 +193,25 @@ const Page = () => {
             >
               <Avatar src="https://img.freepik.com/premium-vector/nigeria-flag-round-circle-vector-icon_601748-26416.jpg?w=740" />
               <span>Nigeria Naira</span>
-              (<FaNairaSign />)
+              {/* (<FaNairaSign />) */}
             </div>
           </AnimateDropdown>
 
           <div className="flex flex-col">
             <div className="flex flex-row items-center mt-4 gap-x-2">
               <div className="flex flex-row text-2xl items-center ">
-                {state.dollar.isActive ? (
+                {/* {state.dollar.isActive ? (
                   "$"
                 ) : state.euro.isActive ? (
-                  <FaEuroSign />
+                  // <FaEuroSign />
                 ) : state.pounds.isActive ? (
-                  <FaPoundSign />
+                  // <FaPoundSign /> l
                 ) : (
-                  <FaNairaSign />
-                )}
+                  // <FaNairaSign />
+                )} */}
                 <span>0.00</span>
               </div>
-              <IoEyeOutline />
+              {/* <IoEyeOutline /> */}
             </div>
             <h2>Available Balance</h2>
           </div>
@@ -229,14 +229,14 @@ const Page = () => {
               <div className="flex flex-col">
                 <div className="flex flex-row items-center gap-x-4">
                   <span className="text-gray-950">John Doe Robert </span>
-                  <FaRegCopy />
+                  {/* <FaRegCopy /> */}
                 </div>
                 <span className="text-gray-400">Account Holder</span>
               </div>
               <div className="flex flex-col">
                 <div className="flex flex-row items-center gap-x-4">
                   <span className="text-gray-950">Wells Fargo</span>
-                  <FaRegCopy />
+                  {/* <FaRegCopy /> */}
                 </div>
                 <span className="text-gray-400">Bank Name</span>
               </div>
@@ -244,14 +244,14 @@ const Page = () => {
               <div className="flex flex-col">
                 <div className="flex flex-row items-center gap-x-4">
                   <span className="text-gray-950">40630269950327378 </span>
-                  <FaRegCopy />
+                  {/* <FaRegCopy /> */}
                 </div>
                 <span className="text-gray-400">Account Number</span>
               </div>
               <div className="flex flex-col">
                 <div className="flex flex-row items-center gap-x-4">
                   <span className="text-gray-950">121000248</span>
-                  <FaRegCopy />
+                  {/* <FaRegCopy /> */}
                 </div>
                 <span className="text-gray-400">Routing Number</span>
               </div>
