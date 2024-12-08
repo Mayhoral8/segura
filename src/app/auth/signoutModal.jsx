@@ -10,6 +10,10 @@ const SignOutModal = () => {
   const handleModal = () => {
     setShowSignOutModal(false);
   };
+  const handleSignOut = () => {
+    localStorage.removeItem("lastVisitedPage");
+    signOut({ callbackUrl: "/auth/login" });
+  };
 
   return (
     <AnimateModal isVisible={showSignOutModal}>
@@ -20,7 +24,7 @@ const SignOutModal = () => {
           <AnimateButton>
             <button
               className="h-10 w-24 rounded-md hover:bg-[#245674]  transition-all border bg-[#2c698d] text-white"
-              onClick={() => signOut({ callbackUrl: "/auth/login" })}
+              onClick={handleSignOut}
             >
               Yes
             </button>

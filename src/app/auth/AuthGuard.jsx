@@ -1,33 +1,43 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import AutorenewIcon from "@mui/icons-material/Autorenew";
 import { CgSpinner } from "react-icons/cg";
+import { ConfigContext } from "../../contexts/ConfigContext";
 
 const AuthGuard = ({ children }) => {
+  const { previousLocation } = useContext(ConfigContext);
   const router = useRouter();
   const { data: session, status } = useSession();
 
   useEffect(() => {
     if (status === "unauthenticated") {
       router.push("/auth/login");
-    } else if (status === "authenticated") {
+      return;
+    }
+
+    if (status === "authenticated" && session) {
       const permissions = session?.user?.permissions || [];
 
-      // Adjusted to check for permissions array of objects
+      // Determine redirection path based on permissions
       const isCorporateAdmin = permissions.some(
         (permission) => permission.name === "PERMISSION_CORPORATE_CREATE"
       );
 
-      if (isCorporateAdmin) {
-        router.push("/corporate-admin/dashboard");
+      const targetRoute = isCorporateAdmin
+        ? "/corporate-admin/dashboard"
+        : "/corporate/dashboard";
+
+      // Redirect only if the user isn't already on the target route
+
+      if (previousLocation !== targetRoute && previousLocation) {
+        return router.push(previousLocation);
       } else {
-        router.push("/corporate/dashboard");
+        return router.push(targetRoute);
       }
     }
-  }, [status, router, session]);
+  }, [status, session]);
 
   // Show loading spinner while session is being checked
   if (status === "loading") {
@@ -38,7 +48,7 @@ const AuthGuard = ({ children }) => {
     );
   }
 
-  // Render children only if authenticated and the correct path is loaded
+  // Render children only if authenticated
   if (status === "authenticated") {
     return <>{children}</>;
   }

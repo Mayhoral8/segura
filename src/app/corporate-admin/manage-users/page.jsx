@@ -1,9 +1,8 @@
 "use client";
 import React, { useContext, useEffect, useState } from "react";
 import { ConfigContext } from "../../../contexts/ConfigContext";
-// import AccTable from "@/app/corporateAdmin/manage-users/accTables";
-import AccTable from "../../corporate-admin/manage-users/accTables";
-import AccountViewModal from "../../corporate-admin/manage-users/AccountViewModal";
+import UserTable from "./userTable";
+import CorporateDetailsModal from "../../corporate-admin/manage-users/CorporateDetailsModal";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
@@ -109,7 +108,7 @@ const Page = () => {
         {
           method: "GET",
           headers: {
-            Authorization: `Bearer ${session?.user?.accessToken}`, // Include if the API expects an access token
+            Authorization: `Bearer ${session?.user?.accessToken}`
           },
         }
       );
@@ -146,9 +145,8 @@ const Page = () => {
           </Link>
         </article>
       </section>
-
-      <AccTable users={users?.data?.content} />
-      <AccountViewModal />
+      <UserTable users={users?.data?.content} />
+      <CorporateDetailsModal />
     </div>
   );
 };

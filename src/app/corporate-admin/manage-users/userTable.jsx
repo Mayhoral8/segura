@@ -10,7 +10,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 // import { FaNairaSign } from "react-icons/fa6";
 
-const AccTables = ({ users }) => {
+const UserTable = ({ users }) => {
   const { showCorporateDetails, setShowCorporateDetails, userContext } =
     useContext(ConfigContext);
   const { setUserInView } = userContext;
@@ -107,4 +107,4 @@ const AccTables = ({ users }) => {
   );
 };
 
-export default AccTables;
+export default UserTable;

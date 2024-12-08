@@ -6,7 +6,7 @@ import { SessionProvider } from "next-auth/react";
 
 // project import
 
-import Toast from "../components/Toast"
+import Toast from "../components/Toast";
 
 // import Locales from "@/components/Locales";
 // import ScrollTop from "@/components/ScrollTop";
@@ -17,6 +17,7 @@ import Toast from "../components/Toast"
 import { ConfigProvider } from "../contexts/ConfigContext";
 import ReactQueryProvider from "./reactqueryProvider";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import Spinner from "../components/Spinner";
 
 // ==============================|| APP - THEME, ROUTER, LOCAL ||============================== //
 
@@ -26,6 +27,7 @@ export default function ProviderWrapper({ children }) {
       <ReactQueryDevtools initialIsOpen={false} />
       <ConfigProvider>
         <SessionProvider refetchInterval={0}>
+          <Spinner />
           <Toast />
           {children}
         </SessionProvider>

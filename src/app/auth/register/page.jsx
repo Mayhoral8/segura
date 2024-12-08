@@ -1,14 +1,15 @@
 "use client";
 
 // next
-import NextLink from "next/link";
-import { useEffect } from "react";
+
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Form, Formik, ErrorMessage, Field } from "formik";
 import AnimateButton from "../../../components/@extended/AnimateButton";
 import { useSession } from "next-auth/react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 
 // material-ui
 // import Grid from "@mui/material/Grid";
@@ -16,17 +17,31 @@ import Link from "next/link";
 // import Stack from "@mui/material/Stack";
 // import Typography from "@mui/material/Typography";
 
-import AutorenewIcon from "@mui/icons-material/Autorenew";
 import * as Yup from "yup";
 
 export default function SignIn() {
-  const { data: session, status } = useSession();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const router = useRouter();
 
   const initialValues = {
     username: "",
     password: "",
+    email: "",
+    firstname: "",
+    lastname: "",
+    phoneNumber: "",
+    officeAddress: "",
+    confirmPassword: "",
+  };
+
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleShowConfirmPassword = () => {
+    setShowConfirmPassword(!showConfirmPassword);
   };
 
   const schema = Yup.object().shape({
@@ -61,40 +76,44 @@ export default function SignIn() {
       validationSchema={schema}
       onSubmit={async (values, { setSubmitting }) => {
         const trimmedEmail = values.email.trim();
-          try {
-            const response = await fetch(
-             `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/registerCorporateAdmin`,
-              {
-                method: "POST",
-                body: JSON.stringify({
-                  firstName: values.firstname,
-                  lastName: values.lastname,
-                  email: trimmedEmail,
-                  username: values.username,
-                  phoneNumber: values.phoneNumber,
-                  officeAddress: values.officeAddress,
-                  password: values.password,
-                  confirmPassword: values.confirmPassword,
-                  permissionLists: ["PERMISSION_ACCOUNT_CREATE", "PERMISSION_USER_VIEW", "PERMISSION_CORPORATE_CREATE"],
-                  corporateId: "12345",
-                  isCorporate: "true",
-                  isVerified: "false",
-                  userStatus: "INACTIVE",
-                }),
-                headers: {
-                  "Content-Type": "application/json",
-                },
-              }
-            );
-            if (response.ok) {
-              const responseData = await response.json();
-              console.log(responseData);
-              toast.success("Registration successful")
-              router.push("/auth/login");
+        try {
+          const response = await fetch(
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/registerCorporateAdmin`,
+            {
+              method: "POST",
+              body: JSON.stringify({
+                firstName: values.firstname,
+                lastName: values.lastname,
+                email: trimmedEmail,
+                username: values.username,
+                phoneNumber: values.phoneNumber,
+                officeAddress: values.officeAddress,
+                password: values.password,
+                confirmPassword: values.confirmPassword,
+                permissionLists: [
+                  "PERMISSION_ACCOUNT_CREATE",
+                  "PERMISSION_USER_VIEW",
+                  "PERMISSION_CORPORATE_CREATE",
+                ],
+                corporateId: "12345",
+                isCorporate: "true",
+                isVerified: "false",
+                userStatus: "INACTIVE",
+              }),
+              headers: {
+                "Content-Type": "application/json",
+              },
             }
-          } catch (err) {
-            console.log(err);
+          );
+          if (response.ok) {
+            const responseData = await response.json();
+            console.log(responseData);
+            toast.success("Registration successful");
+            router.push("/auth/login");
           }
+        } catch (err) {
+          console.log(err);
+        }
       }}
     >
       <section className=" items-center flex justify-center bottom-0 right-0 top-0 left-0 ">
@@ -186,26 +205,50 @@ export default function SignIn() {
                 <ErrorMessage name="officeAddress" />
               </span>
             </div>
-            <div className="flex flex-col gap-y-2 ">
+            <div className="grid grid-rows-3 ">
               <label htmlFor="password">Password</label>
-              <Field
-                name="password"
-                type="text"
-                placeholder="password"
-                className="border focus:outline-none px-1 text-xs h-8 rounded-sm"
-              />
+              <div className=" flex justify-between items-center border focus:outline-none px-1 text-xs h-8 rounded-sm">
+                <Field
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  className="w-full h-full focus:outline-none"
+                />
+                {showPassword ? (
+                  <IoMdEyeOff
+                    className="text-lg cursor-pointer"
+                    onClick={handleShowPassword}
+                  />
+                ) : (
+                  <IoMdEye
+                    className="text-lg cursor-pointer"
+                    onClick={handleShowPassword}
+                  />
+                )}
+              </div>
               <span className="text-red-500 text-xs">
                 <ErrorMessage name="password" />
               </span>
             </div>
-            <div className="flex flex-col gap-y-2 ">
+            <div className="grid grid-rows-3 ">
               <label htmlFor="confirmPassword">Confirm Password</label>
-              <Field
-                name="confirmPassword"
-                type="text"
-                placeholder="Confirm Password"
-                className="border focus:outline-none px-1 text-xs h-8 rounded-sm"
-              />
+              <div className=" flex justify-between items-center border focus:outline-none px-1 text-xs h-8 rounded-sm">
+                <Field
+                  name="confirmPassword"
+                  type={showConfirmPassword ? "text" : "password"}
+                  className="w-full h-full focus:outline-none"
+                />
+                {showConfirmPassword ? (
+                  <IoMdEyeOff
+                    className="text-lg cursor-pointer"
+                    onClick={handleShowConfirmPassword}
+                  />
+                ) : (
+                  <IoMdEye
+                    className="text-lg cursor-pointer"
+                    onClick={handleShowConfirmPassword}
+                  />
+                )}
+              </div>
               <span className="text-red-500 text-xs">
                 <ErrorMessage name="confirmPassword" />
               </span>
