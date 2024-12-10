@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext} from "react";
+import React, { useContext } from "react";
 import { ConfigContext } from "../../../contexts/ConfigContext";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -8,17 +8,23 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import usePagination from "../../../hooks/usePagination";
+import { FaCaretLeft } from "react-icons/fa6";
+import { FaCaretRight } from "react-icons/fa6";
 // import { FaNairaSign } from "react-icons/fa6";
 
 const AccountTable = () => {
-  
   const {
     showAccountDetailsModal,
     setShowAccountDetailsModal,
     accountsContext,
   } = useContext(ConfigContext);
   const { accounts } = accountsContext;
-  
+  const { next, prev, jump, currentData, currentPage, maxPage } = usePagination(
+    accounts,
+    5
+  );
+
   const viewAcc = () => {
     setShowAccountDetailsModal(true);
   };
@@ -41,7 +47,7 @@ const AccountTable = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {accounts.map((row, i) => (
+              {currentData().map((row, i) => (
                 <TableRow
                   key={i}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -106,6 +112,17 @@ const AccountTable = () => {
           </div>
         )}
       </section>
+      <div className="flex mt-4 mb-6 items-center w-full justify-center text-lg gap-x-2">
+        <FaCaretLeft
+          onClick={prev}
+          className="font-light border rounded cursor-pointer text-xl"
+        />
+        {currentPage} of {maxPage}
+        <FaCaretRight
+          onClick={next}
+          className="border rounded cursor-pointer text-xl"
+        />
+      </div>
     </main>
   );
 };

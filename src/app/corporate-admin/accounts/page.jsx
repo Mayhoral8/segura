@@ -1,7 +1,7 @@
 "use client";
 import React, { useContext, useEffect, useState } from "react";
 import { ConfigContext } from "../../../contexts/ConfigContext";
-import AccTable from "../../corporate/accounts/accTables";
+import AccountTable from "./accTables";
 import AccountViewModal from "../../corporate/accounts/AccountViewModal";
 import { CiSearch } from "react-icons/ci";
 import { FaUsers } from "react-icons/fa6";
@@ -39,7 +39,7 @@ const Page = () => {
         <AccountTableOperations />
       </section>
 
-      <AccTable />
+      <AccountTable />
       <AccountViewModal />
     </div>
   );

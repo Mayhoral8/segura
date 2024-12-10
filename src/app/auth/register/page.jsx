@@ -2,24 +2,19 @@
 
 // next
 
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useRouter } from "next/navigation";
 import { Form, Formik, ErrorMessage, Field } from "formik";
 import AnimateButton from "../../../components/@extended/AnimateButton";
-import { useSession } from "next-auth/react";
-import { signIn } from "next-auth/react";
+import { ConfigContext } from "../../../contexts/ConfigContext";
 import Link from "next/link";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
-
-// material-ui
-// import Grid from "@mui/material/Grid";
-// import Link from "@mui/material/Link";
-// import Stack from "@mui/material/Stack";
-// import Typography from "@mui/material/Typography";
-
 import * as Yup from "yup";
 
 export default function SignIn() {
+  const { spinner, errorModal } = useContext(ConfigContext);
+  const { setShowSpinner } = spinner;
+  const { setShowErrorModal, setErrorMsg } = errorModal;
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -76,6 +71,7 @@ export default function SignIn() {
       validationSchema={schema}
       onSubmit={async (values, { setSubmitting }) => {
         const trimmedEmail = values.email.trim();
+        setShowSpinner(true);
         try {
           const response = await fetch(
             `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/registerCorporateAdmin`,
@@ -106,13 +102,20 @@ export default function SignIn() {
             }
           );
           if (response.ok) {
+            setShowSpinner(false);
             const responseData = await response.json();
             console.log(responseData);
             toast.success("Registration successful");
             router.push("/auth/login");
+          } else {
+            setShowSpinner(false);
+            setShowErrorModal(true);
+            setErrorMsg(response.error);
           }
         } catch (err) {
-          console.log(err);
+          setShowSpinner(false);
+          setShowErrorModal(true);
+          setErrorMsg(response.error);
         }
       }}
     >

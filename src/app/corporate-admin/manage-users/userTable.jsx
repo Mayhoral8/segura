@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { ConfigContext } from "../../../contexts/ConfigContext";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -8,15 +8,20 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import usePagination from "../../../hooks/usePagination";
 // import { FaNairaSign } from "react-icons/fa6";
+import { FaCaretLeft, FaCaretRight } from "react-icons/fa6";
 
 const UserTable = ({ users }) => {
   const { showCorporateDetails, setShowCorporateDetails, userContext } =
     useContext(ConfigContext);
   const { setUserInView } = userContext;
+  const { next, prev, jump, currentData, currentPage, maxPage } = usePagination(
+    users || [],
+    5
+  );
 
   const viewAcc = (user) => {
-
     setShowCorporateDetails(true);
     console.log(user);
     setUserInView(user);
@@ -38,7 +43,7 @@ const UserTable = ({ users }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {users?.map((user, i) => (
+              {currentData().map((user, i) => (
                 <TableRow
                   key={i}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -84,9 +89,7 @@ const UserTable = ({ users }) => {
                   <TableCell
                     title="Click to view details"
                     className={`cursor-pointer ${
-                      user.verified === true
-                        ? "text-green-600"
-                        : "text-red-500"
+                      user.verified === true ? "text-green-600" : "text-red-500"
                     }`}
                     align="center"
                   >
@@ -103,6 +106,17 @@ const UserTable = ({ users }) => {
           </div>
         )}
       </section>
+      <div className="flex mt-4 mb-6 items-center w-full justify-center text-lg gap-x-2">
+        <FaCaretLeft
+          onClick={prev}
+          className="font-light border rounded cursor-pointer text-xl"
+        />
+        {currentPage} of {maxPage}
+        <FaCaretRight
+          onClick={next}
+          className="border rounded cursor-pointer text-xl"
+        />
+      </div>
     </main>
   );
 };

@@ -136,9 +136,9 @@ const Page = () => {
       <section className="flex flex-row justify-between px-10">
         <article className="">
           <div className="text-2xl font-semibold mb-5">Manage Users</div>
-          <Link href="/corporateAdmin/manage-users/addUser">
+          <Link href="/corporate-admin/manage-users/addUser">
             <div className="mb-5">
-              <button className="bg-[#2C698D] text-white p-3 rounded-md flex items-center">
+              <button className="bg-[#2C698D] text-white px-2 rounded-md flex items-center h-10">
                 <span className="text-2xl mr-2">+</span> Add User
               </button>
             </div>

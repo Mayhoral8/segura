@@ -4,13 +4,9 @@ import PropTypes from "prop-types";
 import { createContext, useEffect } from "react";
 
 // project import
-// import defaultConfig from '@/config';
-import useLocalStorage from "../hooks/useLocalStorage";
+
 import { useState } from "react";
 import { usePathname } from "next/navigation";
-// initial state
-
-// ==============================|| CONFIG CONTEXT & PROVIDER ||============================== //
 
 const ConfigContext = createContext();
 
@@ -39,77 +35,20 @@ function ConfigProvider({ children }) {
   const [accounts, setAccounts] = useState(initialAccounts);
   const [showCorporateDetails, setShowCorporateDetails] = useState(false);
   const [userInView, setUserInView] = useState({});
+  const [showSpinner, setShowSpinner] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
-  const onChangeContainer = (container) => {
-    setConfig({
-      ...config,
-      container: container,
-    });
-  };
-
-  const onChangeLocalization = (lang) => {
-    setConfig({
-      ...config,
-      i18n: lang,
-    });
-  };
-
-  const onChangeMode = (mode) => {
-    setConfig({
-      ...config,
-      mode,
-    });
-  };
-
-  const onChangePresetColor = (theme) => {
-    setConfig({
-      ...config,
-      presetColor: theme,
-    });
-  };
-
-  const onChangeDirection = (direction) => {
-    setConfig({
-      ...config,
-      themeDirection: direction,
-    });
-  };
-
-  const onChangeMiniDrawer = (miniDrawer) => {
-    setConfig({
-      ...config,
-      miniDrawer,
-    });
-  };
-
-  const onChangeThemeLayout = (direction, miniDrawer) => {
-    setConfig({
-      ...config,
-      miniDrawer,
-      themeDirection: direction,
-    });
-  };
-
-  const onChangeMenuOrientation = (layout) => {
-    setConfig({
-      ...config,
-      menuOrientation: layout,
-    });
-  };
-
-  const onChangeFontFamily = (fontFamily) => {
-    setConfig({
-      ...config,
-      fontFamily,
-    });
-  };
-  const check = () => {
-    console.log("yes");
-  };
+  const [previousLocation, setPreviousLocation] = useState(
+    localStorage.getItem("lastVisitedPage") || null
+  );
 
   useEffect(() => {
-    console.log(process.env.NEXT_PUBLIC_TEST);
-  }, []);
+    if (pathname !== "/auth/login" && pathname !== "/auth/register" && pathname !== "/") {
+      localStorage.setItem("lastVisitedPage", pathname);
+      setPreviousLocation(pathname);
+    }
+  }, [pathname]);
 
   return (
     <ConfigContext.Provider
@@ -131,6 +70,18 @@ function ConfigProvider({ children }) {
         userContext: {
           userInView,
           setUserInView,
+        },
+        previousLocation,
+
+        spinner: {
+          showSpinner,
+          setShowSpinner,
+        },
+        errorModal: {
+          showErrorModal,
+          setShowErrorModal,
+          errorMsg,
+          setErrorMsg,
         },
       }}
     >
