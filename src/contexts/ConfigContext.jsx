@@ -39,8 +39,11 @@ function ConfigProvider({ children }) {
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
+  const [showOtpModal,
+    setShowOtpmodal] = useState(false)
+
+    const [showLoginSuccessModal, setShowLoginSuccessModal] = useState(false)
   const [previousLocation, setPreviousLocation] = useState(
-    localStorage.getItem("lastVisitedPage") || null
   );
 
   useEffect(() => {
@@ -83,6 +86,13 @@ function ConfigProvider({ children }) {
           errorMsg,
           setErrorMsg,
         },
+
+        login: {
+          showOtpModal,
+          setShowOtpmodal,
+          showLoginSuccessModal,
+          setShowLoginSuccessModal
+        }
       }}
     >
       {children}
