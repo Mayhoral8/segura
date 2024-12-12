@@ -31,32 +31,32 @@ export default function SignInForm() {
     setShowPassword(!showPassword);
   };
 
-  // useEffect(() => {
-  //   if (status === "authenticated") {
-  //     // Debugging session and permissions
+  useEffect(() => {
+    if (status === "authenticated") {
+      // Debugging session and permissions
 
-  //     const permissions = session?.user?.permissions || [];
+      const permissions = session?.user?.permissions || [];
 
-  //     // Adjusted to check for permissions array of objects
-  //     const isCorporateAdmin = permissions.some(
-  //       (permission) => permission.name === "PERMISSION_CORPORATE_CREATE"
-  //     );
+      // Adjusted to check for permissions array of objects
+      const isCorporateAdmin = permissions.some(
+        (permission) => permission.name === "PERMISSION_CORPORATE_CREATE"
+      );
 
-  //     if (isCorporateAdmin) {
-  //       router.push("/corporate-admin/dashboard");
-  //     } else {
-  //       router.push("/corporate/dashboard");
-  //     }
-  //   }
-  // }, [status, router]);
+      if (isCorporateAdmin) {
+        router.push("/corporate-admin/dashboard");
+      } else {
+        router.push("/corporate/dashboard");
+      }
+    }
+  }, [status, router]);
 
-  // if (status === "loading") {
-  //   return (
-  //     <div className="fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center bg-[#00000061]">
-  //       <CgSpinner className="animate-spin text-5xl text-[#2c698d]" />
-  //     </div>
-  //   );
-  // }
+  if (status === "loading") {
+    return (
+      <div className="fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center bg-[#00000061]">
+        <CgSpinner className="animate-spin text-5xl text-[#2c698d]" />
+      </div>
+    );
+  }
 
   const initialValues = {
     username: "",
@@ -67,7 +67,7 @@ export default function SignInForm() {
     username: Yup.string().max(255).required("Username is required"),
     password: Yup.string().max(255).required("Password is required"),
   });
-  // if (status === "unauthenticated") {
+  if (status === "unauthenticated") {
   return (
     <>
       <ErrorModal />
@@ -146,7 +146,9 @@ export default function SignInForm() {
               </div>
               <div className="flex justify-between text-sm ">
                 <span>Keep me signed in</span>
+                <Link href='/auth/forgot-password' className="text-[#2c698d]">
                 <span>Forgot password</span>
+                </Link>
               </div>
               <AnimateButton>
                 <button
@@ -184,5 +186,5 @@ export default function SignInForm() {
       </Formik>
     </>
   );
-  // }
+  }
 }
