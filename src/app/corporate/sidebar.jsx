@@ -5,12 +5,12 @@ import { usePathname } from "next/navigation";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import LogoutIcon from "@mui/icons-material/Logout";
 import CancelIcon from "@mui/icons-material/Cancel";
-import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import GroupIcon from "@mui/icons-material/Group";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { useSearchParams } from "next/navigation";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import { useSearchParams } from "next/navigation";
 
 const Sidebar = () => {
   const searchParams = useSearchParams();

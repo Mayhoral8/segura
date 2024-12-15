@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -8,22 +8,26 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { HiMiniUser } from "react-icons/hi2";
-import { FaCoins } from "react-icons/fa";
-import { CiCreditCard1 } from "react-icons/ci";
-import { FaClock } from "react-icons/fa";
-import { BarChart } from "@mui/x-charts/BarChart";
-import { useSession } from "next-auth/react"
-
-
+import { TbMoneybag } from "react-icons/tb";
+import { TbArrowsExchange } from "react-icons/tb";
+import { useSession } from "next-auth/react";
+import {
+  Area,
+  AreaChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
+import { FaMoneyBills } from "react-icons/fa6";
 
 const Dashboard = () => {
-  const { data: session, status } = useSession()
+  const { data: session, status } = useSession();
 
   console.log(session);
   function createData(date, senderReceiver, amount, description, status) {
     return { date, senderReceiver, amount, description, status };
   }
- 
 
   const rows = [
     createData("Nov 14", "Mayowa", "-$7", "Transfer", "Successful"),
@@ -38,122 +42,217 @@ const Dashboard = () => {
     createData("Nov 08", "Tim Cook", "+$500", "Bonus", "Successful"),
   ];
 
+  const payments = [
+    {
+      month: "Mon",
+      uv: 4000,
+      pv: 2400,
+      amt: "$2400",
+    },
+    {
+      month: "Tue",
+      uv: 3000,
+      pv: 1398,
+      amt: "$2210",
+    },
+    {
+      month: "Wed",
+      uv: 2000,
+      pv: 3000,
+      amt: "$2290",
+    },
+    {
+      month: "Thu",
+      uv: 2780,
+      pv: 4000,
+      amt: "$2000",
+    },
+    {
+      month: "Fri",
+      uv: 1890,
+      pv: 5000,
+      amt: "$2181",
+    },
+    {
+      month: "Sat",
+      uv: 2390,
+      pv: 7000,
+      amt: "$2500",
+    },
+    {
+      month: "Sun",
+      uv: 2390,
+      pv: 6400,
+      amt: "$2500",
+    },
+  ];
+
   return (
-    <div className="px-10 w-full">
-    
-      <section className="flex flex-row lg:justify-between mt-4 justify-center gap-y-2 lg:gap-y-0 gap-x-4 flex-wrap lg:flex-nowrap just">
-        <article className=" bg-white flex flex-row border lg:w-[25%] w-[45%]  h-24 items-center px-4 gap-x-4">
-          <div className="bg-[#bae8e8] border rounded-full h-10 w-10 justify-center flex items-center">
-            <HiMiniUser className="text-[#2C698D]" />
-          </div>
-          <div className="]">
-            <h2 className="font-bold text-base">500,000</h2>
-            <h1 className="lg:text-[10px] text-[8px]">Active Accounts</h1>
-            <div className="lg:text-[10px] text-[8px]">
-              <span>+23% </span>
-              <span>since last month</span>
+    <main className="px-10 w-full bg-[#F0F0F0]">
+      <section className="flex flex-row lg:justify-between  justify-center gap-y-2 lg:gap-y-0 gap-x-4 flex-wrap lg:flex-nowrap just bg-[#F0F0F0]">
+        <article className=" bg-white flex flex-row border lg:w-[25%] w-[45%]  h-24 items-center px-4 ">
+          <div className="flex flex-col gap-y-2">
+            <div>
+              <h1 className="lg:text-[10px] text-[8px] text-[#787878]">
+                Active Accounts
+              </h1>
+              <div className="flex items-center gap-x-1">
+                <div className="bg-[#E6F7FF] border rounded-full h-6 w-6 justify-center flex items-center">
+                  <HiMiniUser className="text-[#1890FF]" />
+                </div>
+
+                <h2 className="font-bold text-base">500,000</h2>
+              </div>
+            </div>
+            <div className="lg:text-[10px] text-[8px] flex gap-x-1 items-center">
+              <span className="bg-[#E6F7FF] text-[#1890FF] py-1 px-2 rounded-md ">
+                +23%{" "}
+              </span>
+              <span className="text-[#787878]">
+                Extra in the last one month
+              </span>
             </div>
           </div>
         </article>
-        <article className=" bg-white flex flex-row border lg:w-[25%] w-[45%] h-24 items-center px-4 gap-x-4">
-          <div className="bg-[#ffc22736]   border rounded-full h-10 w-10 justify-center flex items-center">
-            <FaCoins className="text-[#FFC327]" />
-          </div>
-          <div className="]">
-            <h2 className="font-bold text-base">500,000</h2>
-            <h1 className="lg:text-[10px] text-[8px]">Funds processed</h1>
-            <div className="lg:text-[10px] text-[8px]">
-              <span>+23% </span>
-              <span>since last month</span>
+        <article className=" bg-white flex flex-row border lg:w-[25%] w-[45%]  h-24 items-center px-4 ">
+          <div className="flex flex-col gap-y-2">
+            <div>
+              <h1 className="lg:text-[10px] text-[8px] text-[#787878]">
+                Funds Processed
+              </h1>
+              <div className="flex items-center gap-x-1">
+                <div className="bg-[#DAFFE5] border rounded-full h-6 w-6 justify-center flex items-center">
+                  <TbMoneybag className="text-[#09DD49]" />
+                </div>
+
+                <h2 className="font-bold text-base">500,000</h2>
+              </div>
+            </div>
+            <div className="lg:text-[10px] text-[8px] flex gap-x-1 items-center">
+              <span className="bg-[#DAFFE5] text-[#09DD49] py-1 px-2 rounded-md">
+                +23%{" "}
+              </span>
+              <span className="text-[#787878]">
+                Extra in the last one month
+              </span>
             </div>
           </div>
         </article>
-        <article className="bg-white flex flex-row border lg:w-[25%] w-[45%] h-24 items-center px-4 gap-x-4">
-          <div className="bg-[#f292392d]   border rounded-full h-10 w-10 justify-center flex items-center">
-            <FaClock className="text-[#F29339]" />
-          </div>
-          <div className="]">
-            <h2 className="font-bold text-base">20,000</h2>
-            <h1 className="lg:text-[10px] text-[8px]">Transactions made</h1>
-            <div className="lg:text-[10px] text-[8px]">
-              <span>+20% </span>
-              <span>Refund Requests</span>
+        <article className=" bg-white flex flex-row border lg:w-[25%] w-[45%]  h-24 items-center px-4 ">
+          <div className="flex flex-col gap-y-2">
+            <div>
+              <h1 className="lg:text-[10px] text-[8px] text-[#787878]">
+                Transactions Made
+              </h1>
+              <div className="flex items-center gap-x-1">
+                <div className="bg-[#FFF7E6] border rounded-full h-6 w-6 justify-center flex items-center">
+                  <TbArrowsExchange className="text-[#FA8C16]" />
+                </div>
+
+                <h2 className="font-bold text-base">500,000</h2>
+              </div>
+            </div>
+            <div className="lg:text-[10px] text-[8px] flex gap-x-1 items-center">
+              <span className="bg-[#FFF7E6] text-[#FA8C16] py-1 px-2 rounded-md">
+                +23%{" "}
+              </span>
+              <span className="text-[#787878]">
+                Extra in the last one month
+              </span>
             </div>
           </div>
         </article>
-        <article className=" bg-white flex flex-row border lg:w-[25%] w-[45%] h-24 items-center px-4 gap-x-4">
-          <div className="bg-[#4a89571a]   border rounded-full h-10 w-10 justify-center flex items-center">
-            <CiCreditCard1 className="text-[#4A8957]" />
-          </div>
-          <div className="]">
-            <h2 className="font-bold text-base">20+</h2>
-            <h1 className="lg:text-[10px] text-[8px]">Refund requests</h1>
-            <div className="lg:text-[10px] text-[8px]">
-              <span>+20% </span>
-              <span>since last month</span>
+        <article className=" bg-white flex flex-row border lg:w-[25%] w-[45%]  h-24 items-center px-4 ">
+          <div className="flex flex-col gap-y-2">
+            <div>
+              <h1 className="lg:text-[10px] text-[8px] text-[#787878]">
+                Refunds Request
+              </h1>
+              <div className="flex items-center gap-x-1">
+                <div className="bg-[#E6F7FF] border rounded-full h-6 w-6 justify-center flex items-center">
+                  <FaMoneyBills className="text-[#CF1322]" />
+                </div>
+
+                <h2 className="font-bold text-base">500,000</h2>
+              </div>
+            </div>
+            <div className="lg:text-[10px] text-[8px] flex gap-x-1 items-center">
+              <span className="bg-[#FFCCC7] text-[#CF1322] py-1 px-2 rounded-md">
+                +23%{" "}
+              </span>
+              <span className="text-[#787878]">
+                Extra in the last one month
+              </span>
             </div>
           </div>
         </article>
       </section>
 
-      <article className="mt-4 bg-white">
-        <span className="ml-2 text-lg font-semibold">Report</span>
-        {/* <LineChart
-          dataset={dataset}
-          xAxis={[{ dataKey: "x" }]} // Use "month" for x-axis
-          series={[
-            {
-              dataKey: "y", // Link to y values in the dataset
-            },
-          ]}
-          width={500}
-          height={300}
-          sx={{
-            color: "#2c698d",
-          }}
-        /> */}
-        <BarChart
-          xAxis={[
-            {
-              colorMap: {
-                type: 'piecewise',
-                thresholds: [new Date(2021, 1, 1), new Date(2023, 1, 1)],
-                colors: ['#2c698d'],
-              },
-              id: "barCategories",
-              data: [
-                "Jan",
-                "Feb",
-                "Mar",
-                "Apr",
-                "May",
-                "Jun",
-                "Jul",
-                "Aug",
-                "Sep",
-                "Oct",
-                "Nov",
-                "Dec",
-              ],
-              scaleType: "band",
-            },
-            
-          ]}
-          series={[
-            {
-              data: [
-                1000, 2300, 1500, 5000, 2300, 4000, 1000, 1800, 1500, 1000,
-                3200, 1500,
-              ],
-            },
-          ]}
-          width={700}
-          height={300}
-          sx={{
-            color: "#2c698d",
-          }}
-        />
-      </article>
+      <section className="mt-4  flex flex-row gap-x-4">
+        <article className=" flex flex-col gap-y-2  px-2 py-2 w-[60%]   h-[350px]">
+          <span className="font-medium">Revenue Flow</span>
+          <div className="bg-white shadow-sm">
+            <ResponsiveContainer height={300} width="100%">
+              <AreaChart data={payments} className="">
+                <defs>
+                  <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#40A9FF" stopOpacity={0.8} />
+                    <stop offset="95%" stopColor="#40A9FF" stopOpacity={0} />
+                  </linearGradient>
+                  <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#003A8C7A" stopOpacity={0.8} />
+                    <stop offset="95%" stopColor="#003A8C7A" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <YAxis
+                  tickSize={0}
+                  axisLine={false}
+                  className="text-xs translate-x-[-20px]"
+                />
+                <XAxis
+                  dataKey="month"
+                  tickSize={0}
+                  axisLine={false}
+                  className="text-xs translate-y-[20px]"
+                />
+                <Tooltip />
+                <Area
+                  type="monotone"
+                  dataKey="uv"
+                  stroke="#0050B3"
+                  fillOpacity={1}
+                  fill="url(#colorUv)"
+                  className="border"
+                />
+                <Area
+                  type="monotone"
+                  dataKey="pv"
+                  stroke="#1890FF"
+                  fillOpacity={1}
+                  fill="url(#colorPv)"
+                />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        </article>
+        <article className="w-[40%] mt-2">
+          <span className=" font-medium ">Analytics Report</span>
+          <div className="border w-[90%] mt-2 bg-white flex flex-col">
+            <div className="flex justify-between text-xs items-center border py-4 px-2">
+              <span className="">Business Risk Cases</span>
+              <span>+45.14%</span>
+            </div>
+            <div className="flex justify-between text-xs items-center border py-4 px-2">
+              <span className="">Business Risk Cases</span>
+              <span>0.58%</span>
+            </div>
+            <div className="flex justify-between text-xs items-center border py-4 px-2">
+              <span className="">Business Risk Cases</span>
+              <span>Low</span>
+            </div>
+          </div>
+        </article>
+      </section>
 
       <section className="mt-4 bg-white">
         <span className="text-lg ">Transactions</span>
@@ -180,14 +279,26 @@ const Dashboard = () => {
                   <TableCell align="center">{row.senderReceiver}</TableCell>
                   <TableCell align="right">{row.amount}</TableCell>
                   <TableCell align="right">{row.description}</TableCell>
-                  <TableCell sx={{color: row.status === "Failed" ? "red" : row.status === "Pending" ? "orange" : "green"}} align="right">{row.status}</TableCell>
+                  <TableCell
+                    sx={{
+                      color:
+                        row.status === "Failed"
+                          ? "red"
+                          : row.status === "Pending"
+                          ? "orange"
+                          : "green",
+                    }}
+                    align="right"
+                  >
+                    {row.status}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
       </section>
-    </div>
+    </main>
   );
 };
 

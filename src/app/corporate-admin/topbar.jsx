@@ -10,7 +10,7 @@ const TopBar = () => {
   const {data: session, status} = useSession()
   return (
     <div className="flex flex-col lg:w-[84%] relative lg:left-[16%]">
-    <div className="lg:w-[84%] h-20 bg-white shadow-[0_4px_10px_-5px_rgba(0,0,0,0.1)] text-white fixed top-0 z-40 px-10">
+    <div className="lg:w-[84%] h-16 bg-white shadow-[0_4px_10px_-5px_rgba(0,0,0,0.1)] text-white fixed top-0 z-40 px-10">
       <div className="h-full w-full flex justify-between items-center">
         <div className="">
           <div className="w-[200px] h-[40px] border-[2px] rounded-md bg-white flex justify-between items-center pl-2">

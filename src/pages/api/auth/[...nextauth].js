@@ -1,4 +1,3 @@
-// pages/api/auth/[...nextauth].ts
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -7,12 +6,12 @@ export default NextAuth({
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        username: { label: "Username", type: "text" }, // Changed to email
+        username: { label: "Username", type: "text" }, 
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
         try {
-          // Make a POST request to your custom backend's authentication endpoint
+         
           const response = await fetch(
             "https://api-dev.segura-pay.com/api/v1/auth/login",
             {
@@ -27,7 +26,7 @@ export default NextAuth({
             }
           );
 
-          // Extract user data from response (adjust based on your backend’s response structure)
+          
           const user = await response.json();
           console.log(user);
           // const decoded
@@ -40,7 +39,7 @@ export default NextAuth({
             throw new Error(user?.message || "Invalid login credentials");
           }
         } catch (error) {
-          throw new Error("Unable to authenticate. Please check your credentials and try again.");
+          throw new Error(error.message);
         }
       },
     }),
@@ -48,7 +47,7 @@ export default NextAuth({
   pages: {
     signIn: "/auth/login",
     signOut: "/auth/login",
-    error: "/auth/login", // Error page if authentication fails
+    error: "/auth/login", 
   },
   session: {
     strategy: "jwt", // Storing session as a JWT
