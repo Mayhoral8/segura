@@ -39,15 +39,17 @@ function ConfigProvider({ children }) {
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
-  const [showOtpModal,
-    setShowOtpmodal] = useState(false)
+  const [showOtpModal, setShowOtpmodal] = useState(false);
 
-    const [showLoginSuccessModal, setShowLoginSuccessModal] = useState(false)
-  const [previousLocation, setPreviousLocation] = useState(
-  );
+  const [showLoginSuccessModal, setShowLoginSuccessModal] = useState(false);
+  const [previousLocation, setPreviousLocation] = useState();
 
   useEffect(() => {
-    if (pathname !== "/auth/login" && pathname !== "/auth/register" && pathname !== "/") {
+    if (
+      pathname !== "/auth/login" &&
+      pathname !== "/auth/register" &&
+      pathname !== "/"
+    ) {
       localStorage.setItem("lastVisitedPage", pathname);
       setPreviousLocation(pathname);
     }
@@ -91,8 +93,8 @@ function ConfigProvider({ children }) {
           showOtpModal,
           setShowOtpmodal,
           showLoginSuccessModal,
-          setShowLoginSuccessModal
-        }
+          setShowLoginSuccessModal,
+        },
       }}
     >
       {children}

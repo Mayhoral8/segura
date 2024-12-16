@@ -5,6 +5,8 @@ import "./globals.css";
 // PROJECT IMPORTS
 import ProviderWrapper from "./ProviderWrapper";
 
+console.log(ProviderWrapper);
+
 export const metadata = {
   title: "Segura",
   description: "",

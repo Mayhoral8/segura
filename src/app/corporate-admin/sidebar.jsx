@@ -2,15 +2,22 @@ import React, { useEffect, useReducer, useContext, useState } from "react";
 import Link from "next/link";
 import { ConfigContext } from "../../contexts/ConfigContext";
 import { usePathname } from "next/navigation";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import LogoutIcon from "@mui/icons-material/Logout";
-import CancelIcon from "@mui/icons-material/Cancel";
-import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
-import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
-import GroupIcon from "@mui/icons-material/Group";
-import SettingsIcon from "@mui/icons-material/Settings";
 import { useSearchParams } from "next/navigation";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
+import Image from "next/image";
+
+// assets import
+import Logo from "../../assets/landingPage/logo.svg";
+import StartHereIcon from "../../assets/adminDashboard/starthere.svg";
+import DashboardIcon from "../../assets/adminDashboard/dashboard.svg";
+import AccountManagementIcon from "../../assets/adminDashboard/starthere.svg";
+import WalletIcon from "../../assets/adminDashboard/wallet.svg";
+import AuditLogsIcon from "../../assets/adminDashboard/auditlog.svg";
+import HelpIcon from "../../assets/adminDashboard/help.svg";
+import SettingsIcon from "../../assets/adminDashboard/settings.svg";
+import LogoutIcon from "../../assets/adminDashboard/logout.svg";
+import Avatar from "../../avatar.png";
+import RightArrow from "../../assets/adminDashboard/rightArrow.svg";
 
 const Sidebar = () => {
   const searchParams = useSearchParams();
@@ -29,8 +36,11 @@ const Sidebar = () => {
   const pathname = usePathname();
 
   const initialState = {
-    dashboard: {
+    starthere: {
       isActive: true,
+    },
+    dashboard: {
+      isActive: false,
     },
     accounts: {
       isActive: false,
@@ -38,7 +48,10 @@ const Sidebar = () => {
     wallets: {
       isActive: false,
     },
-    userManagement: {
+    auditslog: {
+      isActive: false,
+    },
+    help: {
       isActive: false,
     },
     settings: {
@@ -48,65 +61,100 @@ const Sidebar = () => {
 
   const reducerFunc = (state, action) => {
     switch (action.type) {
+      case "START_HERE": {
+        return {
+          ...state,
+          starthere: { isActive: true },
+          dashboard: { isActive: false },
+          accounts: { isActive: false },
+          wallets: { isActive: false },
+          auditslog: { isActive: false },
+          help: { isActive: false },
+          settings: { isActive: false },
+        };
+      }
       case "DASHBOARD": {
         return {
           ...state,
+          starthere: { isActive: false },
           dashboard: { isActive: true },
+          accounts: { isActive: false },
+          wallets: { isActive: false },
+          auditslog: { isActive: false },
+          help: { isActive: false },
           settings: { isActive: false },
-          userManagement: { isActive: false },
-          accounts: { isActive: false },
-          wallets: { isActive: false },
-        };
-      }
-      case "SETTINGS": {
-        return {
-          ...state,
-          dashboard: { isActive: false },
-          settings: { isActive: true },
-          userManagement: { isActive: false },
-          accounts: { isActive: false },
-          wallets: { isActive: false },
-        };
-      }
-      case "USER_MANAGEMENT": {
-        return {
-          ...state,
-          dashboard: { isActive: false },
-          settings: { isActive: false },
-          userManagement: { isActive: true },
-          accounts: { isActive: false },
-          wallets: { isActive: false },
         };
       }
       case "ACCOUNTS": {
-        console.log("fgd");
         return {
           ...state,
+          starthere: { isActive: false },
           dashboard: { isActive: false },
-          settings: { isActive: false },
-          userManagement: { isActive: false },
           accounts: { isActive: true },
           wallets: { isActive: false },
+          auditslog: { isActive: false },
+          help: { isActive: false },
+          settings: { isActive: false },
         };
       }
       case "WALLETS": {
         return {
           ...state,
+          starthere: { isActive: false },
           dashboard: { isActive: false },
-          settings: { isActive: false },
-          userManagement: { isActive: false },
           accounts: { isActive: false },
           wallets: { isActive: true },
+          auditslog: { isActive: false },
+          help: { isActive: false },
+          settings: { isActive: false },
+        };
+      }
+      case "AUDITS_LOG": {
+        return {
+          ...state,
+          starthere: { isActive: false },
+          dashboard: { isActive: false },
+          accounts: { isActive: false },
+          wallets: { isActive: false },
+          auditslog: { isActive: true },
+          help: { isActive: false },
+          settings: { isActive: false },
+        };
+      }
+      case "HELP": {
+        return {
+          ...state,
+          starthere: { isActive: false },
+          dashboard: { isActive: false },
+          accounts: { isActive: false },
+          wallets: { isActive: false },
+          auditslog: { isActive: false },
+          help: { isActive: true },
+          settings: { isActive: false },
+        };
+      }
+      case "SETTINGS": {
+        return {
+          ...state,
+          starthere: { isActive: false },
+          dashboard: { isActive: false },
+          accounts: { isActive: false },
+          wallets: { isActive: false },
+          auditslog: { isActive: false },
+          help: { isActive: false },
+          settings: { isActive: true },
         };
       }
       case "DEFAULT": {
         return {
           ...state,
+          starthere: { isActive: false },
           dashboard: { isActive: false },
-          settings: { isActive: false },
-          userManagement: { isActive: false },
           accounts: { isActive: false },
           wallets: { isActive: false },
+          auditslog: { isActive: false },
+          help: { isActive: false },
+          settings: { isActive: false },
         };
       }
       default:
@@ -139,129 +187,150 @@ const Sidebar = () => {
   }, [showDropdown]);
 
   return (
-    <section className="hidden lg:flex flex-col justify-between bg-white text-gray-600 border-solid mt-10 fixed z-30 lg:h-full shadow-md  text-3xl h-20 bottom-0  w-full lg:w-[16%]  ">
-      <div className="flex-row items-center gap-x-1 lg:flex hidden border h-[100px] justify-center lg:px-4">
-        <p className="font-semibold text-base text-primary-500 text-center">
-          SEGURA
-        </p>
+    <section className="hidden lg:flex flex-col bg-white text-gray-600 border-solid mt-10 fixed z-30 lg:h-full shadow-md  text-3xl h-20 bottom-0  w-full lg:w-[260px]">
+      <div className="flex-row items-center gap-x-1 lg:flex hidden justify-start pt-[20px] pl-[25px] mb-[60px]">
+        <Image src={Logo} alt="logo" />
       </div>
-      <section className="flex flex-row lg:flex-col lg:gap-y-4 w-full lg:mt-4 overflow-y-auto scrollbar-hide h-[400px] lg:px-4">
+      <section className="flex flex-row lg:flex-col lg:gap-y-1 w-full overflow-y-auto scrollbar-hide h-[400px]">
         <Link
           href="/corporate-admin/dashboard"
-          onClick={() => handleDispatch("DASHBOARD")}
-          className={`w-full  flex items-center lg:rounded-md lg:px-2 justify-center  ${
-            state.dashboard.isActive
-              ? "bg-[#2c698d] text-white"
-              : "hover:bg-[#e3f6f5]"
+          onClick={() => handleDispatch("START_HERE")}
+          className={`w-full h-[44px] flex items-center pl-[20px] justify-center  ${
+            state.starthere.isActive
+              ? "bg-[#e3f6f5] text-[#2C698D]"
+              : "text-[#787878]"
           } `}
         >
-          <div className="flex flex-col w-full text-[12px] gap-x-1 lg:flex-row items-center  ">
-            <DashboardIcon className="text-lg " />
-            <span className="">Dashboard</span>
+          <div className="flex flex-col w-full text-[14px] gap-x-1 lg:flex-row items-center  ">
+            <Image src={StartHereIcon} alt="start here" />
+            <span className="ml-1">Start Here</span>
+          </div>
+        </Link>
+
+        <Link
+          href="/corporate-admin/accounts"
+          onClick={() => handleDispatch("DASHBOARD")}
+          className={`w-full h-[44px] flex items-center pl-[20px] justify-center  ${
+            state.dashboard.isActive
+              ? "bg-[#e3f6f5] text-[#2C698D]"
+              : "text-[#787878]"
+          } `}
+        >
+          <div className="flex flex-col w-full text-[14px] gap-x-1 lg:flex-row items-center  ">
+            <Image src={DashboardIcon} alt="dashboard" />
+            <span className="ml-1">Dashboard</span>
           </div>
         </Link>
 
         <Link
           href="/corporate-admin/accounts"
           onClick={() => handleDispatch("ACCOUNTS")}
-          className={`w-full flex items-center lg:rounded-md lg:px-2 justify-center  ${
+          className={`w-full h-[44px] flex items-center pl-[20px] justify-center  ${
             state.accounts.isActive
-              ? "bg-[#2c698d] text-white"
-              : "hover:bg-[#e3f6f5]"
+              ? "bg-[#e3f6f5] text-[#2C698D]"
+              : "text-[#787878]"
           } `}
         >
-          <div className="flex flex-col w-full text-[12px] gap-x-1 lg:flex-row items-center  ">
-            <GroupIcon className="text-lg " />
-            <span className="">Accounts</span>
+          <div className="flex flex-col w-full text-[14px] gap-x-1 lg:flex-row items-center  ">
+            <Image src={AccountManagementIcon} alt="account management" />
+            <span className="ml-1">Account Management</span>
           </div>
         </Link>
 
         <Link
           href="/corporate-admin/wallets"
           onClick={() => handleDispatch("WALLETS")}
-          className={`w-full  flex items-center lg:rounded-md lg:px-2 justify-center  ${
+          className={`w-full h-[44px] flex items-center pl-[20px] justify-center  ${
             state.wallets.isActive
-              ? "bg-[#2c698d] text-white"
-              : "hover:bg-[#e3f6f5]"
+              ? "bg-[#e3f6f5] text-[#2C698D]"
+              : "text-[#787878]"
           } `}
         >
-          <div className="flex flex-col w-full text-[12px] gap-x-1 lg:flex-row items-center  ">
-            <AccountBalanceWalletIcon className="text-lg " />
-            <span className="">Wallets</span>
+          <div className="flex flex-col w-full text-[14px] gap-x-1 lg:flex-row items-center  ">
+            <Image src={WalletIcon} alt="wallet" />
+            <span className="ml-1">Wallet</span>
           </div>
         </Link>
 
         <Link
           href="/corporate-admin/manage-users"
-          onClick={() => handleDispatch("USER_MANAGEMENT")}
-          className={`w-full  flex items-center lg:rounded-md lg:px-2 justify-center  ${
-            state.userManagement.isActive
-              ? "bg-[#2c698d] text-white"
-              : "hover:bg-[#e3f6f5]"
+          onClick={() => handleDispatch("AUDITS_LOG")}
+          className={`w-full h-[44px] flex items-center pl-[20px] justify-center  ${
+            state.auditslog.isActive
+              ? "bg-[#e3f6f5] text-[#2C698D]"
+              : "text-[#787878]"
           } `}
         >
-          <div className=" w-full flex flex-col  text-[12px] gap-x-1 lg:flex-row  items-center">
-            <ManageAccountsIcon className="text-lg" />
-            <span className="">User Management</span>
+          <div className=" w-full flex flex-col  text-[14px] gap-x-1 lg:flex-row  items-center">
+            <Image src={AuditLogsIcon} alt="audit log" />
+            <span className="ml-1">Audit Log</span>
           </div>
         </Link>
 
-        <article
-          className="w-full flex items-center lg:rounded-md justify-center flex-col cursor-pointer"
-          onClick={() => handleDispatch("SETTINGS")}
+        <Link
+          href="/corporate-admin/accounts"
+          onClick={() => handleDispatch("HELP")}
+          className={`w-full h-[44px] flex items-center pl-[20px] justify-center  ${
+            state.help.isActive
+              ? "bg-[#e3f6f5] text-[#2C698D]"
+              : "text-[#787878]"
+          } `}
         >
-          <div
-            onClick={handleSettingsDropdown}
-            className={`flex flex-col w-full text-[12px] gap-x-1 lg:flex-row items-center rounded-md px-2 justify-between ${
-              state.settings.isActive && "bg-[#2c698d] text-white"
-            }`}
-          >
-            <div className="flex items-center gap-x-1">
-              <SettingsIcon className="text-lg " />
-              <span>Settings</span>
-            </div>
-            {showDropdown ? (
-              <ExpandLess className="text-lg " />
-            ) : (
-              <ExpandMore className="text-lg " />
-            )}
+          <div className="flex flex-col w-full text-[14px] gap-x-1 lg:flex-row items-center  ">
+            <Image src={HelpIcon} alt="help" />
+            <span className="ml-1">Help</span>
           </div>
-          <article
-            className={`flex flex-col ${
-              showDropdown ? "h-auto" : "h-0 hidden"
-            }  transition-all text-[12px] w-full  `}
-          >
-            <Link
-              href="/corporate/settings/verification"
-              className="hover:bg-[#e3f6f5]"
-            >
-              <div className="pl-5">Verification</div>
-            </Link>
-            <Link
-              href="/corporate/settings/profile"
-              className="hover:bg-[#e3f6f5]"
-            >
-              <div className="pl-5">Profile</div>
-            </Link>
-            <Link
-              href="/corporate/settings/policy"
-              className="hover:bg-[#e3f6f5]"
-            >
-              <div className="pl-5">Policy</div>
-            </Link>
-          </article>
-        </article>
+        </Link>
+        <Link
+          href="/corporate-admin/accounts"
+          onClick={() => handleDispatch("SETTINGS")}
+          className={`w-full h-[44px] flex items-center pl-[20px] justify-center  ${
+            state.settings.isActive
+              ? "bg-[#e3f6f5] text-[#2C698D]"
+              : "text-[#787878]"
+          } `}
+        >
+          <div className="flex flex-col w-full text-[14px] gap-x-1 lg:flex-row items-center  ">
+            <Image src={SettingsIcon} alt="start here" />
+            <span className="ml-1">Settings</span>
+          </div>
+        </Link>
       </section>
 
-      <div className="border w-full lg:px-0"></div>
-      <article className=" h-[150px] lg:flex hidden border-t flex-col justify-evenly py-2 lg:px-4">
-       
-        <div className="hover:lg:bg-PrimaryPurple cursor-pointer rounded-md h-8  flex flex-col w-full text-sm gap-x-1 lg:flex-row items-center justify-between">
-          <span className="text-xs ">
-            ABC Company <br />
-            corporate{" "}
-          </span>
-          <LogoutIcon onClick={handleSignOutModal} className="text-lg" />
+      <article className="flex flex-col mt-auto justify-self-end">
+        <div className="hover:lg:bg-PrimaryPurple lg:px-[20px] cursor-pointer rounded-md flex w-full text-sm gap-x-1 lg:flex-row items-center h-[44px]">
+          <Image
+            src={LogoutIcon}
+            onClick={handleSignOutModal}
+            className="text-lg"
+          />
+          <span className="text-xs text-[#CF1322] ml-2">Logout</span>
+        </div>
+        <div className="lg:px-[20px] lg:py-[10px] bg-[#FAFAFA]">
+          <div className="flex items-center">
+            <Image
+              src={Avatar}
+              alt=""
+              height={40}
+              width={40}
+              className="rounded-full mr-2"
+            />
+            <div className="flex flex-col justify-center">
+              <p className="text-[#262626] text-[14px] leading-none mb-1">
+                {/* {session?.user?.username} */}
+                Jones Canes
+              </p>
+              <p className="text-[#8C8C8C] text-[10px] leading-none">
+                {/* {session?.user?.username} */}
+                Super admin
+              </p>
+            </div>
+            <Image
+              src={RightArrow}
+              alt=""
+              className="ml-auto justify-self-end"
+            />
+          </div>
         </div>
       </article>
     </section>
