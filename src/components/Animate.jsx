@@ -1,6 +1,6 @@
 import React, { useContext, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ConfigContext } from "@/contexts/ConfigContext";
+import { ConfigContext } from "../contexts/ConfigContext";
 
 export const AnimateModal = ({ children, isVisible }) => {
   return (

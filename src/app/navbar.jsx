@@ -3,13 +3,11 @@
 import React, { useState, useContext, useReducer, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { GiHamburgerMenu } from "react-icons/gi";
-import { FaXmark } from "react-icons/fa6";
+import MenuIcon from "@mui/icons-material/Menu";
+import CloseIcon from "@mui/icons-material/Close";
 import { usePathname } from "next/navigation";
 // import logo from "../../public/navbar/logo.png";
 import { useRouter } from "next/navigation";
-import { RxCaretDown } from "react-icons/rx";
-import { RxCaretUp } from "react-icons/rx";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -127,12 +125,12 @@ const Navbar = () => {
 
           <div className="lg:hidden cursor-pointer text-2xl">
             {openNavBar ? (
-              <FaXmark
+              <CloseIcon
                 onClick={() => navBarHandler("")}
                 className="text-white"
               />
             ) : (
-              <GiHamburgerMenu onClick={() => navBarHandler("")} />
+              <MenuIcon onClick={() => navBarHandler("")} />
             )}
           </div>
         </div>

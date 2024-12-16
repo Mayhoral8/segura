@@ -1,19 +1,19 @@
 import React, { useEffect, useReducer, useContext, useState } from "react";
 import Link from "next/link";
-import { ConfigContext } from "@/contexts/ConfigContext";
+import { ConfigContext } from "../../contexts/ConfigContext";
 import { usePathname } from "next/navigation";
-import { MdDashboard } from "react-icons/md";
-import { GoSignOut } from "react-icons/go";
-import { FaCircleXmark } from "react-icons/fa6";
-import { MdManageAccounts } from "react-icons/md";
-import { CiWallet } from "react-icons/ci";
-import { FaUsers } from "react-icons/fa6";
-import { IoMdSettings } from "react-icons/io";
-import { RxCaretDown, RxCaretUp } from "react-icons/rx";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import LogoutIcon from "@mui/icons-material/Logout";
+import CancelIcon from "@mui/icons-material/Cancel";
+import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
+import GroupIcon from "@mui/icons-material/Group";
+import SettingsIcon from "@mui/icons-material/Settings";
+import { ExpandLess, ExpandMore } from "@mui/icons-material";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import { useSearchParams } from "next/navigation";
 
 const Sidebar = () => {
-  const searchParams = useSearchParams()
+  const searchParams = useSearchParams();
   const { setShowSignOutModal, check } = useContext(ConfigContext);
   const [showDropdown, setShowDropDown] = useState(false);
 
@@ -30,21 +30,20 @@ const Sidebar = () => {
 
   const initialState = {
     dashboard: {
-      isActive: true
+      isActive: true,
     },
     accounts: {
-      isActive: false
+      isActive: false,
     },
     wallets: {
-      isActive: false
+      isActive: false,
     },
     userManagement: {
-      isActive: false
+      isActive: false,
     },
     settings: {
-      isActive: false
-    }
-    
+      isActive: false,
+    },
   };
 
   const reducerFunc = (state, action) => {
@@ -117,7 +116,6 @@ const Sidebar = () => {
   const [state, dispatch] = useReducer(reducerFunc, initialState);
 
   useEffect(() => {
-    
     if (pathname === "/corporate/dashboard") {
       return dispatch({ type: "DASHBOARD" });
     } else if (pathname.includes("/corporate/settings")) {
@@ -126,15 +124,11 @@ const Sidebar = () => {
     } else if (pathname === "/corporate/user-management") {
       return dispatch({ type: "USER_MANAGEMENT" });
     } else if (pathname.includes("/corporate/accounts")) {
-      
       return dispatch({ type: "ACCOUNTS" });
     } else if (pathname.includes("/corporate/wallets")) {
       return dispatch({ type: "WALLETS" });
     }
-   
   }, [pathname, searchParams]);
-
-
 
   const handleDispatch = (type) => {
     dispatch({ type });
@@ -144,7 +138,6 @@ const Sidebar = () => {
     showDropdown === false && handleDispatch("DEFAULT");
   }, [showDropdown]);
 
-  
   return (
     <section className="hidden lg:flex flex-col justify-between bg-white text-gray-600 border-solid mt-10 fixed z-30 lg:h-full shadow-md  text-3xl h-20 bottom-0  w-full lg:w-[16%]  ">
       <div className="flex-row items-center gap-x-1 lg:flex hidden border h-[100px] justify-center lg:px-4">
@@ -157,11 +150,13 @@ const Sidebar = () => {
           href="/corporate/dashboard"
           onClick={() => handleDispatch("DASHBOARD")}
           className={`w-full  flex items-center lg:rounded-md lg:px-2 justify-center  ${
-            state.dashboard.isActive  ? "bg-[#2c698d] text-white"
-            : "hover:bg-[#e3f6f5]"} `}
+            state.dashboard.isActive
+              ? "bg-[#2c698d] text-white"
+              : "hover:bg-[#e3f6f5]"
+          } `}
         >
           <div className="flex flex-col w-full text-[12px] gap-x-1 lg:flex-row items-center  ">
-            <MdDashboard className="text-lg " />
+            <DashboardIcon className="text-lg " />
             <span className="">Dashboard</span>
           </div>
         </Link>
@@ -170,11 +165,13 @@ const Sidebar = () => {
           href="/corporate/accounts"
           onClick={() => handleDispatch("ACCOUNTS")}
           className={`w-full flex items-center lg:rounded-md lg:px-2 justify-center  ${
-            state.accounts.isActive  ? "bg-[#2c698d] text-white"
-            : "hover:bg-[#e3f6f5]"} `}
+            state.accounts.isActive
+              ? "bg-[#2c698d] text-white"
+              : "hover:bg-[#e3f6f5]"
+          } `}
         >
           <div className="flex flex-col w-full text-[12px] gap-x-1 lg:flex-row items-center  ">
-            <FaUsers className="text-lg " />
+            <GroupIcon className="text-lg " />
             <span className="">Accounts</span>
           </div>
         </Link>
@@ -183,27 +180,31 @@ const Sidebar = () => {
           href="/corporate/wallets"
           onClick={() => handleDispatch("WALLETS")}
           className={`w-full  flex items-center lg:rounded-md lg:px-2 justify-center  ${
-            state.wallets.isActive  ? "bg-[#2c698d] text-white"
-            : "hover:bg-[#e3f6f5]"} `}
+            state.wallets.isActive
+              ? "bg-[#2c698d] text-white"
+              : "hover:bg-[#e3f6f5]"
+          } `}
         >
           <div className="flex flex-col w-full text-[12px] gap-x-1 lg:flex-row items-center  ">
-            <CiWallet className="text-lg " />
+            <AccountBalanceWalletIcon className="text-lg " />
             <span className="">Wallets</span>
           </div>
         </Link>
 
-        <Link
+        {/* <Link
           href="/corporate/user-management"
           onClick={() => handleDispatch("USER_MANAGEMENT")}
           className={`w-full  flex items-center lg:rounded-md lg:px-2 justify-center  ${
-            state.userManagement.isActive ? "bg-[#2c698d] text-white"
-          : "hover:bg-[#e3f6f5]"} `}
+            state.userManagement.isActive
+              ? "bg-[#2c698d] text-white"
+              : "hover:bg-[#e3f6f5]"
+          } `}
         >
           <div className=" w-full flex flex-col  text-[12px] gap-x-1 lg:flex-row  items-center">
-            <MdManageAccounts className="text-lg" />
+            <ManageAccountsIcon className="text-lg" />
             <span className="">User Management</span>
           </div>
-        </Link>
+        </Link> */}
 
         <article
           className="w-full flex items-center lg:rounded-md justify-center flex-col cursor-pointer"
@@ -216,13 +217,13 @@ const Sidebar = () => {
             }`}
           >
             <div className="flex items-center gap-x-1">
-              <IoMdSettings className="text-lg " />
+              <SettingsIcon className="text-lg " />
               <span>Settings</span>
             </div>
             {showDropdown ? (
-              <RxCaretUp className="text-lg " />
+              <ExpandLess className="text-lg " />
             ) : (
-              <RxCaretDown className="text-lg " />
+              <ExpandMore className="text-lg " />
             )}
           </div>
           <article
@@ -254,11 +255,11 @@ const Sidebar = () => {
 
       <div className="border w-full lg:px-0"></div>
       <article className=" h-[150px] lg:flex hidden border-t flex-col justify-evenly py-2 lg:px-4">
-        <div className="text-xs flex flex-row gap-x-2">
+        <div className="text-xs flex flex-row gap-x-2 items-center">
           <span className="font-light">Status:</span>
           <div className="flex items-center gap-x-1">
             <span>Unverified</span>
-            <FaCircleXmark className="text-red-400" />
+            <CancelIcon className="text-red-400" />
           </div>
         </div>
         <div className="hover:lg:bg-PrimaryPurple cursor-pointer rounded-md h-8  flex flex-col w-full text-sm gap-x-1 lg:flex-row items-center justify-between">
@@ -266,7 +267,7 @@ const Sidebar = () => {
             ABC Company <br />
             corporate{" "}
           </span>
-          <GoSignOut onClick={handleSignOutModal} className="text-lg" />
+          <LogoutIcon onClick={handleSignOutModal} className="text-lg" />
         </div>
       </article>
     </section>

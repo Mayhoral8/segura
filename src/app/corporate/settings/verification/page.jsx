@@ -5,7 +5,6 @@ import { FormHelperText } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import { useTheme } from "@mui/material";
-import { Gender } from "@/config";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import InputLabel from "@mui/material/InputLabel";
@@ -16,54 +15,33 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import ListItemText from "@mui/material/ListItemText";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
-import { FaCloudUploadAlt } from "react-icons/fa";
+// import { FaCloudUploadAlt } from "react-icons/fa";
 
 import { useFormik } from "formik";
 import _ from "lodash";
 import * as Yup from "yup";
 
-
 const Verify = () => {
-  const allStatus = [
-    { value: 3, label: "Sole Proprieetorship" },
+  const allBusinessTypes = [
+    { value: 3, label: "Sole Proprietorship" },
     { value: 1, label: "Limited Liability Company" },
     { value: 2, label: "Partnership" },
   ];
 
   const getInitialValues = () => {
     const newCustomer = {
-      firstName: "",
-      lastName: "",
-      name: "",
+      corporateName: "",
+      rcNumber: "",
+      tin: "",
+      businessType: "",
       email: "",
-      firstName: "",
-      lastName: "",
-      name: "",
-      email: "",
-      age: 18,
-      avatar: 1,
-      gender: Gender.FEMALE,
-      industry: "",
-      orders: 0,
-      progress: 50,
-      status: 2,
-      orderStatus: "",
-      contact: "",
-      country: "",
-      location: "",
-      about: "",
-      orderStatus: "",
-      contact: "",
-      country: "",
-      location: "",
-      about: "",
-      // skills: [],
-      time: ["just now"],
-      date: "",
-      time: ["just now"],
-      date: "",
+      websiteUrl: "",
+      industrySector: "",
+      phoneNumber: "",
+      businessAddress: "",
+      operationalAddress: "",
+      totalEmployees: "",
     };
-
 
     return newCustomer;
   };
@@ -81,29 +59,46 @@ const Verify = () => {
   });
 
   const CustomerSchema = Yup.object().shape({
-    firstName: Yup.string()
+    corporateName: Yup.string()
       .max(255)
       .required("Registered Company Name is required"),
-    lastName: Yup.string().max(255).required("Registered Number is required"),
+    rcNumber: Yup.string().max(255).required("Registered Number is required"),
+    tin: Yup.string()
+      .max(255)
+      .required("Tax Identification number is required"),
+    businessType: Yup.string().max(255).required("Business type is required"),
+    websiteUrl: Yup.string().max(255).required("Website Url is required"),
     email: Yup.string()
       .max(255)
       .required("Email is required")
       .email("Must be a valid email"),
+    phoneNumber: Yup.string().max(255).required("Phone Number is required"),
+    businessAddress: Yup.string()
+      .max(255)
+      .required("Business address is required"),
+    operationalAddress: Yup.string()
+      .max(255)
+      .required("Operational address is required"),
+    totalEmployees: Yup.string().max(10).required("Total Employee is Required"),
+    industrySector: Yup.string()
+      .max(255)
+      .required("Industry sector is required"),
     status: Yup.string().required("Status is required"),
-    location: Yup.string().max(500),
-    about: Yup.string().max(500),
-    about: Yup.string().max(500),
   });
+  const submitDetails = (values)=>{
+    console.log(values)
+    alert(values)
+  }
 
   const formik = useFormik({
     initialValues: getInitialValues(),
     validationSchema: CustomerSchema,
     enableReinitialize: true,
-    // onSubmit:
+    onSubmit: submitDetails,
     enableReinitialize: true,
     // onSubmit:
   });
-  
+
   const {
     errors,
     touched,
@@ -115,7 +110,7 @@ const Verify = () => {
   const theme = useTheme();
 
   return (
-    <main className="my-10 flex flex-col justify-center lg:px-10 items-center gap-y-10 w-full">
+    <form onSubmit={handleSubmit} className="my-10 flex flex-col justify-center lg:px-10 items-center gap-y-10 w-full">
       <div className="">
         <Grid spacing={3}>
           <Grid item xs={12} md={8}>
@@ -125,59 +120,57 @@ const Verify = () => {
             <Grid container spacing={3}>
               <Grid item xs={6}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="customer-firstName">
+                  <InputLabel htmlFor="corporateName">
                     Registered Company Name
                   </InputLabel>
                   <TextField
                     fullWidth
-                    id="customer-firstName"
+                    id="corporateName"
                     placeholder="Registered Company Name"
-                    {...getFieldProps("firstName")}
-                    error={Boolean(touched.firstName && errors.firstName)}
-                    helperText={touched.firstName && errors.firstName}
+                    {...getFieldProps("corporateName")}
+                    error={Boolean(
+                      touched.corporateName && errors.corporateName
+                    )}
+                    helperText={touched.corporateName && errors.corporateName}
                   />
                 </Stack>
               </Grid>
               <Grid item xs={6}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="customer-lastName">
-                    Registered Number
-                  </InputLabel>
+                  <InputLabel htmlFor="rcNumber">Registered Number</InputLabel>
                   <TextField
                     fullWidth
-                    id="customer-lastName"
+                    id="rcNumber"
                     placeholder="Registered Number"
-                    {...getFieldProps("lastName")}
-                    error={Boolean(touched.lastName && errors.lastName)}
-                    helperText={touched.lastName && errors.lastName}
+                    {...getFieldProps("rcNumber")}
+                    error={Boolean(touched.rcNumber && errors.rcNumber)}
+                    helperText={touched.rcNumber && errors.rcNumber}
                   />
                 </Stack>
               </Grid>
               <Grid item xs={12}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="customer-email">
+                  <InputLabel htmlFor="tin">
                     Tax Identification Number (TIN)
                   </InputLabel>
                   <TextField
                     fullWidth
-                    id="customer-email"
+                    id="tin"
                     placeholder="Tax Identification Number (TIN)"
-                    {...getFieldProps("email")}
-                    error={Boolean(touched.email && errors.email)}
-                    helperText={touched.email && errors.email}
+                    {...getFieldProps("tin")}
+                    error={Boolean(touched.tin && errors.tin)}
+                    helperText={touched.tin && errors.tin}
                   />
                 </Stack>
               </Grid>
               <Grid item xs={12}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="customer-status">
-                    Business Type
-                  </InputLabel>
+                  <InputLabel htmlFor="businessType">Business Type</InputLabel>
                   <FormControl fullWidth>
                     <Select
-                      id="column-hiding"
+                      id="businessType"
                       displayEmpty
-                      {...getFieldProps("status")}
+                      {...getFieldProps("businessType")}
                       onChange={(event) =>
                         setFieldValue("status", event.target.value)
                       }
@@ -191,139 +184,163 @@ const Verify = () => {
                         if (!selected) {
                           return (
                             <Typography variant="subtitle1">
-                              Select Status
+                              Select Type
                             </Typography>
                           );
                         }
 
-                        const selectedStatus = allStatus.filter(
+                        const selectedBusinessType = allBusinessTypes.filter(
                           (item) => item.value === Number(selected)
                         );
                         return (
                           <Typography variant="subtitle2">
-                            {selectedStatus.length > 0
-                              ? selectedStatus[0].label
+                            {selectedBusinessType.length > 0
+                              ? selectedBusinessType[0].label
                               : "Pending"}
                           </Typography>
                         );
                       }}
                     >
-                      {allStatus.map((column) => (
+                      {allBusinessTypes.map((column) => (
                         <MenuItem key={column.value} value={column.value}>
                           <ListItemText primary={column.label} />
                         </MenuItem>
                       ))}
                     </Select>
                   </FormControl>
-                  {touched.status && errors.status && (
+                  {touched.businessType && errors.businessType && (
                     <FormHelperText
                       error
                       id="standard-weight-helper-text-email-login"
                       sx={{ pl: 1.75 }}
                     >
-                      {errors.status}
+                      {errors.businessType}
                     </FormHelperText>
                   )}
                 </Stack>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="customer-fatherName">
+                  <InputLabel htmlFor="industrySector">
                     Industry Sector/Nature of Business
                   </InputLabel>
                   <TextField
                     fullWidth
-                    id="customer-fatherName"
+                    id="industrySector"
                     placeholder="Industry Sector/Nature of Business"
-                    {...getFieldProps("fatherName")}
-                    error={Boolean(touched.fatherName && errors.fatherName)}
-                    helperText={touched.fatherName && errors.fatherName}
+                    {...getFieldProps("industrySector")}
+                    error={Boolean(
+                      touched.industrySector && errors.industrySector
+                    )}
+                    helperText={touched.industrySector && errors.industrySector}
                   />
                 </Stack>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="customer-country">
+                  <InputLabel htmlFor="email">
                     Official Email Address
                   </InputLabel>
                   <TextField
                     fullWidth
-                    id="customer-country"
+                    id="email"
                     placeholder="Official email address"
-                    {...getFieldProps("country")}
-                    error={Boolean(touched.country && errors.country)}
-                    helperText={touched.country && errors.country}
+                    {...getFieldProps("email")}
+                    error={Boolean(touched.email && errors.email)}
+                    helperText={touched.email && errors.email}
                   />
                 </Stack>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="customer-role">
+                  <InputLabel htmlFor="businessAddress">
                     Registered Business Address
                   </InputLabel>
                   <TextField
                     fullWidth
-                    id="customer-role"
-                    placeholder="Address I"
-                    {...getFieldProps("role")}
-                    error={Boolean(touched.role && errors.role)}
-                    helperText={touched.role && errors.role}
-                  />
-                </Stack>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Stack spacing={1}>
-                  <InputLabel htmlFor="customer-contact">
-                    Operational Address (if different)
-                  </InputLabel>
-                  <TextField
-                    fullWidth
-                    id="customer-contact"
-                    placeholder="Address II"
-                    {...getFieldProps("contact")}
-                    error={Boolean(touched.contact && errors.contact)}
-                    helperText={touched.contact && errors.contact}
+                    id="businessAddress"
+                    placeholder="Business Address"
+                    {...getFieldProps("businessAddress")}
+                    error={Boolean(
+                      touched.businessAddress && errors.businessAddress
+                    )}
+                    helperText={
+                      touched.businessAddress && errors.businessAddress
+                    }
                   />
                 </Stack>
               </Grid>
               <Grid item xs={12}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="customer-location">
-                    Phone Number
+                  <InputLabel htmlFor="operationalAddress">
+                    Operational Address
                   </InputLabel>
                   <TextField
                     fullWidth
-                    id="customer-location"
+                    id="operationalAddress"
+                    placeholder="Operational Address"
+                    {...getFieldProps("operationalAddress")}
+                    error={Boolean(touched.operationalAddress && errors.operationalAddress)}
+                    helperText={touched.operationalAddress && errors.operationalAddress}
+                  />
+                </Stack>
+              </Grid>
+              <Grid item xs={12}>
+                <Stack spacing={1}>
+                  <InputLabel htmlFor="phoneNumber">Phone Number</InputLabel>
+                  <TextField
+                    fullWidth
+                    id="phoneNumber"
                     multiline
                     rows={1}
                     placeholder="Phone number"
-                    {...getFieldProps("location")}
-                    error={Boolean(touched.location && errors.location)}
-                    helperText={touched.location && errors.location}
+                    {...getFieldProps("phoneNumber")}
+                    error={Boolean(touched.phoneNumber && errors.phoneNumber)}
+                    helperText={touched.phoneNumber && errors.phoneNumber}
                   />
                 </Stack>
               </Grid>
               <Grid item xs={12}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="customer-about">
-                    Website (if any)
-                  </InputLabel>
+                  <InputLabel htmlFor="websiteUrl">Website (if any)</InputLabel>
                   <TextField
                     fullWidth
-                    id="customer-about"
+                    id="websiteUrl"
                     multiline
                     rows={1}
                     placeholder="URL"
-                    {...getFieldProps("about")}
-                    error={Boolean(touched.about && errors.about)}
-                    helperText={touched.about && errors.about}
+                    {...getFieldProps("websiteUrl")}
+                    error={Boolean(touched.websiteUrl && errors.websiteUrl)}
+                    helperText={touched.websiteUrl && errors.websiteUrl}
                   />
                 </Stack>
+              </Grid>
+              <Grid item xs={12}>
+                <Stack spacing={1}>
+                  <InputLabel htmlFor="totalEmployees">
+                    Total Employees
+                  </InputLabel>
+                  <TextField
+                    fullWidth
+                    id="totalEmployees"
+                    multiline
+                    rows={1}
+                    placeholder="URL"
+                    {...getFieldProps("totalEmployees")}
+                    error={Boolean(
+                      touched.totalEmployees && errors.totalEmployees
+                    )}
+                    helperText={touched.totalEmployees && errors.totalEmployees}
+                  />
+                </Stack>
+              </Grid>
+              <Grid item xs={12}>
+              <Button>Submit</Button>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
-        <Grid spacing={3}>
+        {/* <Grid spacing={3}>
           <Grid item xs={12} md={8}>
             <h2 className="mb-5 text-2xl font-semibold">
               Documents to be Uploaded
@@ -339,73 +356,7 @@ const Verify = () => {
                     role={undefined}
                     variant="contained"
                     tabIndex={-1}
-                    startIcon={<FaCloudUploadAlt />}
-                    className="bg-[#2C698D] hover:bg-[#204d67]"
-                  >
-                    Upload files
-                    <VisuallyHiddenInput
-                      type="file"
-                      onChange={(event) => console.log(event.target.files)}
-                      multiple
-                    />
-                  </Button>
-                </Stack>
-              </Grid>
-              <Grid item xs={6}>
-                <Stack spacing={1}>
-                  <InputLabel htmlFor="customer-lastName">
-                    Memorandum and Articles of Association
-                  </InputLabel>
-                  <Button
-                    component="label"
-                    role={undefined}
-                    variant="contained"
-                    tabIndex={-1}
-                    startIcon={<FaCloudUploadAlt />}
-                    className="bg-[#2C698D] hover:bg-[#204d67]"
-                  >
-                    Upload files
-                    <VisuallyHiddenInput
-                      type="file"
-                      onChange={(event) => console.log(event.target.files)}
-                      multiple
-                    />
-                  </Button>
-                </Stack>
-              </Grid>
-              <Grid item xs={6}>
-                <Stack spacing={1}>
-                  <InputLabel htmlFor="customer-email">
-                    From CAC 2 (Statement of Share Capital)
-                  </InputLabel>
-                  <Button
-                    component="label"
-                    role={undefined}
-                    variant="contained"
-                    tabIndex={-1}
-                    startIcon={<FaCloudUploadAlt />}
-                    className="bg-[#2C698D] hover:bg-[#204d67]"
-                  >
-                    Upload files
-                    <VisuallyHiddenInput
-                      type="file"
-                      onChange={(event) => console.log(event.target.files)}
-                      multiple
-                    />
-                  </Button>
-                </Stack>
-              </Grid>
-              <Grid item xs={6}>
-                <Stack spacing={1}>
-                  <InputLabel htmlFor="customer-age">
-                    Board resolution authorizing account opening
-                  </InputLabel>
-                  <Button
-                    component="label"
-                    role={undefined}
-                    variant="contained"
-                    tabIndex={-1}
-                    startIcon={<FaCloudUploadAlt />}
+                    // startIcon={<FaCloudUploadAlt />}
                     className="bg-[#2C698D] hover:bg-[#204d67]"
                   >
                     Upload files
@@ -540,7 +491,7 @@ const Verify = () => {
                     role={undefined}
                     variant="contained"
                     tabIndex={-1}
-                    startIcon={<FaCloudUploadAlt />}
+                    // startIcon={<FaCloudUploadAlt />}
                     className="bg-[#2C698D] hover:bg-[#204d67]"
                   >
                     Upload files
@@ -563,7 +514,7 @@ const Verify = () => {
                     role={undefined}
                     variant="contained"
                     tabIndex={-1}
-                    startIcon={<FaCloudUploadAlt />}
+                    // startIcon={<FaCloudUploadAlt />}
                     className="bg-[#2C698D] hover:bg-[#204d67]"
                   >
                     Upload files
@@ -585,8 +536,8 @@ const Verify = () => {
                     role={undefined}
                     variant="contained"
                     tabIndex={-1}
-                    startIcon={<FaCloudUploadAlt />}
-                    className="bg-[#2C698D] hover:bg-[#204d67] hover:bg-[#204d67] "
+                    // startIcon={<FaCloudUploadAlt />}
+                    className="bg-[#2C698D] hover:bg-[#204d67] "
                   >
                     Upload files
                     <VisuallyHiddenInput
@@ -607,7 +558,7 @@ const Verify = () => {
                     role={undefined}
                     variant="contained"
                     tabIndex={-1}
-                    startIcon={<FaCloudUploadAlt />}
+                    // startIcon={<FaCloudUploadAlt />}
                     className="bg-[#2C698D] hover:bg-[#204d67]"
                   >
                     Upload files
@@ -621,12 +572,11 @@ const Verify = () => {
               </Grid>
             </Grid>
           </Grid>
-        </Grid>
+        </Grid> */}
       </div>
-    </main>
+    </form>
   );
 };
-
 
 export default Verify;
 

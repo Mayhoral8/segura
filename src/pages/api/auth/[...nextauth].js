@@ -1,29 +1,32 @@
-// pages/api/auth/[...nextauth].ts
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import jwtDecode from "jwt-decode"
 
 export default NextAuth({
   providers: [
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        username: { label: "Username", type: "text" }, // Changed to email
+        username: { label: "Username", type: "text" }, 
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
         try {
-          // Make a POST request to your custom backend's authentication endpoint
-          const response = await fetch("https://api-dev.segura-pay.com/api/v1/auth/login", {
-            method: "POST",
-            body: JSON.stringify({username: credentials?.username,
-              password: credentials?.password,}),
-            headers: {
-                "Content-Type": "application/json"
+         
+          const response = await fetch(
+            "https://api-dev.segura-pay.com/api/v1/auth/login",
+            {
+              method: "POST",
+              body: JSON.stringify({
+                username: credentials?.username,
+                password: credentials?.password,
+              }),
+              headers: {
+                "Content-Type": "application/json",
               },
-          });
+            }
+          );
 
-          // Extract user data from response (adjust based on your backend’s response structure)
+          
           const user = await response.json();
           console.log(user);
           // const decoded
@@ -33,23 +36,22 @@ export default NextAuth({
             console.log(user.data);
             return user.data;
           } else {
-            return null;
+            throw new Error(user?.message || "Invalid login credentials");
           }
         } catch (error) {
-          console.error("Login error:", error);
-          return null; // Authentication failed
+          throw new Error(error.message);
         }
       },
     }),
   ],
   pages: {
-    signIn: '/auth/login',
-    signOut: '/auth/login',
-    error: '/auth/error', // Error page if authentication fails
+    signIn: "/auth/login",
+    signOut: "/auth/login",
+    error: "/auth/login", 
   },
   session: {
     strategy: "jwt", // Storing session as a JWT
-    maxAge: 24 * 60 * 60
+    maxAge: 24 * 60 * 60,
   },
   callbacks: {
     async jwt({ token, user }) {

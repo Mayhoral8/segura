@@ -2,12 +2,13 @@
 
 import React from "react";
 
-import SignOutModal from "@/app/auth/signoutModal";
-import { RiVerifiedBadgeFill } from "react-icons/ri";
+import SignOutModal from "../auth/signoutModal";
+import VerifiedIcon from "@mui/icons-material/Verified";
 import Sidebar from "./sidebar";
-import TopBar from "@/app/corporate/topbar";
+import TopBar from "./topbar";
 
-import AuthGuard from "@/app/auth/AuthGuard";
+// import AuthGuard from "@/app/auth/AuthGuard";
+import AuthGuard from "../auth/AuthGuard";
 export default function DashboardLayout({
   children, // will be a page or nested layout
 }) {

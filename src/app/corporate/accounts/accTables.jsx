@@ -1,6 +1,6 @@
 "use client";
 import React, { useContext} from "react";
-import { ConfigContext } from "@/contexts/ConfigContext";
+import { ConfigContext } from "../../../contexts/ConfigContext";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -8,7 +8,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { FaNairaSign } from "react-icons/fa6";
+// import { FaNairaSign } from "react-icons/fa6";
 
 const AccountTable = () => {
   
@@ -74,7 +74,8 @@ const AccountTable = () => {
                     className="cursor-pointer flex items-center justify-center"
                     align="center"
                   >
-                    <FaNairaSign /> {row.accBalance}
+                    {/* <FaNairaSign /> {row.accBalance} */}
+                    {row.accBalance}
                   </TableCell>
                   <TableCell
                     title="Click to view details"

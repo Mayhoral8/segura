@@ -5,39 +5,32 @@ import PropTypes from "prop-types";
 import { SessionProvider } from "next-auth/react";
 
 // project import
-import ThemeCustomization from "@/themes";
 
-import Locales from "@/components/Locales";
-import ScrollTop from "@/components/ScrollTop";
-import RTLLayout from "@/components/RTLLayout";
-import Snackbar from "@/components/@extended/Snackbar";
-import Notistack from "@/components/third-party/Notistack";
+import Toast from "../components/Toast";
 
-import { ConfigProvider } from "@/contexts/ConfigContext";
+// import Locales from "@/components/Locales";
+// import ScrollTop from "@/components/ScrollTop";
+// import RTLLayout from "@/components/RTLLayout";
+// import Snackbar from "@/components/@extended/Snackbar";
+// import Notistack from "@/components/third-party/Notistack";
+
+import { ConfigProvider } from "../contexts/ConfigContext";
 import ReactQueryProvider from "./reactqueryProvider";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import Spinner from "../components/Spinner";
 
 // ==============================|| APP - THEME, ROUTER, LOCAL ||============================== //
 
 export default function ProviderWrapper({ children }) {
   return (
     <ReactQueryProvider>
-      <ReactQueryDevtools initialIsOpen={false}/>
+      <ReactQueryDevtools initialIsOpen={false} />
       <ConfigProvider>
-        <ThemeCustomization>
-          <RTLLayout>
-            <Locales>
-              <ScrollTop>
-                <SessionProvider refetchInterval={0}>
-                  <Notistack>
-                    <Snackbar />
-                    {children}
-                  </Notistack>
-                </SessionProvider>
-              </ScrollTop>
-            </Locales>
-          </RTLLayout>
-        </ThemeCustomization>
+        <SessionProvider refetchInterval={0}>
+          <Spinner />
+          <Toast />
+          {children}
+        </SessionProvider>
       </ConfigProvider>
     </ReactQueryProvider>
   );
