@@ -201,17 +201,25 @@ export default function SignIn() {
                   </span>
                 </div>
                 <div className="flex flex-col w-[48%] gap-y-2 mb-2">
-                  <label htmlFor="email" className="text-[#8C8C8C] text-sm">
-                    Official Email Address
+                  <label
+                    htmlFor="company size"
+                    className="text-[#8C8C8C] text-sm"
+                  >
+                    Business/Company Size
                   </label>
-                  <Field
-                    name="email"
-                    type="text"
-                    placeholder="Enter your email"
-                    className="border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px]"
-                  />
+                  <div className="border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px]">
+                    <Field
+                      name="company size"
+                      as="select"
+                      className="bg-white w-full h-full outline-none"
+                    >
+                      <option value="red">Select</option>
+                      <option value="green">Green</option>
+                      <option value="blue">Blue</option>
+                    </Field>
+                  </div>
                   <span className="text-red-500 text-xs">
-                    <ErrorMessage name="email" />
+                    <ErrorMessage name="business size" />
                   </span>
                 </div>
               </div>

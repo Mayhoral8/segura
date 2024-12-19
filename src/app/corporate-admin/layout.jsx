@@ -18,7 +18,7 @@ export default function DashboardLayout({
       <SignOutModal />
       <TopBar />
       <Sidebar />
-      <div className="pt-20 bg-[#F0F0F0] ml-[16%]">{children}</div>
+      <div className="pt-20 bg-[#F0F0F0] ml-[260px]">{children}</div>
     </main>
     // </AuthGuard>
   );

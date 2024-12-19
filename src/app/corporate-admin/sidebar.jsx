@@ -148,7 +148,7 @@ const Sidebar = () => {
       case "DEFAULT": {
         return {
           ...state,
-          starthere: { isActive: false },
+          starthere: { isActive: true },
           dashboard: { isActive: false },
           accounts: { isActive: false },
           wallets: { isActive: false },
@@ -193,7 +193,7 @@ const Sidebar = () => {
       </div>
       <section className="flex flex-row lg:flex-col lg:gap-y-1 w-full overflow-y-auto scrollbar-hide h-[400px]">
         <Link
-          href="/corporate-admin/dashboard"
+          href="/corporate-admin/starthere"
           onClick={() => handleDispatch("START_HERE")}
           className={`w-full h-[44px] flex items-center pl-[20px] justify-center  ${
             state.starthere.isActive
