@@ -15,14 +15,14 @@ const TopBar = () => {
       style={{ width: "calc(100% - 260px)" }}
       className="flex flex-col relative left-[260px]"
     >
-      <div className="lg:w-[84%] h-20 bg-white shadow-[0_4px_10px_-5px_rgba(0,0,0,0.1)] text-white fixed top-0 z-40 px-10">
+      <div className="lg:w-[80%] h-20 bg-white shadow-[0_4px_10px_-5px_rgba(0,0,0,0.1)] text-white fixed top-0 z-40 px-10">
         <div className="h-full w-full flex justify-between items-center">
           <div className="text-[#1F1F1F] text-[20px] font-bold">
             <p>Account Management</p>
           </div>
           <div className="flex items-center gap-[50px]">
             <div className="">
-              <div className="w-[450px] h-[40px] border-[#D9D9D9] border-[2px] rounded-md bg-white flex justify-between items-center pl-2">
+              <div className="w-[400px] h-[40px] border-[#D9D9D9] border-[2px] rounded-md bg-white flex justify-between items-center pl-2">
                 <CiSearch className="text-[#262626] text-[14px]" />
                 <input
                   type="text"

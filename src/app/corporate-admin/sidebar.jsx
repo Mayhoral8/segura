@@ -164,16 +164,18 @@ const Sidebar = () => {
   const [state, dispatch] = useReducer(reducerFunc, initialState);
 
   useEffect(() => {
-    if (pathname === "/corporate/dashboard") {
+    if (pathname === "/corporate-admin/start-here") {
+      return dispatch({ type: "USER_MANAGEMENT" });
+    } else if (pathname === "/corporate-admin/dashboard") {
       return dispatch({ type: "DASHBOARD" });
-    } else if (pathname.includes("/corporate/settings")) {
+    } else if (pathname.includes("/corporate-admin/settings")) {
       setShowDropDown(true);
       return dispatch({ type: "SETTINGS" });
-    } else if (pathname === "/corporate/user-management") {
+    } else if (pathname === "/corporate-admin/user-management") {
       return dispatch({ type: "USER_MANAGEMENT" });
-    } else if (pathname.includes("/corporate/accounts")) {
+    } else if (pathname.includes("/corporate-admin/accounts")) {
       return dispatch({ type: "ACCOUNTS" });
-    } else if (pathname.includes("/corporate/wallets")) {
+    } else if (pathname.includes("/corporate-admin/wallets")) {
       return dispatch({ type: "WALLETS" });
     }
   }, [pathname, searchParams]);
@@ -193,7 +195,7 @@ const Sidebar = () => {
       </div>
       <section className="flex flex-row lg:flex-col lg:gap-y-1 w-full overflow-y-auto scrollbar-hide h-[400px]">
         <Link
-          href="/corporate-admin/starthere"
+          href="/corporate-admin/start-here"
           onClick={() => handleDispatch("START_HERE")}
           className={`w-full h-[44px] flex items-center pl-[20px] justify-center  ${
             state.starthere.isActive
@@ -208,7 +210,7 @@ const Sidebar = () => {
         </Link>
 
         <Link
-          href="/corporate-admin/accounts"
+          href="/corporate-admin/dashboard"
           onClick={() => handleDispatch("DASHBOARD")}
           className={`w-full h-[44px] flex items-center pl-[20px] justify-center  ${
             state.dashboard.isActive
@@ -298,12 +300,11 @@ const Sidebar = () => {
       </section>
 
       <article className="flex flex-col mt-auto justify-self-end">
-        <div className="hover:lg:bg-PrimaryPurple lg:px-[20px] cursor-pointer rounded-md flex w-full text-sm gap-x-1 lg:flex-row items-center h-[44px]">
-          <Image
-            src={LogoutIcon}
-            onClick={handleSignOutModal}
-            className="text-lg"
-          />
+        <div
+          className="hover:lg:bg-PrimaryPurple lg:px-[20px] cursor-pointer rounded-md flex w-full text-sm gap-x-1 lg:flex-row items-center h-[44px]"
+          onClick={handleSignOutModal}
+        >
+          <Image src={LogoutIcon} className="text-lg" />
           <span className="text-xs text-[#CF1322] ml-2">Logout</span>
         </div>
         <div className="lg:px-[20px] lg:py-[10px] bg-[#FAFAFA]">
