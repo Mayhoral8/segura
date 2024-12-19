@@ -1,6 +1,6 @@
 "use client";
 import React, { useContext} from "react";
-import { ConfigContext } from "@/contexts/ConfigContext";
+import { ConfigContext } from "../../../contexts/ConfigContext";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -75,6 +75,7 @@ const AccountTable = () => {
                     align="center"
                   >
                     {/* <FaNairaSign /> {row.accBalance} */}
+                    {row.accBalance}
                   </TableCell>
                   <TableCell
                     title="Click to view details"

@@ -1,13 +1,13 @@
 "use client";
 import React, { useContext, useEffect, useState } from "react";
-import { ConfigContext } from "@/contexts/ConfigContext";
-import AccTable from "@/app/corporate/accounts/accTables";
-import AccountViewModal from "@/app/corporate/accounts/AccountViewModal";
-// import { CiSearch } from "react-icons/ci";
-// import { FaUsers } from "react-icons/fa6";
-// import { FaUserCheck } from "react-icons/fa6";
+import { ConfigContext } from "../../../contexts/ConfigContext";
+import AccTable from "../../corporate/accounts/accTables";
+import AccountViewModal from "../../corporate/accounts/AccountViewModal";
+import { CiSearch } from "react-icons/ci";
+import { FaUsers } from "react-icons/fa6";
+import { FaUserCheck } from "react-icons/fa6";
 // import AccountTableOperations from "../../../components/AccountTableOperations";
-import AccountTableOperations from "@/components/TableOperations/AccountTableOperations" 
+import AccountTableOperations from "../../../components/TableOperations/AccountTableOperations" 
 
 
 const Page = () => {

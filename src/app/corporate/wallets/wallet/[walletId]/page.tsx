@@ -1,5 +1,9 @@
 "use client";
+<<<<<<< HEAD
 import React, { useState, useReducer } from "react";
+=======
+import { useReducer, useState } from "react";
+>>>>>>> 676767d25f4b30635d418b8237c37f1bdd9d9456
 // import { FiSend } from "react-icons/fi";
 import { Avatar } from "@mui/material";
 // import { FaEuroSign, FaPoundSign } from "react-icons/fa";
@@ -8,7 +12,11 @@ import { Avatar } from "@mui/material";
 // import { IoEyeOutline } from "react-icons/io5";
 // import { FaRegCopy } from "react-icons/fa";
 // import { HiSwitchHorizontal } from "react-icons/hi";
+<<<<<<< HEAD
 import { AnimateDropdown } from "@/components/Animate";
+=======
+import { AnimateDropdown } from "../../../../../components/Animate";
+>>>>>>> 676767d25f4b30635d418b8237c37f1bdd9d9456
 import RequestFundingFormWrapper from "../RequestFundingFormWrapper";
 
 type State = {

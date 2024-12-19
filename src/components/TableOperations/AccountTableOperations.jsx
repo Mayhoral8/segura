@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useContext, useState } from "react";
-import { ConfigContext } from "@/contexts/ConfigContext";
-import { useFilterTable } from "@/hooks/useFilterTable";
+import { ConfigContext } from "../../contexts/ConfigContext";
+import { useFilterTable } from "../../hooks/useFilterTable";
 import { useSearchParams } from "next/navigation";
 // import { IoFilterOutline } from "react-icons/io5";
 

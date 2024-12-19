@@ -8,6 +8,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { usePathname } from "next/navigation";
 // import logo from "../../public/navbar/logo.png";
 import { useRouter } from "next/navigation";
+import Logo from "@/assets/landingPage/logo.svg";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -111,16 +112,16 @@ const Navbar = () => {
     <section
       className={`${
         openNavBar ? "bg-[#2c698d]" : "bg-white"
-      } xl:bg-white xl:bg-opacity-[0.05] xl:backdrop-blur-sm flex justify-center py-5 xl:h-28 lg:items-center fixed top-0 left-0 right-0 z-30 items-center`}
+      } flex justify-center py-5 h-[96px] lg:items-center fixed top-0 left-0 right-0 z-30 items-center`}
     >
-      <div className="xl:border-2 xl:bg-opacity-50 xl:backdrop-blur-md xl:border-[#2c698d] xl:h-[60px] w-full h-full xl:w-[88%] xl:bg-white flex lg:flex-row flex-col lg:justify-between items-center lg:rounded-[20px] lg:px-2">
-        <div className="px-4 xl:px-0 lg:w-max flex flex-row justify-between items-center w-full">
+      <div className="h-full xl:bg-white flex lg:flex-row flex-col lg:justify-between items-center lg:px-[50px] xl:px-0 xl:w-[1200px] w-full">
+        <div className="px-4 lg:px-0 lg:w-max flex flex-row justify-between items-center w-full">
           <div
             className={`${
               openNavBar ? "text-white" : "text-black"
-            } flex flex-row items-center lg:text-black font-bold text-2xl`}
+            } flex flex-row items-center lg:text-black font-bold text-[22px]`}
           >
-            SEGURA.
+            <Image src={Logo} alt="logo " />
           </div>
 
           <div className="lg:hidden cursor-pointer text-2xl">
@@ -137,30 +138,18 @@ const Navbar = () => {
 
         <div
           className={`${
-            openNavBar ? "bg-[#2c698d] h-screen text-gray-950 " : " h-0"
-          } shadow-md transition-all delay-400 duration-300 lg:h-full lg:shadow-none w-full lg:w-max lg:text-black overflow-y-scroll lg:overflow-hidden relative`}
+            openNavBar ? "bg-[#2c698d] h-screen text-gray-950" : " h-0"
+          } flex items-center shadow-md transition-all delay-400 duration-300 lg:h-full lg:shadow-none w-full lg:w-max lg:text-black overflow-y-scroll lg:overflow-hidden relative`}
         >
-          <ul className="flex lg:px-2 items-center gap-y-8 lg:gap-y-0 justify-center  lg:text-sm flex-col lg:flex-row h-full relative text-xl lg:gap-10 font-semibold">
-            <Link href="#" className="">
-              <li
-                className={`${
-                  openNavBar ? "visible" : "hidden"
-                } hover:lg:bg-[#2c698d]  hover:lg:text-white lg:block ${
-                  state.aboutIsActive && "lg:bg-[#2c698d]  lg:text-gray-950 "
-                } text-white lg:text-gray-900 lg:h-8 lg:w-20 lg:text-center lg:flex lg:items-center lg:justify-center transition-all delay-400 duration-300 ml-2 lg:ml-0`}
-                onClick={() => navBarHandler("about")}
-              >
-                About Us
-              </li>
-            </Link>
+          <ul className="flex lg:px-2 items-center gap-y-8 lg:gap-y-0 justify-center  lg:text-sm flex-col lg:flex-row h-full relative text-xl lg:gap-10 text-[14px] text-[#272643]">
             <Link href="#">
               <div
                 className={`${openNavBar ? "visible" : "hidden"}  lg:block ${
                   state.portalsIsActive && "lg:bg-[#2c698d]  lg:text-gray-950 "
-                } text-white lg:text-gray-900 lg:h-8 lg:w-20 lg:text-center lg:flex lg:items-center lg:justify-center transition-all delay-400 duration-300 cursor-pointer flex flex-row items-center justify-between`}
+                } text-white font-normal lg:text-gray-900 lg:h-8 lg:w-20 lg:text-center lg:flex lg:items-center lg:justify-center transition-all delay-400 duration-300 cursor-pointer flex flex-row items-center justify-between`}
                 onClick={() => navBarHandler("portal")}
               >
-                Products
+                Home
               </div>
             </Link>
 
@@ -174,7 +163,7 @@ const Navbar = () => {
                 } lg:text-gray-900 text-white lg:h-8 lg:w-20 lg:text-center lg:flex lg:items-center lg:justify-center transition-all delay-400 duration-300`}
                 onClick={() => navBarHandler("admissions")}
               >
-                Company
+                Features
               </li>
             </Link>
 
@@ -187,29 +176,15 @@ const Navbar = () => {
                 } lg:text-gray-900 text-white lg:h-8 lg:w-20 lg:text-center lg:flex lg:items-center lg:justify-center transition-all delay-400 duration-300 relative`}
                 onClick={() => navBarHandler("contact")}
               >
-                Resources
+                About Us
               </li>
             </Link>
-
-            <li
-              className={`${openNavBar ? "visible" : "hidden"} ${
-                pathname === "/portals/result" ? "visible" : "hidden lg:hidden"
-              } hover:lg:bg-[#2c698d]  hover:lg:text-white  lg:text-gray-900 text-white lg:h-8 lg:w-20 lg:text-center lg:flex lg:items-center lg:justify-center transition-all delay-400 duration-300 relative cursor-pointer`}
-              onClick={handleLogout}
-            >
-              Logout
-            </li>
           </ul>
-        </div>
-        <div className="hidden lg:flex flex-row gap-x-2">
-          <Link href="/auth/login">
-            <button className="border-[#2c698d] text-[#2c698d] tracking-[0.5px] font-semibold border-2 hover:bg-[#2c698d] hover:text-white lg:px-3 xl:px-0 xl:w-[140px] h-[40px] rounded-[10px] ">
-              Login
+          <Link href="/auth/register">
+            <button className="bg-[#2c698d] w-[117px] h-[44px] rounded-[4px] font-normal text-white ml-8">
+              Get Started
             </button>
           </Link>
-          <button className="bg-[#2c698d] lg:px-3 xl:px-0 xl:w-[140px] h-[40px] rounded-[10px] tracking-[0.5px] font-semibold text-white">
-            Get Started
-          </button>
         </div>
       </div>
     </section>

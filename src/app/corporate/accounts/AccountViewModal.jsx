@@ -1,7 +1,7 @@
 "use client";
 import React, { useContext } from "react";
-// import { HiMiniXMark } from "react-icons/hi2";
-import { ConfigContext } from "@/contexts/ConfigContext";
+import { HiMiniXMark } from "react-icons/hi2";
+import { ConfigContext } from "../../../contexts/ConfigContext";
 import { useRouter } from "next/navigation";
 import { AnimateRightModal } from "../../../components/Animate";
 import TransactionsHistory from "../dashboard/TransactionsHistory";
@@ -24,7 +24,7 @@ const AccountViewModal = () => {
   return (
     <AnimateRightModal isVisible={showAccountDetailsModal}>
       <section className="absolute h-full w-[600px] bg-white overflow-y-scroll">
-        <div className="flex flex-row justify-between px-4 items-center text-lg fixed bg-white top-0 w-[600px] z-10 shadow-sm py-2">
+        <div className="flex flex-row justify-between px-4 items-center text-lg fixed bg-white top-0 w-[600px] z-20 shadow-sm py-2">
           <span className=" font-semibold">Account Details</span>
           {/* <HiMiniXMark
             onClick={hideModal}

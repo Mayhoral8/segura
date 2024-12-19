@@ -1,35 +1,59 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import AutorenewIcon from "@mui/icons-material/Autorenew";
+import { CgSpinner } from "react-icons/cg";
+import { ConfigContext } from "../../contexts/ConfigContext";
 
 const AuthGuard = ({ children }) => {
+  const { previousLocation } = useContext(ConfigContext);
   const router = useRouter();
   const { data: session, status } = useSession();
 
   useEffect(() => {
-    if (status === "unauthenticated") {
-      router.push("/auth/login");
-    }
-  }, [status, router]);
+    // if (status === "unauthenticated") {
+    //   router.push("/auth/login");
+    //   return;
+    // }
+
+    // if (status === "authenticated" && session) {
+    //   const permissions = session?.user?.permissions || [];
+
+    //   // Determine redirection path based on permissions
+    //   const isCorporateAdmin = permissions.some(
+    //     (permission) => permission.name === "PERMISSION_CORPORATE_CREATE"
+    //   );
+
+    //   const targetRoute = isCorporateAdmin
+    //     ? "/corporate-admin/dashboard"
+    //     : "/corporate/dashboard";
+
+    //   // Redirect only if the user isn't already on the target route
+
+    //   if (previousLocation !== targetRoute && previousLocation) {
+    //     return router.push(previousLocation);
+    //   } else {
+    //     return router.push(targetRoute);
+    //   }
+    // }
+  }, [status, session]);
 
   // Show loading spinner while session is being checked
   if (status === "loading") {
     return (
       <div className="fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center bg-[#00000061]">
-        <AutorenewIcon className="animate-spin text-3xl text-[#2c698d]" />
+        <CgSpinner className="animate-spin text-5xl text-[#2c698d]" />
       </div>
     );
   }
 
-  // Only render children if authenticated
-  if (status === "authenticated") {
-    return <div>{children}</div>;
-  }
+  // Render children only if authenticated
+  // if (status === "authenticated") {
+    return <>{children}</>;
+  // }
 
-  // Render nothing while redirecting
+  // Render nothing while redirecting or if unauthenticated
   return null;
 };
 

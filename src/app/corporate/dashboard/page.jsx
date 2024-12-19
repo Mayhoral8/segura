@@ -13,8 +13,9 @@ import TableRow from "@mui/material/TableRow";
 // import { FaClock } from "react-icons/fa";
 import { BarChart } from "@mui/x-charts/BarChart";
 import { useSession } from "next-auth/react"
+import Modal from "../../../components/modal";
 
-import Modal from '@/components/modal'
+import Modal from '../../../components/modal'
 
 const Dashboard = () => {
   const { data: session, status } = useSession()
@@ -23,7 +24,9 @@ const Dashboard = () => {
   function createData(date, senderReceiver, amount, description, status) {
     return { date, senderReceiver, amount, description, status };
   }
-  const [showModal, setShowModal] = useState(false)
+
+
+const [showModal, setShowModal] = useState(false)
   
 
   useEffect(()=>{
