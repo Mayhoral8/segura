@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 "use client";
 
 // next
@@ -69,14 +68,4 @@ export default function SignIn() {
     );
   }
 }
-=======
-import React from 'react'
 
-const Page = () => {
-  return (
-    <div className='w-full h-full'>Page</div>
-  )
-}
-
-export default Page
->>>>>>> 676767d25f4b30635d418b8237c37f1bdd9d9456
