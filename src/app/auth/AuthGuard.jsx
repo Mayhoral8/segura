@@ -12,31 +12,21 @@ const AuthGuard = ({ children }) => {
   const { data: session, status } = useSession();
 
   useEffect(() => {
-    // if (status === "unauthenticated") {
-    //   router.push("/auth/login");
-    //   return;
-    // }
+    if (status === "unauthenticated") {
+      router.push("/auth/login");
+      return;
+    }
 
-    // if (status === "authenticated" && session) {
-    //   const permissions = session?.user?.permissions || [];
+    if (status === "authenticated" && session) {
+      const permissions = session?.user?.permissions || [];
 
-    //   // Determine redirection path based on permissions
-    //   const isCorporateAdmin = permissions.some(
-    //     (permission) => permission.name === "PERMISSION_CORPORATE_CREATE"
-    //   );
+      // Determine redirection path based on permissions
+      const isCorporateAdmin = permissions.some(
+        (permission) => permission.name === "PERMISSION_CORPORATE_CREATE"
+      );
 
-    //   const targetRoute = isCorporateAdmin
-    //     ? "/corporate-admin/dashboard"
-    //     : "/corporate/dashboard";
-
-    //   // Redirect only if the user isn't already on the target route
-
-    //   if (previousLocation !== targetRoute && previousLocation) {
-    //     return router.push(previousLocation);
-    //   } else {
-    //     return router.push(targetRoute);
-    //   }
-    // }
+     
+    }
   }, [status, session]);
 
   // Show loading spinner while session is being checked
@@ -49,9 +39,9 @@ const AuthGuard = ({ children }) => {
   }
 
   // Render children only if authenticated
-  // if (status === "authenticated") {
+  if (status === "authenticated") {
     return <>{children}</>;
-  // }
+  }
 
   // Render nothing while redirecting or if unauthenticated
   return null;

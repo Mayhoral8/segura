@@ -304,14 +304,14 @@ const Sidebar = () => {
           className="hover:lg:bg-PrimaryPurple lg:px-[20px] cursor-pointer rounded-md flex w-full text-sm gap-x-1 lg:flex-row items-center h-[44px]"
           onClick={handleSignOutModal}
         >
-          <Image src={LogoutIcon} className="text-lg" />
+          <Image src={LogoutIcon} alt="" className="text-lg" />
           <span className="text-xs text-[#CF1322] ml-2">Logout</span>
         </div>
         <div className="lg:px-[20px] lg:py-[10px] bg-[#FAFAFA]">
           <div className="flex items-center">
             <Image
               src={Avatar}
-              alt=""
+              alt="avatar"
               height={40}
               width={40}
               className="rounded-full mr-2"
@@ -328,7 +328,7 @@ const Sidebar = () => {
             </div>
             <Image
               src={RightArrow}
-              alt=""
+              alt="right-arrow"
               className="ml-auto justify-self-end"
             />
           </div>

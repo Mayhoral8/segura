@@ -21,7 +21,7 @@ const ErrorModal = () => {
 
   if (showErrorModal) {
     return (
-      <main className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-[rgba(0,0,0,0.36)] z-50">
+      <main className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-[rgba(0,0,0,0.36)] z-50  backdrop-blur-sm">
         <section className="border w-[30%] h-[40%] bg-white flex flex-col justify-evenly items-center gap-y-4 rounded-md">
           <BiSolidError className="text-4xl text-red-400" />
           <p className="text-base text-center px-6">{capitalize(errorMsg)}</p>
