@@ -32,14 +32,14 @@ function MyApp() {
               <button className="border-[#2c698d] border-2 w-[200px] rounded-[4px] h-[44px] text-[#2c698d]">
                 Get Started
               </button>
-              <button className="rounded-[4px] bg-[#2c698d] text-white w-[200px] h-[44px]">
+              <button className="rounded-[4px] bg-[#2c698d] text-white w-fi[200px] h-[44px]">
                 Scehdule a demo
               </button>
             </div>
           </article>
           <div className="relative">
             <Image src={HeroIllustration} alt="landing page illustration" />
-            <Image src={MainHeroIllustration} className="absolute bottom-0" />
+            <Image src={MainHeroIllustration} alt="main hero page illustration" className="absolute bottom-0" />
           </div>
         </div>
       </section>
@@ -344,7 +344,7 @@ function MyApp() {
             </button>
           </div>
         </div>
-        <Image src={CreditCard} className="absolute right-0" />
+        <Image src={CreditCard} alt="credit-card" className="absolute right-0" />
       </section>
 
       <footer className="flex justify-center items-center bg-[#1F1F1F] text-white">

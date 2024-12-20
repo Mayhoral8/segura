@@ -83,32 +83,31 @@ export default function SignInForm() {
                 password: values.password,
               });
 
-              // const permissions = session?.user?.permissions || [];
-              // const isCorporateAdmin = permissions.some(
-              //   (permission) =>
-              //     permission.name === "PERMISSION_CORPORATE_CREATE"
-              // );
-
-              // const targetRoute = isCorporateAdmin
-              //   ? "/corporate-admin/dashboard"
-              //   : "/corporate/dashboard";
-
-              // console.log(response);
-              // router.push(targetRoute);
-
-              setShowSpinner(false);
+              const permissions = session?.user?.permissions || [];
+              const isCorporateAdmin = permissions.some(
+                (permission) =>
+                  permission.name === "PERMISSION_CORPORATE_CREATE"
+              );
 
               if (response.error) {
                 // Handle the error (e.g., display an error message to the user)
-                setShowSpinner(false);
-                setShowErrorModal(true);
-                setErrorMsg(response.error);
+                console.log(response.error);
+                throw new Error(response.error)
               }
+
+              const targetRoute = isCorporateAdmin
+                ? "/corporate-admin/dashboard"
+                : "/corporate/dashboard";
+
+              console.log(response);
+              router.push(targetRoute);
+
+              setShowSpinner(false);
             } catch (error) {
-              console.log(error);
+              console.log(error.message);
               setShowSpinner(false);
               setShowErrorModal(true);
-              setErrorMsg(response.error); // Handle unexpected errors
+              setErrorMsg(error.message); // Handle unexpected errors
             } finally {
               setSubmitting(false);
             }

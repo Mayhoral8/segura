@@ -15,8 +15,6 @@ import { BarChart } from "@mui/x-charts/BarChart";
 import { useSession } from "next-auth/react"
 import Modal from "../../../components/modal";
 
-import Modal from '../../../components/modal'
-
 const Dashboard = () => {
   const { data: session, status } = useSession()
 

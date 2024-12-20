@@ -119,7 +119,7 @@ export default function SignIn() {
           </p>
         </div>
         <div className="absolute z-0 bottom-[0px] -right-24">
-          <Image src={Symbol} className="scale-75 opacity-40" />
+          <Image src={Symbol} alt="symbol" className="scale-75 opacity-40" />
         </div>
       </div>
       <Formik
