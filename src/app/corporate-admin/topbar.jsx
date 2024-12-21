@@ -8,17 +8,17 @@ import { useSession } from "next-auth/react";
 import Translate from "../../assets/adminDashboard/Translation.svg";
 import Notification from "../../assets/adminDashboard/notifBell.svg";
 
-const TopBar = () => {
+const TopBar = ({page}) => {
   const { data: session, status } = useSession();
   return (
     <div
-      style={{ width: "calc(100% - 260px)" }}
-      className="flex flex-col relative left-[260px]"
+      
+      className="flex flex-col relative  w-full"
     >
       <div className="lg:w-[80%] h-20 bg-white shadow-[0_4px_10px_-5px_rgba(0,0,0,0.1)] text-white fixed top-0 z-40 px-10">
         <div className="h-full w-full flex justify-between items-center">
           <div className="text-[#1F1F1F] text-[20px] font-bold">
-            <p>Account Management</p>
+            <p>{page}</p>
           </div>
           <div className="flex items-center gap-[50px]">
             <div className="">

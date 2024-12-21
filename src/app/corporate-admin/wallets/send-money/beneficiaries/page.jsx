@@ -15,7 +15,7 @@ const Beneficiaries = () => {
 
         <article className="border shadow-md w-[200px] rounded-md flex items-center h-[76px] justify-center gap-x-2">
           <Avatar
-            src="https://www.google.com/url?sa=i&url=https%3A%2F%2Flovepik.com%2Fimage-401440477%2Fcartoon-avatar.html&psig=AOvVaw0--uoAt-imAdgDIh_5iCq1&ust=1734798009816000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCODP1q_gtooDFQAAAAAdAAAAABAE"
+          src={AvatarImg.src}
             alt="avatar"
           />
           <div className="flex flex-col">
@@ -25,7 +25,7 @@ const Beneficiaries = () => {
         </article>
         <article className="border shadow-md w-[200px] rounded-md flex items-center h-[76px] justify-center gap-x-2">
           <Avatar
-            src={AvatarImg}
+            src={AvatarImg.src}
             alt="avatar"
           />
           <div className="flex flex-col">
@@ -35,7 +35,7 @@ const Beneficiaries = () => {
         </article>
         <article className="border shadow-md w-[200px] rounded-md flex items-center h-[76px] justify-center gap-x-2">
           <Avatar
-            src={AvatarImg}
+            src={AvatarImg.src}
             alt="avatar"
           />
           <div className="flex flex-col">
@@ -45,7 +45,7 @@ const Beneficiaries = () => {
         </article>
         <article className="border shadow-md w-[200px] rounded-md flex items-center h-[76px] justify-center gap-x-2">
           <Avatar
-            src="https://www.google.com/url?sa=i&url=https%3A%2F%2Flovepik.com%2Fimage-401440477%2Fcartoon-avatar.html&psig=AOvVaw0--uoAt-imAdgDIh_5iCq1&ust=1734798009816000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCODP1q_gtooDFQAAAAAdAAAAABAE"
+            src={AvatarImg.src}
             alt="avatar"
           />
           <div className="flex flex-col">

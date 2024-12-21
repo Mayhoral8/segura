@@ -13,6 +13,7 @@ import TableRow from "@mui/material/TableRow";
 // import { FaClock } from "react-icons/fa";
 import { BarChart } from "@mui/x-charts/BarChart";
 import { useSession } from "next-auth/react"
+import TopBar from "../topbar";
 
 import Modal from '@/components/modal'
 
@@ -45,6 +46,7 @@ const Dashboard = () => {
 
   return (
     <div className="px-10 w-full">
+      {/* <TopBar page={"dashboard"}/> */}
       { showModal && <Modal setShowModal={setShowModal}/>}
       <section className="flex flex-row lg:justify-between mt-4 justify-center gap-y-2 lg:gap-y-0 gap-x-4 flex-wrap lg:flex-nowrap just">
         <article className=" bg-white flex flex-row border lg:w-[25%] w-[45%]  h-24 items-center px-4 gap-x-4">

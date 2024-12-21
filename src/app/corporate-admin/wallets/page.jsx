@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import MyWallet from "./my-wallet/page";
 import SendMoney from "./send-money/page";
+import ConvertFunds from "./convert-funds/page";
+import TopBar from "../topbar";
 
 const Page = () => {
   const [walletTab, setWalletTab] = useState({
@@ -48,6 +50,8 @@ const Page = () => {
   };
 
   return (
+    <>
+    <TopBar page="Wallets"/>
     <main className="px-8 h-full">
       <section className="h-10 bg-white w-full mt-4 flex gap-x-10 px-2 rounded-md text-[#8C8C8C] text-sm">
         <article
@@ -77,9 +81,11 @@ const Page = () => {
       </section>
       {walletTab.myWallets ?
         
-        <MyWallet />: <SendMoney/>
+        <MyWallet />:  walletTab.sendMoney ? <SendMoney/> : <ConvertFunds/>
       }
     </main>
+    </>
+
   );
 };
 

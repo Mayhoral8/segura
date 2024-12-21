@@ -20,6 +20,7 @@ import {
   YAxis,
 } from "recharts";
 import { FaMoneyBills } from "react-icons/fa6";
+import TopBar from "../topbar";
 
 const Dashboard = () => {
   const { data: session, status } = useSession();
@@ -88,6 +89,8 @@ const Dashboard = () => {
   ];
 
   return (
+    <>
+      <TopBar page="Dashboard"/>
     <main className="px-8 w-full bg-[#F0F0F0] mt-2">
       <section className="flex flex-row lg:justify-between  justify-center gap-y-2 lg:gap-y-0 gap-x-4 flex-wrap lg:flex-nowrap just bg-[#F0F0F0]">
         <article className=" bg-white flex flex-row border lg:w-[25%] w-[45%]  h-24 items-center px-4 ">
@@ -299,6 +302,8 @@ const Dashboard = () => {
         </TableContainer>
       </section>
     </main>
+    </>
+
   );
 };
 

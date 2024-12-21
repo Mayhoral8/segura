@@ -11,7 +11,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import { useSearchParams } from "next/navigation";
-import { ExpandLess, ExpandMore } from "@mui/icons-material";
+
 
 const Sidebar = () => {
   const searchParams = useSearchParams();

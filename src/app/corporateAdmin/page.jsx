@@ -6,18 +6,11 @@ import AuthGuard from '../auth/AuthGuard'
 
 const Page = () => {
 
-  const [showModal, setShowModal] = useState(false)
-  
-
-  useEffect(()=>{
-    setShowModal(true)
-},[])
 
 
   return (
     <div>
-     { showModal && <Modal setShowModal={setShowModal}/>}
-     {/* <SignOutModal/> */}
+   
       
     </div>
   )

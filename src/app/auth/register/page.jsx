@@ -2,13 +2,16 @@
 
 // next
 
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Form, Formik, ErrorMessage, Field } from "formik";
 import AnimateButton from "../../../components/@extended/AnimateButton";
 import { ConfigContext } from "../../../contexts/ConfigContext";
 import Link from "next/link";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
+import ErrorModal from "../../../components/ErrorModal";
+import { useSession } from "next-auth/react";
+import { CgSpinner } from "react-icons/cg";
 
 // asset import
 import Logo from "@/assets/auth/logo.svg";
@@ -25,6 +28,7 @@ import Facebook from "@/assets/auth/Facebook.svg";
 
 import * as Yup from "yup";
 import Image from "next/image";
+import { toast } from "sonner";
 
 export default function SignIn() {
   const { spinner, errorModal } = useContext(ConfigContext);
@@ -32,17 +36,36 @@ export default function SignIn() {
   const { setShowErrorModal, setErrorMsg } = errorModal;
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
+  
+  const [ previousLocation, setPreviousLocation ]  = useState("")
   const router = useRouter();
+  const { data: session, status } = useSession();
+  
+
+  useEffect(()=>{
+    const lastVisitedPage = localStorage.getItem("lastVisitedPage")
+    if (lastVisitedPage) setPreviousLocation(lastVisitedPage)
+    if (status !== "unauthenticated") {
+      router.push(previousLocation); // Perform navigation after render
+    }
+}, [status, previousLocation, router])
+
+
+  const hasNumber = (number) => new RegExp(/[0-9]/).test(number);
+
+  // has mix of small and capitals
+  const hasMixed = (number) =>
+    new RegExp(/[a-z]/).test(number) && new RegExp(/[A-Z]/).test(number);
+
+  // has special chars
+  const hasSpecial = (number) => new RegExp(/[!#@$%^&*)(+=._-]/).test(number);
 
   const initialValues = {
-    username: "",
-    password: "",
+    businessName: "",
     email: "",
-    firstname: "",
-    lastname: "",
     phoneNumber: "",
-    officeAddress: "",
+    officeCountry: "",
+    password: "",
     confirmPassword: "",
   };
 
@@ -55,9 +78,9 @@ export default function SignIn() {
   };
 
   const schema = Yup.object().shape({
-    username: Yup.string().max(12).required("Username is required"),
-    firstname: Yup.string().max(255).required("First Name is required"),
-    lastname: Yup.string().max(255).required("Last Name is required"),
+    businessName: Yup.string().max(12).required("Business name is required"),
+    // firstname: Yup.string().max(255).required("First Name is required"),
+    // lastname: Yup.string().max(255).required("Last Name is required"),
     email: Yup.string()
       .email("Must be a valid email")
       .max(255)
@@ -65,23 +88,40 @@ export default function SignIn() {
     // homeAddress: Yup.string()
     //   .max(255)
     //   .required("Home address is required"),
-    officeAddress: Yup.string().max(255).required("Office address is required"),
+    officeCountry: Yup.string().max(255).required("Office country is required"),
     phoneNumber: Yup.string().max(13).required("Phone number is required"),
     password: Yup.string()
+      .min(8, "Password must be between 8 to 20 characters")
+      .max(20, "Password must be between 8 to 20 characters")
       .required("Password is required")
       .test(
         "no-leading-trailing-whitespace",
         "Password cannot start or end with spaces",
         (value) => value === value.trim()
       )
-      .max(10, "Password must be less than 10 characters"),
+      .test(
+        "has-special-char",
+        "Password must contain at least one special character",
+        (value) => value && hasSpecial(value)
+      )
+      .test(
+        "has-mixed", // Name of the test
+        "Password must contain lower and upper case letter(s)", // Error message
+        (value) => value && hasMixed(value) // Validation logic
+      )
+      .test(
+        "has-number", // Name of the test
+        "Password must contain a number", // Error message
+        (value) => value && hasNumber(value) // Validation logic
+      ),
     confirmPassword: Yup.string()
       .required("Confirm Password is required")
       .oneOf([Yup.ref("password")], "Password must match"),
   });
-
+if(status === "unauthenticated"){
   return (
     <div className="flex">
+      <ErrorModal/>
       <div className="h-screen bg-[#272643] w-[35%] relative flex flex-col justify-between p-5 text-white overflow-hidden">
         <div className="relative z-10">
           <Image src={Logo} alt="segura logo" />
@@ -126,6 +166,7 @@ export default function SignIn() {
         initialValues={initialValues}
         validationSchema={schema}
         onSubmit={async (values, { setSubmitting }) => {
+          console.log("p");
           const trimmedEmail = values.email.trim();
           setShowSpinner(true);
           try {
@@ -134,44 +175,32 @@ export default function SignIn() {
               {
                 method: "POST",
                 body: JSON.stringify({
-                  firstName: values.firstname,
-                  lastName: values.lastname,
+                  businessName: values.businessName,
                   email: trimmedEmail,
-                  username: values.username,
+                  officeCountry: values.officeCountry,
                   phoneNumber: values.phoneNumber,
-                  officeAddress: values.officeAddress,
                   password: values.password,
                   confirmPassword: values.confirmPassword,
-                  permissionLists: [
-                    "PERMISSION_ACCOUNT_CREATE",
-                    "PERMISSION_USER_VIEW",
-                    "PERMISSION_CORPORATE_CREATE",
-                  ],
-                  corporateId: "12345",
-                  isCorporate: "true",
-                  isVerified: "false",
-                  userStatus: "INACTIVE",
                 }),
                 headers: {
                   "Content-Type": "application/json",
                 },
               }
             );
-            if (response.ok) {
-              setShowSpinner(false);
-              const responseData = await response.json();
-              console.log(responseData);
-              toast.success("Registration successful");
-              router.push("/auth/login");
-            } else {
-              setShowSpinner(false);
-              setShowErrorModal(true);
-              setErrorMsg(response.error);
+
+            const responseData = await response.json();
+            if (!response.ok) {
+              console.log(response);
+             throw new Error(responseData.responseMessage)
             }
+            setShowSpinner(false);
+            toast.success("Registration successful");
+            router.push("/auth/login");
           } catch (err) {
+            console.log(err.message);
             setShowSpinner(false);
             setShowErrorModal(true);
-            setErrorMsg(response.error);
+            setErrorMsg(err.message);
           }
         }}
       >
@@ -185,77 +214,69 @@ export default function SignIn() {
               <div className="flex w-full justify-between">
                 <div className="flex flex-col w-[48%] gap-y-2 mb-2">
                   <label
-                    htmlFor="officeAddress"
+                    htmlFor="businessName"
                     className="text-[#8C8C8C] text-sm"
                   >
                     Business/Company Name
                   </label>
                   <Field
-                    name="company name"
+                    name="businessName"
                     type="text"
                     placeholder="Enter company name"
                     className="border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px]"
                   />
                   <span className="text-red-500 text-xs">
-                    <ErrorMessage name="company name" />
+                    <ErrorMessage name="businessName" />
                   </span>
                 </div>
                 <div className="flex flex-col w-[48%] gap-y-2 mb-2">
-                  <label
-                    htmlFor="company size"
-                    className="text-[#8C8C8C] text-sm"
-                  >
-                    Business/Company Size
+                  <label htmlFor="email" className="text-[#8C8C8C] text-sm">
+                    Email
                   </label>
-                  <div className="border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px]">
-                    <Field
-                      name="company size"
-                      as="select"
-                      className="bg-white w-full h-full outline-none"
-                    >
-                      <option value="red">Select</option>
-                      <option value="green">Green</option>
-                      <option value="blue">Blue</option>
-                    </Field>
-                  </div>
+                  <Field
+                    name="email"
+                    type="text"
+                    placeholder="Enter email"
+                    className="border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px]"
+                  />
                   <span className="text-red-500 text-xs">
-                    <ErrorMessage name="business size" />
+                    <ErrorMessage name="email" />
                   </span>
                 </div>
               </div>
               <div className="flex w-full justify-between">
                 <div className="flex flex-col w-[48%] gap-y-2 mb-2">
                   <label
-                    htmlFor="companyAddress"
+                    htmlFor="officeCountry"
                     className="text-[#8C8C8C] text-sm"
                   >
                     Country
                   </label>
                   <Field
-                    name="country"
+                    name="officeCountry"
                     type="text"
-                    placeholder="Country"
+                    placeholder="officeCountry"
                     className="border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px]"
                   />
                   <span className="text-red-500 text-xs">
-                    <ErrorMessage name="companyAddress" />
+                    <ErrorMessage name="officeCountry" />
                   </span>
                 </div>
                 <div className="flex flex-col w-[48%] gap-y-2 mb-2">
                   <label
-                    htmlFor="companyAddress"
+                    htmlFor="phoneNumber"
                     className="text-[#8C8C8C] text-sm"
                   >
                     Phone Number
                   </label>
                   <Field
-                    name="country"
+                    name="phoneNumber"
                     type="text"
-                    placeholder="Enter country"
+                    placeholder="Enter Phone Number"
                     className="border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px]"
                   />
                   <span className="text-red-500 text-xs">
-                    <ErrorMessage name="country" />
+                    <ErrorMessage name="phoneNumber" />
                   </span>
                 </div>
               </div>
@@ -343,4 +364,12 @@ export default function SignIn() {
       </Formik>
     </div>
   );
+}else{
+  return (
+    <div className="top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-[rgba(0,0,0,0.36)] z-50 fixed ">
+      <CgSpinner className=" text-6xl animate-spin text-[#2c698d] " />
+    </div>
+  );
+}
+
 }
