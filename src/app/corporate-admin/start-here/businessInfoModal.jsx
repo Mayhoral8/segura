@@ -88,7 +88,7 @@ const BusinessInfoModal = ({
                       htmlFor="officeAddress"
                       className="text-[#8C8C8C] text-sm"
                     >
-                      Rmail Address
+                      Email Address
                     </label>
                     <Field
                       name="email address"

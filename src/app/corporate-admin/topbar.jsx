@@ -8,13 +8,10 @@ import { useSession } from "next-auth/react";
 import Translate from "../../assets/adminDashboard/Translation.svg";
 import Notification from "../../assets/adminDashboard/notifBell.svg";
 
-const TopBar = ({page}) => {
+const TopBar = ({ page }) => {
   const { data: session, status } = useSession();
   return (
-    <div
-      
-      className="flex flex-col relative  w-full"
-    >
+    <div className="flex flex-col relative  w-full">
       <div className="lg:w-[80%] h-20 bg-white shadow-[0_4px_10px_-5px_rgba(0,0,0,0.1)] text-white fixed top-0 z-40 px-10">
         <div className="h-full w-full flex justify-between items-center">
           <div className="text-[#1F1F1F] text-[20px] font-bold">

@@ -1,46 +1,42 @@
 "use client";
-import React, { useContext, useEffect, useState } from "react";
-import { ConfigContext } from "../../../contexts/ConfigContext";
-import AccountTable from "./accTables";
-import AccountViewModal from "../../corporate/accounts/AccountViewModal";
-import { CiSearch } from "react-icons/ci";
-import { FaUsers } from "react-icons/fa6";
-import { FaUserCheck } from "react-icons/fa6";
-// import AccountTableOperations from "../../../components/AccountTableOperations";
-import AccountTableOperations from "../../../components/TableOperations/AccountTableOperations" 
-
+import React, { useState } from "react";
+import AddNewUserModal from "./addNewUserModal";
+import Table from "./Table";
 
 const Page = () => {
-  const { showAccountDetailsModal } = useContext(ConfigContext);
+  const [toggleNewUserModal, setToggleNewUserModal] = useState(false);
+
+  const handleToggleNewUserModal = () => {
+    setToggleNewUserModal(!toggleNewUserModal);
+  };
 
   return (
-    <div className={`${showAccountDetailsModal && "overflow-hidden"}`}>
-      <section className="flex flex-row justify-between mx-10 bg-white px-4 rounded-md border py-2 items-center ">
-        <article className=" rounded-md flex flex-row gap-x-4 ">
-          <div className="flex flex-row items-center gap-x-2 border px-2 rounded-sm h-16 w-40 ">
-            <div className="border rounded-sm py-1 px-1">
-              <FaUsers />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-xs">Total</span>
-              <span className="font-semibold">12030</span>
-            </div>
-          </div>
-          <div className="flex flex-row items-center  gap-x-2 border px-2 rounded-sm h-16 w-40 ">
-            <div className="border rounded-sm py-1 px-1">
-              <FaUserCheck />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-xs">Active</span>
-              <span className="font-semibold">11890</span>
-            </div>
-          </div>
+    <div className="px-[30px] min-h-[90vh] pb-[70px]">
+      <AddNewUserModal
+        toggleNewUserModal={toggleNewUserModal}
+        handleToggleNewUserModal={handleToggleNewUserModal}
+      />
+      <section className="h-[57px] bg-white w-full my-4 flex gap-x-10 px-2 rounded-md text-[#8C8C8C] text-sm">
+        <article className="border-b-2 border-[#2C698D] text-[#2C698D] flex items-end w-32 justify-center">
+          <h2 className="pb-2 font-semibold ">All Members</h2>
         </article>
-        <AccountTableOperations />
+        <article className=" h-full flex items-end w-32 justify-center">
+          <h2 className="pb-2 ">Admin</h2>
+        </article>
+        <article className=" h-full flex items-end w-32 justify-center">
+          <h2 className="pb-2 ">Regular users</h2>
+        </article>
+        <article className=" h-full flex items-end w-32 justify-center">
+          <h2 className="pb-2 ">Pending Users</h2>
+        </article>
+        <button
+          className="h-[36px] w-[130px] rounded-[4px] bg-[#2C698D] text-white my-auto self-center ml-auto justify-self-end"
+          onClick={() => handleToggleNewUserModal()}
+        >
+          Add New User
+        </button>
       </section>
-
-      <AccountTable />
-      <AccountViewModal />
+      <Table />
     </div>
   );
 };
