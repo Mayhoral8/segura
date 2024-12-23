@@ -293,7 +293,7 @@ const Sidebar = () => {
           } `}
         >
           <div className="flex flex-col w-full text-[14px] gap-x-1 lg:flex-row items-center  ">
-            <Image src={SettingsIcon} alt="start here" />
+            <Image src={SettingsIcon} alt="settings" />
             <span className="ml-1">Settings</span>
           </div>
         </Link>
@@ -304,7 +304,7 @@ const Sidebar = () => {
           className="hover:lg:bg-PrimaryPurple lg:px-[20px] cursor-pointer rounded-md flex w-full text-sm gap-x-1 lg:flex-row items-center h-[44px]"
           onClick={handleSignOutModal}
         >
-          <Image src={LogoutIcon} alt="" className="text-lg" />
+          <Image src={LogoutIcon} alt="logout" className="text-lg" />
           <span className="text-xs text-[#CF1322] ml-2">Logout</span>
         </div>
         <div className="lg:px-[20px] lg:py-[10px] bg-[#FAFAFA]">
@@ -328,7 +328,7 @@ const Sidebar = () => {
             </div>
             <Image
               src={RightArrow}
-              alt="right-arrow"
+              alt="right arrow"
               className="ml-auto justify-self-end"
             />
           </div>
