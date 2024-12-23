@@ -55,7 +55,7 @@ export const AnimateDropdown = ({ children, isVisible }) => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.1, ease: "easeOut" }}
-          className="absolute border mt-12 text-sm flex-col rounded-md w-[222px] bg-white  transition-transform shadow-sm z-10`"
+          className="absolute border mt-12 text-sm flex-col rounded-md w-[222px] bg-white  transition-transform shadow-sm z-30`"
         >
           {children}
         </motion.div>

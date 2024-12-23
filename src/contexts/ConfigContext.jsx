@@ -2,7 +2,7 @@
 import PropTypes from "prop-types";
 
 import { createContext, useEffect } from "react";
-
+import { useSession } from "next-auth/react";
 // project import
 
 import { useState } from "react";
@@ -11,6 +11,7 @@ import { usePathname } from "next/navigation";
 const ConfigContext = createContext();
 
 function ConfigProvider({ children }) {
+  const { data: session, status } = useSession();
   const pathname = usePathname();
   function createData(id, accNo, name, accBalance, currency, status) {
     return { id, accNo, name, accBalance, currency, status };
@@ -48,7 +49,7 @@ function ConfigProvider({ children }) {
     if (
       pathname !== "/auth/login" &&
       pathname !== "/auth/register" &&
-      pathname !== "/"
+      pathname !== "/" || session === "authenticated"
     ) {
       localStorage.setItem("lastVisitedPage", pathname);
       setPreviousLocation(pathname);

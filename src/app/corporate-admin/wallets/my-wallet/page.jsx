@@ -19,46 +19,46 @@ const MyWallet = () => {
   ];
 
   const tableValues = [
-    {
-      txnId: "#790957",
-      name: "Olakunle Gray",
-      amount: "3000",
-      paymentType: "Net Banking",
-      status: "Success",
-      dateAndTime: "01-06-2024 9:20 AM",
-    },
-    {
-      txnId: "#790957",
-      name: "Olakunle Gray",
-      amount: "3000",
-      paymentType: "Credit Card",
-      status: "Failed",
-      dateAndTime: "01-06-2024 9:20 AM",
-    },
-    {
-      txnId: "#790957",
-      name: "Olakunle Gray",
-      amount: "3000",
-      paymentType: "Net Banking",
-      status: "Success",
-      dateAndTime: "01-06-2024 9:20 AM",
-    },
-    {
-      txnId: "#790957",
-      name: "Olakunle Gray",
-      amount: "3000",
-      paymentType: "UPI",
-      status: "Success",
-      dateAndTime: "01-06-2024 9:20 AM",
-    },
-    {
-      txnId: "#790957",
-      name: "Olakunle Gray",
-      amount: "3000",
-      paymentType: "Net Banking",
-      status: "Success",
-      dateAndTime: "01-06-2024 9:20 AM",
-    },
+    // {
+    //   txnId: "#790957",
+    //   name: "Olakunle Gray",
+    //   amount: "3000",
+    //   paymentType: "Net Banking",
+    //   status: "Success",
+    //   dateAndTime: "01-06-2024 9:20 AM",
+    // },
+    // {
+    //   txnId: "#790957",
+    //   name: "Olakunle Gray",
+    //   amount: "3000",
+    //   paymentType: "Credit Card",
+    //   status: "Failed",
+    //   dateAndTime: "01-06-2024 9:20 AM",
+    // },
+    // {
+    //   txnId: "#790957",
+    //   name: "Olakunle Gray",
+    //   amount: "3000",
+    //   paymentType: "Net Banking",
+    //   status: "Success",
+    //   dateAndTime: "01-06-2024 9:20 AM",
+    // },
+    // {
+    //   txnId: "#790957",
+    //   name: "Olakunle Gray",
+    //   amount: "3000",
+    //   paymentType: "UPI",
+    //   status: "Success",
+    //   dateAndTime: "01-06-2024 9:20 AM",
+    // },
+    // {
+    //   txnId: "#790957",
+    //   name: "Olakunle Gray",
+    //   amount: "3000",
+    //   paymentType: "Net Banking",
+    //   status: "Success",
+    //   dateAndTime: "01-06-2024 9:20 AM",
+    // },
   ];
   return (
     <div>
@@ -80,24 +80,13 @@ const MyWallet = () => {
             <span className="text-xs font-light">Account No: 656888986</span>
           </div>
         </article>
-        <article className="bg-[#272643] h-[90%] w-[32%] rounded-md  py-4 text-white px-4 flex flex-col justify-center gap-y-1">
-          <div className="text-xs flex items-center gap-x-2">
-            <Avatar
-              src="https://img.freepik.com/premium-vector/united-states-america-flag-usa-flag-button_97458-15.jpg?w=740"
-              className="w-2 h-2"
-            />
-            <h2>Wallet Balance</h2>
-          </div>
-          <div className="flex items-center text-3xl">
-            <span>$</span>
-            <span className="">645</span>
-            <span className="text-sm">.69</span>
-          </div>
-          <div>
-            <span className="text-xs font-light">Account No: 656888986</span>
-          </div>
+        <article className="text-gray-900 h-[90%] w-[32%] rounded-md  py-4  px-4 flex flex-col justify-center gap-y-3 border-2 border-dashed">
+         <span className='font-bold'>Set up foreign currency wallet</span>
+         <p className='text-xs'>Setting up a foreign currency wallet allows you perform cross-boarder transaction.</p>
+
+         <button className='bg-[#2C698D] text-white w-32 rounded-sm'>Set up wallet</button>
         </article>
-        <article className="bg-[#272643] h-[90%] w-[32%] rounded-md  py-4 text-white px-4 flex flex-col justify-center gap-y-1">
+        {/* <article className="bg-[#272643] h-[90%] w-[32%] rounded-md  py-4 text-white px-4 flex flex-col justify-center gap-y-1">
           <div className="text-xs flex items-center gap-x-2">
             <Avatar
               src="https://img.freepik.com/premium-vector/united-kingdom-flag-button-uk-flag-icon_97458-16.jpg?w=740"
@@ -113,7 +102,7 @@ const MyWallet = () => {
           <div>
             <span className="text-xs font-light">Account No: 656888986</span>
           </div>
-        </article>
+        </article> */}
       </section>
       <section className=" mt-4 ">
         <article className="h-10 bg-white flex justify-between px-2 items-center text-sm">

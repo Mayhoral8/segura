@@ -7,6 +7,9 @@ import SuccessModal from "../../../components/Auth/Login/SuccessModal";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { CgSpinner } from "react-icons/cg";
+import Logo from "@/assets/auth/logo.svg";
+import Symbol from "@/assets/auth/seguraSymbol.svg";
+import Image from "next/image";
 
 const layout = () => {
   const [previousLocation, setPreviousLocation] = useState("");
@@ -26,24 +29,24 @@ const layout = () => {
       <>
         <OTP />
         <SuccessModal />
-        <main className="flex justify-between w-full border h-screen">
-          <section
-            className="w-[36%] h-full"
-            style={{
-              backgroundImage: `url(${bgImg.src})`,
-              backgroundSize: `450px 560px`,
-              backgroundRepeat: "no-repeat",
-            }}
-          >
-            <div className="flex flex-col items-center justify-center h-full w-full text-white px-8">
-              <p className="text-5xl font-bold">
+        <main className="flex justify-between w-full  h-screen">
+          <section className="h-screen bg-[#272643] w-[35%] relative flex flex-col justify-between p-5 text-white overflow-hidden">
+            <div className="flex flex-col items-center justify-center h-full w-full text-white relative z-10">
+              <p className="text-5xl font-bold relative z-10">
                 Welcome back! You’ve been missed, Login to to access your
                 dashboard.
               </p>
-              <p className="mt-4 text-sm font-light">
+              <p className="mt-4 text-sm font-light relative z-10">
                 You have been missed, login to to access your Segura BaaS
                 dashboard.
               </p>
+            </div>
+            <div className="absolute z-0 bottom-[0px] -right-24">
+              <Image
+                src={Symbol}
+                alt="symbol"
+                className="scale-75 opacity-40"
+              />
             </div>
           </section>
           <section className="w-[60%] h-full">
