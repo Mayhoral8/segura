@@ -1,14 +1,21 @@
-import React from 'react'
-import { Avatar } from '@mui/material'
+import React, { useContext } from "react";
+import { Avatar } from "@mui/material";
 import { FaEuroSign, FaPoundSign } from "react-icons/fa";
 import { FaNairaSign } from "react-icons/fa6";
 // import TableComponent from "../../../components/Table";
-import TableComponent from "../../../../components/Table"
+import TableComponent from "../../../../components/Table";
 import { AiOutlineExport } from "react-icons/ai";
-import {Checkbox} from "@mui/material";
+import { Checkbox } from "@mui/material";
 import { RxCaretLeft, RxCaretRight } from "react-icons/rx";
+import Intro from "../../../../components/WalletSetupModals/Intro";
+import ChooseCurrency from "../../../../components/WalletSetupModals/ChooseCurrency";
+import SuccessModal from "../../../../components/WalletSetupModals/Success";
+import { ConfigContext } from "../../../../contexts/ConfigContext";
 
 const MyWallet = () => {
+  const {showSetupInfoModal, setShowSetupInfoModal} =
+    useContext(ConfigContext).walletSetup
+
   const tableHeaders = [
     "Id",
     "Customer Name",
@@ -60,9 +67,16 @@ const MyWallet = () => {
     //   dateAndTime: "01-06-2024 9:20 AM",
     // },
   ];
+
+  const handleSetupWallet = () => {
+    setShowSetupInfoModal(!showSetupInfoModal);
+  };
   return (
     <div>
-       <section className="mt-4 w-full h-40 bg-white px-2 py-2 flex items-center  gap-x-2">
+      <SuccessModal />
+      <Intro />
+      <ChooseCurrency />
+      <section className="mt-4 w-full h-40 bg-white px-2 py-2 flex items-center  gap-x-2">
         <article className="bg-[#272643] h-[90%] w-[32%] rounded-md  py-4 text-white px-4 flex flex-col justify-center gap-y-1">
           <div className="text-xs flex items-center gap-x-2">
             <Avatar
@@ -81,10 +95,18 @@ const MyWallet = () => {
           </div>
         </article>
         <article className="text-gray-900 h-[90%] w-[32%] rounded-md  py-4  px-4 flex flex-col justify-center gap-y-3 border-2 border-dashed">
-         <span className='font-bold'>Set up foreign currency wallet</span>
-         <p className='text-xs'>Setting up a foreign currency wallet allows you perform cross-boarder transaction.</p>
+          <span className="font-bold">Set up foreign currency wallet</span>
+          <p className="text-xs">
+            Setting up a foreign currency wallet allows you perform
+            cross-boarder transaction.
+          </p>
 
-         <button className='bg-[#2C698D] text-white w-32 rounded-sm'>Set up wallet</button>
+          <button
+            className="bg-[#2C698D] text-white w-32 rounded-sm"
+            onClick={handleSetupWallet}
+          >
+            Set up wallet
+          </button>
         </article>
         {/* <article className="bg-[#272643] h-[90%] w-[32%] rounded-md  py-4 text-white px-4 flex flex-col justify-center gap-y-1">
           <div className="text-xs flex items-center gap-x-2">
@@ -109,10 +131,10 @@ const MyWallet = () => {
           <h2>Transactions</h2>
           <article className="flex gap-x-4 items-center">
             <div className="flex items-center">
-              <Checkbox/>
+              <Checkbox />
               <span>Mark all</span>
             </div>
-            <div className="bg-[#096DD9] text-white py-1 px-1 rounded-sm cursor-pointer flex items-center gap-x-2 h-[80%] ">
+            <div className="bg-[#096DD9] text-white py-1 px-4 rounded-sm cursor-pointer flex items-center gap-x-2 h-[80%] ">
               <AiOutlineExport />
               <h2>Export</h2>
             </div>
@@ -123,16 +145,16 @@ const MyWallet = () => {
         <article className="h-10 bg-white mt-4 px-2 flex items-center text-sm text-[#8C8C8C] justify-between">
           <span>Page 1 of 6</span>
           <div className="grid items-center grid-cols-6">
-            <RxCaretLeft className="border"/>
+            <RxCaretLeft className="border" />
             <span>1</span>
             <span>2</span>
             <span>3</span>
-            <RxCaretRight className="border"/>
+            <RxCaretRight className="border" />
           </div>
         </article>
       </section>
     </div>
-  )
-}
+  );
+};
 
-export default MyWallet
+export default MyWallet;

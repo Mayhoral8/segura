@@ -45,12 +45,14 @@ function ConfigProvider({ children }) {
   const [showLoginSuccessModal, setShowLoginSuccessModal] = useState(false);
   const [previousLocation, setPreviousLocation] = useState();
 
+  const [showSetupInfoModal, setShowSetupInfoModal] = useState(false);
+  const [showCurrencySelectionModal, setShowCurrencySelectionModal] =
+    useState(false);
+  const [showSuccessfulWalletSetupModal, setShowSuccessfulWalletSetupModal] =
+    useState(false);
+
   useEffect(() => {
-    if (
-      pathname !== "/auth/login" &&
-      pathname !== "/auth/register" &&
-      pathname !== "/" || session === "authenticated"
-    ) {
+    if (pathname.includes("/corporate") || session === "authenticated") {
       localStorage.setItem("lastVisitedPage", pathname);
       setPreviousLocation(pathname);
     }
@@ -96,6 +98,15 @@ function ConfigProvider({ children }) {
           showLoginSuccessModal,
           setShowLoginSuccessModal,
         },
+
+        walletSetup: {
+          showSetupInfoModal,
+          setShowSetupInfoModal,
+          showCurrencySelectionModal,
+          setShowCurrencySelectionModal,
+          showSuccessfulWalletSetupModal,
+          setShowSuccessfulWalletSetupModal,
+        }
       }}
     >
       {children}

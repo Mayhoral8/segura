@@ -66,7 +66,7 @@ const TableComponent = ({ tableHeaders, tableValues }) => {
         </Table>
       </TableContainer>
             ) : (
-              <div className="flex flex-col justify-center items-center min-h-[300px] w-full mx-auto bg-white">
+              <div className="flex flex-col justify-center items-center min-h-[300px] w-full mx-auto bg-white mt-4">
                 <Image
                   src={noDataImg.src}
                   width={100}

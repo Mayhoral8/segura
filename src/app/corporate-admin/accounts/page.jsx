@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import AddNewUserModal from "./addNewUserModal";
 import Table from "./Table";
-
+import Topbar from "../topbar"
 const Page = () => {
   const [toggleNewUserModal, setToggleNewUserModal] = useState(false);
 
@@ -11,6 +11,8 @@ const Page = () => {
   };
 
   return (
+    <>
+    <Topbar page="Account Management"/>
     <div className="px-[30px] min-h-[90vh] pb-[70px]">
       <AddNewUserModal
         toggleNewUserModal={toggleNewUserModal}
@@ -38,6 +40,8 @@ const Page = () => {
       </section>
       <Table />
     </div>
+    </>
+
   );
 };
 

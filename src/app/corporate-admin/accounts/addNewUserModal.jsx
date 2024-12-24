@@ -11,7 +11,7 @@ const AddNewUserModal = ({ toggleNewUserModal, handleToggleNewUserModal }) => {
   return (
     <>
       {toggleNewUserModal && (
-        <div className="w-screen min-h-screen backdrop-blur-[7px] bg-[#0D1012B2] absolute py-[20px] top-0 left-0 z-50 flex items-center justify-center">
+        <div className="w-screen min-h-screen backdrop-blur-[7px] bg-[#0D1012B2] py-[20px] bottom-0 right-0 fixed top-0 left-0 z-50 flex items-center justify-center">
           <div className="bg-white h-[90vh] w-[784px] relative px-[100px] py-[50px]">
             <div
               className="absolute left-[50px] cursor-pointer"
@@ -19,22 +19,21 @@ const AddNewUserModal = ({ toggleNewUserModal, handleToggleNewUserModal }) => {
             >
               <Image src={BackArrow} alt="back arrow" />
             </div>
+            <div className="flex justify-between items-center">
+              <div className="">
+                <h4 className="text-[#1F1F1F] text-[20px] font-bold">
+                  Add New User
+                </h4>
+              </div>
+              <button className="h-[36px] w-[100px] rounded-[4px] bg-[#2C698D] text-white text-[14px]">
+                Add User
+              </button>
+            </div>
+            <p className="text-[#787878] text-[14px] mt-1 mb-5">
+              Fill the necessary fields below with user details
+            </p>
             <Formik>
-              <Form className="flex flex-col h-full">
-                <div className="flex justify-between items-center">
-                  <div className="">
-                    <h4 className="text-[#1F1F1F] text-[20px] font-bold">
-                      Add New User
-                    </h4>
-                  </div>
-                  <button className="h-[36px] w-[100px] rounded-[4px] bg-[#2C698D] text-white text-[14px]">
-                    Add User
-                  </button>
-                </div>
-                <p className="text-[#787878] text-[14px] mt-1 mb-5">
-                  Fill the necessary fields below with user details
-                </p>
-
+              <Form className="flex flex-col h-[320px] overflow-y-auto scroll-smooth scrollbar-hide">
                 <div className="flex w-full justify-between">
                   <div className="flex flex-col w-[48%] gap-y-2 mb-2">
                     <label

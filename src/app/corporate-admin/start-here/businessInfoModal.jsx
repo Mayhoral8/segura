@@ -16,17 +16,15 @@ const BusinessInfoModal = ({
   return (
     <>
       {toggleBusinessInfoModal && (
-        <div className="w-screen min-h-screen backdrop-blur-[7px] bg-[#0D1012B2] absolute py-[20px] top-0 left-0 z-50 flex items-center justify-center">
-          <div className="bg-white w-[784px] relative px-[100px] py-[50px]">
+        <div className="w-screen min-h-screen backdrop-blur-[7px] bg-[#0D1012B2]  py-[20px] fixed bottom-0 right-0 top-0 left-0 z-50 flex items-center justify-center">
+          <div className="bg-white w-[784px] h-[90vh]  relative px-[100px] py-[50px]">
+                <div className="flex justify-between items-center">
             <div
               className="absolute left-[50px] cursor-pointer"
               onClick={() => handleToggleBusinessInfoModal()}
             >
               <Image src={BackArrow} alt="back arrow" />
             </div>
-            <Formik>
-              <Form className="">
-                <div className="flex justify-between items-center">
                   <div className="">
                     <h4 className="text-[#1F1F1F] text-[20px] font-bold">
                       Business Information
@@ -39,6 +37,8 @@ const BusinessInfoModal = ({
                 <p className="text-[#787878] text-[14px] mt-1 mb-5">
                   Fill the necessary fields below with details about yourself
                 </p>
+            <Formik>
+              <Form className="overflow-y-auto h-[300px] scroll-smooth">
 
                 <div className="flex w-full justify-between">
                   <div className="flex flex-col w-[48%] gap-y-2 mb-2">
