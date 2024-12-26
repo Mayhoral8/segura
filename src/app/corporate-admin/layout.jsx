@@ -13,13 +13,13 @@ export default function DashboardLayout({
   children, // will be a page or nested layout
 }) {
   return (
-    // <AuthGuard>
-    <main className="w-screen max-h-full">
-      <SignOutModal />
-      {/* <TopBar /> */}
-      <Sidebar />
-      <div className="pt-20 bg-[#F0F0F0] ml-[260px]">{children}</div>
-    </main>
-    // </AuthGuard>
+    <AuthGuard>
+      <main className="w-screen max-h-full">
+        <SignOutModal />
+        {/* <TopBar /> */}
+        <Sidebar />
+        <div className="pt-20 bg-[#F0F0F0] ml-[260px]">{children}</div>
+      </main>
+    </AuthGuard>
   );
 }

@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import MyWallet from "./my-wallet/page";
 import SendMoney from "./send-money/page";
+import TopUpWallet from "./topup-wallet/page";
 import ConvertFunds from "./convert-funds/page";
 import TopBar from "../topbar";
 
@@ -52,8 +53,8 @@ const Page = () => {
   return (
     <>
       <TopBar page="Wallets" />
-      <main className="px-8 h-full">
-        <section className="h-10 bg-white w-full mt-4 flex gap-x-10 px-2 rounded-md text-[#8C8C8C] text-sm">
+      <main className="px-8 min-h-[88vh]">
+        <section className="h-[56px] bg-white w-full mt-4 flex gap-x-10 px-2 rounded-md text-[#8C8C8C] text-sm">
           <article
             className={`${
               walletTab.myWallets &&
@@ -61,7 +62,9 @@ const Page = () => {
             } h-full flex items-end w-32 justify-center cursor-pointer`}
             onClick={() => handleActiveTab("MY_WALLET")}
           >
-            <h2 className="pb-1">My wallet</h2>
+            <h2 className="pb-3" font-medium>
+              My wallet
+            </h2>
           </article>
           <article
             className={`${
@@ -70,7 +73,7 @@ const Page = () => {
             } h-full flex items-end w-32 justify-center cursor-pointer`}
             onClick={() => handleActiveTab("SEND_MONEY")}
           >
-            <h2 className="pb-1 ">Send Money</h2>
+            <h2 className="pb-3 font-medium">Send Money</h2>
           </article>
           <article
             className={`${
@@ -79,7 +82,7 @@ const Page = () => {
             } h-full flex items-end w-32 justify-center cursor-pointer`}
             onClick={() => handleActiveTab("TOP_UP_WALLET")}
           >
-            <h2 className="pb-1 ">Top up wallet</h2>
+            <h2 className="pb-3 font-medium">Top up wallet</h2>
           </article>
           <article
             className={`${
@@ -88,13 +91,15 @@ const Page = () => {
             } h-full flex items-end w-32 justify-center cursor-pointer`}
             onClick={() => handleActiveTab("CONVERT_FUNDS")}
           >
-            <h2 className="pb-1 ">Convert funds</h2>
+            <h2 className="pb-3 font-medium">Convert funds</h2>
           </article>
         </section>
         {walletTab.myWallets ? (
           <MyWallet />
         ) : walletTab.sendMoney ? (
           <SendMoney />
+        ) : walletTab.topUpWallet ? (
+          <TopUpWallet />
         ) : (
           <ConvertFunds />
         )}

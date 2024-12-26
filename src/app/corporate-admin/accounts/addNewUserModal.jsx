@@ -168,7 +168,12 @@ const AddNewUserModal = ({ toggleNewUserModal, handleToggleNewUserModal }) => {
                       </div>
                     </div>
                     <div className="flex items-start">
-                      <input type="checkbox" name="admin account" id="" />
+                      <input
+                        type="checkbox"
+                        name="regular account"
+                        id=""
+                        className="bg-red-500 w-[17px] h-[17px] mr-2"
+                      />
                       <div className="">
                         <h5 className="leading-none text-[#595959] text-[14px] font-medium">
                           Regular User Account

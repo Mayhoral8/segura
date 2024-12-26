@@ -12,42 +12,50 @@ import noDataImg from "../assets/no-data/empty-img-gray.png";
 const TableComponent = ({ tableHeaders, tableValues }) => {
   return (
     <div>
-              {tableValues?.length >= 1 ? (
-      <TableContainer component={Paper} className="mt-4">
-        <Table>
-          <TableHead className="bg-[#F0F0F0]">
-            <TableRow>
-              {tableHeaders.map((header, index) => (
-                <TableCell key={index} align="start">
-                  {header}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
+      {tableValues?.length >= 1 ? (
+        <TableContainer component={Paper} elevation={0} className="mt-4">
+          <Table>
+            <TableHead className="bg-[#F3F3F3]">
+              <TableRow>
+                {tableHeaders.map((header, index) => (
+                  <TableCell key={index} align="start">
+                    {header}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
               {tableValues.map((row, rowIndex) => (
                 <TableRow
                   key={rowIndex}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  sx={{
+                    "&:first-of-type td, &:first-of-type th": { borderTop: 0 },
+                  }}
                 >
                   {Object.keys(row).map((key, index) => {
+                    const isMiddleCell =
+                      index === Math.floor(Object.keys(row).length / 2);
                     return (
                       <TableCell
                         key={index}
                         title="Click to view details"
-                        className={` ${
+                        className={`border-t-0 border border-[#F0F0F0] ${
                           row[key] === "Success"
-                            ? "text-green-500   "
+                            ? "text-green-500"
                             : row[key] === "Failed"
                             ? "text-red-400"
                             : ""
-                        } cursor-pointer`}
+                        } cursor-pointer ${
+                          isMiddleCell
+                            ? "border-l border-r border-[#F0F0F0]"
+                            : ""
+                        }`}
                         align="start"
                       >
                         <span
                           className={`${
-                            key === "status" && " py-1 px-1 rounded-sm"
-                          }  ${
+                            key === "status" && "py-1 px-1 rounded-sm"
+                          } ${
                             row[key] === "Failed"
                               ? "text-red-400 bg-[#FFF1F0]"
                               : row[key] === "Success"
@@ -62,21 +70,21 @@ const TableComponent = ({ tableHeaders, tableValues }) => {
                   })}
                 </TableRow>
               ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-            ) : (
-              <div className="flex flex-col justify-center items-center min-h-[300px] w-full mx-auto bg-white mt-4">
-                <Image
-                  src={noDataImg.src}
-                  width={100}
-                  height={100}
-                  className="flex items-center mx-auto justify-center"
-                  alt="no-data"
-                />
-                <span className="text-sm">No Data</span>
-              </div>
-            )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      ) : (
+        <div className="flex flex-col justify-center items-center min-h-[300px] w-full mx-auto bg-white mt-4">
+          <Image
+            src={noDataImg.src}
+            width={100}
+            height={100}
+            className="flex items-center mx-auto justify-center"
+            alt="no-data"
+          />
+          <span className="text-sm">No Data</span>
+        </div>
+      )}
     </div>
   );
 };

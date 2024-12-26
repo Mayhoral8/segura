@@ -13,8 +13,8 @@ import SuccessModal from "../../../../components/WalletSetupModals/Success";
 import { ConfigContext } from "../../../../contexts/ConfigContext";
 
 const MyWallet = () => {
-  const {showSetupInfoModal, setShowSetupInfoModal} =
-    useContext(ConfigContext).walletSetup
+  const { showSetupInfoModal, setShowSetupInfoModal } =
+    useContext(ConfigContext).walletSetup;
 
   const tableHeaders = [
     "Id",
@@ -97,8 +97,8 @@ const MyWallet = () => {
         <article className="text-gray-900 h-[90%] w-[32%] rounded-md  py-4  px-4 flex flex-col justify-center gap-y-3 border-2 border-dashed">
           <span className="font-bold">Set up foreign currency wallet</span>
           <p className="text-xs">
-            Setting up a foreign currency wallet allows you perform
-            cross-boarder transaction.
+            Setting up a foreign currency wallet allows you perform cross-border
+            transaction.
           </p>
 
           <button
