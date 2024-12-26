@@ -42,7 +42,7 @@ const Sidebar = () => {
     dashboard: {
       isActive: false,
     },
-    accounts: {
+    userManagement: {
       isActive: false,
     },
     wallets: {
@@ -66,7 +66,7 @@ const Sidebar = () => {
           ...state,
           starthere: { isActive: true },
           dashboard: { isActive: false },
-          accounts: { isActive: false },
+          userManagement: { isActive: false },
           wallets: { isActive: false },
           auditslog: { isActive: false },
           help: { isActive: false },
@@ -78,19 +78,19 @@ const Sidebar = () => {
           ...state,
           starthere: { isActive: false },
           dashboard: { isActive: true },
-          accounts: { isActive: false },
+          userManagement: { isActive: false },
           wallets: { isActive: false },
           auditslog: { isActive: false },
           help: { isActive: false },
           settings: { isActive: false },
         };
       }
-      case "ACCOUNTS": {
+      case "USER_MANAGEMENT": {
         return {
           ...state,
           starthere: { isActive: false },
           dashboard: { isActive: false },
-          accounts: { isActive: true },
+          userManagement: { isActive: true },
           wallets: { isActive: false },
           auditslog: { isActive: false },
           help: { isActive: false },
@@ -102,7 +102,7 @@ const Sidebar = () => {
           ...state,
           starthere: { isActive: false },
           dashboard: { isActive: false },
-          accounts: { isActive: false },
+          userManagement: { isActive: false },
           wallets: { isActive: true },
           auditslog: { isActive: false },
           help: { isActive: false },
@@ -114,7 +114,7 @@ const Sidebar = () => {
           ...state,
           starthere: { isActive: false },
           dashboard: { isActive: false },
-          accounts: { isActive: false },
+          userManagement: { isActive: false },
           wallets: { isActive: false },
           auditslog: { isActive: true },
           help: { isActive: false },
@@ -126,7 +126,7 @@ const Sidebar = () => {
           ...state,
           starthere: { isActive: false },
           dashboard: { isActive: false },
-          accounts: { isActive: false },
+          userManagement: { isActive: false },
           wallets: { isActive: false },
           auditslog: { isActive: false },
           help: { isActive: true },
@@ -138,7 +138,7 @@ const Sidebar = () => {
           ...state,
           starthere: { isActive: false },
           dashboard: { isActive: false },
-          accounts: { isActive: false },
+          userManagement: { isActive: false },
           wallets: { isActive: false },
           auditslog: { isActive: false },
           help: { isActive: false },
@@ -150,7 +150,7 @@ const Sidebar = () => {
           ...state,
           starthere: { isActive: true },
           dashboard: { isActive: false },
-          accounts: { isActive: false },
+          userManagement: { isActive: false },
           wallets: { isActive: false },
           auditslog: { isActive: false },
           help: { isActive: false },
@@ -225,17 +225,17 @@ const Sidebar = () => {
         </Link>
 
         <Link
-          href="/corporate-admin/accounts"
-          onClick={() => handleDispatch("ACCOUNTS")}
+          href="/corporate-admin/user-management"
+          onClick={() => handleDispatch("USER_MANAGEMENT")}
           className={`w-full h-[44px] flex items-center pl-[20px] justify-center  ${
-            state.accounts.isActive
+            state.userManagement.isActive
               ? "bg-[#e3f6f5] text-[#2C698D]"
               : "text-[#787878]"
           } `}
         >
           <div className="flex flex-col w-full text-[14px] gap-x-1 lg:flex-row items-center  ">
             <Image src={AccountManagementIcon} alt="account management" />
-            <span className="ml-1">Account Management</span>
+            <span className="ml-1">User Management</span>
           </div>
         </Link>
 

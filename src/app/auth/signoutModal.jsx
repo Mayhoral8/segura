@@ -1,17 +1,21 @@
+"use client";
 import React, { useContext } from "react";
 import Link from "next/link";
 import { ConfigContext } from "../../contexts/ConfigContext";
 import { signOut } from "next-auth/react";
 import AnimateButton from "../../components/@extended/AnimateButton";
 import { AnimateModal } from "../../components/Animate";
+import { useQueryClient } from "@tanstack/react-query";
 
 const SignOutModal = () => {
+  const queryClient = useQueryClient();
   const { setShowSignOutModal, showSignOutModal } = useContext(ConfigContext);
   const handleModal = () => {
     setShowSignOutModal(false);
   };
   const handleSignOut = () => {
     localStorage.removeItem("lastVisitedPage");
+    queryClient.clear();
     signOut({ callbackUrl: "/auth/login" });
   };
 

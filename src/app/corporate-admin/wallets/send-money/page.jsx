@@ -1,3 +1,4 @@
+"use client"
 import React, { useState } from "react";
 import TableComponent from "../../../../components/Table";
 import { IoIosHeartEmpty } from "react-icons/io";

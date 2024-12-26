@@ -28,7 +28,7 @@ export default NextAuth({
 
           
           const user = await response.json();
-          console.log(user);
+          
           // const decoded
 
           if (response.ok && user?.data) {
@@ -61,7 +61,7 @@ export default NextAuth({
         token.permissions = user.user.permissions;
         token.id = user.user.id;
         token.username = user.user.username;
-        token.corporateAdminEmail = user.corporateAdminEmail
+        token.corporateAdminEmail = user.corporateEmail
       }
       return token;
     },
