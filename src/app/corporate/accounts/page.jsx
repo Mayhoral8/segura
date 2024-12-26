@@ -19,7 +19,7 @@ const Page = () => {
         <article className=" rounded-md flex flex-row gap-x-4 ">
           <div className="flex flex-row items-center gap-x-2 border px-2 rounded-sm h-16 w-40 ">
             <div className="border rounded-sm py-1 px-1">
-              <FaUsers />
+              {/* <FaUsers /> */}
             </div>
             <div className="flex flex-col">
               <span className="text-xs">Total</span>
@@ -28,7 +28,7 @@ const Page = () => {
           </div>
           <div className="flex flex-row items-center  gap-x-2 border px-2 rounded-sm h-16 w-40 ">
             <div className="border rounded-sm py-1 px-1">
-              <FaUserCheck />
+              {/* <FaUserCheck /> */}
             </div>
             <div className="flex flex-col">
               <span className="text-xs">Active</span>

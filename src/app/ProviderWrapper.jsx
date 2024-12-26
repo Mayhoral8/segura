@@ -25,13 +25,13 @@ export default function ProviderWrapper({ children }) {
   return (
     <ReactQueryProvider>
       <ReactQueryDevtools initialIsOpen={false} />
-      <ConfigProvider>
-        <SessionProvider refetchInterval={0}>
+      <SessionProvider refetchInterval={0}>
+        <ConfigProvider>
           <Spinner />
           <Toast />
           {children}
-        </SessionProvider>
-      </ConfigProvider>
+        </ConfigProvider>
+      </SessionProvider>
     </ReactQueryProvider>
   );
 }

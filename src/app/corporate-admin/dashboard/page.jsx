@@ -20,6 +20,7 @@ import {
   YAxis,
 } from "recharts";
 import { FaMoneyBills } from "react-icons/fa6";
+import TopBar from "../topbar";
 
 const Dashboard = () => {
   const { data: session, status } = useSession();
@@ -88,7 +89,9 @@ const Dashboard = () => {
   ];
 
   return (
-    <main className="px-10 w-full bg-[#F0F0F0]">
+    <>
+      <TopBar page="Dashboard"/>
+    <main className="px-8 w-full bg-[#F0F0F0] mt-2">
       <section className="flex flex-row lg:justify-between  justify-center gap-y-2 lg:gap-y-0 gap-x-4 flex-wrap lg:flex-nowrap just bg-[#F0F0F0]">
         <article className=" bg-white flex flex-row border lg:w-[25%] w-[45%]  h-24 items-center px-4 ">
           <div className="flex flex-col gap-y-2">
@@ -189,7 +192,7 @@ const Dashboard = () => {
       </section>
 
       <section className="mt-4  flex flex-row gap-x-4">
-        <article className=" flex flex-col gap-y-2  px-2 py-2 w-[60%]   h-[350px]">
+        <article className=" flex flex-col gap-y-2   py-2 w-[60%]   h-[350px]">
           <span className="font-medium">Revenue Flow</span>
           <div className="bg-white shadow-sm">
             <ResponsiveContainer height={300} width="100%">
@@ -235,9 +238,9 @@ const Dashboard = () => {
             </ResponsiveContainer>
           </div>
         </article>
-        <article className="w-[40%] mt-2">
+        <article className="w-[45%] mt-2">
           <span className=" font-medium ">Analytics Report</span>
-          <div className="border w-[90%] mt-2 bg-white flex flex-col">
+          <div className="border w-[100%] mt-2 bg-white flex flex-col">
             <div className="flex justify-between text-xs items-center border py-4 px-2">
               <span className="">Business Risk Cases</span>
               <span>+45.14%</span>
@@ -299,6 +302,8 @@ const Dashboard = () => {
         </TableContainer>
       </section>
     </main>
+    </>
+
   );
 };
 

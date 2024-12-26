@@ -8,8 +8,8 @@ export default function Spinner() {
 
   if (showSpinner) {
     return (
-      <div className="top-0 left-0 right-0 bottom-0 flex items-center justify-center  bg-[rgba(0,0,0,0.36)]  z-50 fixed  backdrop-blur-sm">
-        <CgSpinner className=" text-7xl animate-spin text-[#2c698d] " />
+      <div className="top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-[rgba(0,0,0,0.36)] z-50 fixed ">
+        <CgSpinner className=" text-6xl animate-spin text-[#2c698d] " />
       </div>
     );
   }

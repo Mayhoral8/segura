@@ -2,7 +2,7 @@
 import PropTypes from "prop-types";
 
 import { createContext, useEffect } from "react";
-
+import { useSession } from "next-auth/react";
 // project import
 
 import { useState } from "react";
@@ -11,6 +11,7 @@ import { usePathname } from "next/navigation";
 const ConfigContext = createContext();
 
 function ConfigProvider({ children }) {
+  const { data: session, status } = useSession();
   const pathname = usePathname();
   function createData(id, accNo, name, accBalance, currency, status) {
     return { id, accNo, name, accBalance, currency, status };
@@ -39,15 +40,19 @@ function ConfigProvider({ children }) {
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
-  const [showOtpModal,
-    setShowOtpmodal] = useState(false)
+  const [showOtpModal, setShowOtpmodal] = useState(false);
 
-    const [showLoginSuccessModal, setShowLoginSuccessModal] = useState(false)
-  const [previousLocation, setPreviousLocation] = useState(
-  );
+  const [showLoginSuccessModal, setShowLoginSuccessModal] = useState(false);
+  const [previousLocation, setPreviousLocation] = useState();
+
+  const [showSetupInfoModal, setShowSetupInfoModal] = useState(false);
+  const [showCurrencySelectionModal, setShowCurrencySelectionModal] =
+    useState(false);
+  const [showSuccessfulWalletSetupModal, setShowSuccessfulWalletSetupModal] =
+    useState(false);
 
   useEffect(() => {
-    if (pathname !== "/auth/login" && pathname !== "/auth/register" && pathname !== "/") {
+    if (pathname.includes("/corporate") || session === "authenticated") {
       localStorage.setItem("lastVisitedPage", pathname);
       setPreviousLocation(pathname);
     }
@@ -91,7 +96,16 @@ function ConfigProvider({ children }) {
           showOtpModal,
           setShowOtpmodal,
           showLoginSuccessModal,
-          setShowLoginSuccessModal
+          setShowLoginSuccessModal,
+        },
+
+        walletSetup: {
+          showSetupInfoModal,
+          setShowSetupInfoModal,
+          showCurrencySelectionModal,
+          setShowCurrencySelectionModal,
+          showSuccessfulWalletSetupModal,
+          setShowSuccessfulWalletSetupModal,
         }
       }}
     >

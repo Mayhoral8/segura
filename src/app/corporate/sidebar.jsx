@@ -12,6 +12,7 @@ import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import { useSearchParams } from "next/navigation";
 
+
 const Sidebar = () => {
   const searchParams = useSearchParams();
   const { setShowSignOutModal, check } = useContext(ConfigContext);

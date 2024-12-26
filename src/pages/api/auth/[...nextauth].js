@@ -6,7 +6,7 @@ export default NextAuth({
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        username: { label: "Username", type: "text" }, 
+        email: { label: "Email", type: "text" }, 
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
@@ -17,7 +17,7 @@ export default NextAuth({
             {
               method: "POST",
               body: JSON.stringify({
-                username: credentials?.username,
+                username: credentials?.email,
                 password: credentials?.password,
               }),
               headers: {
@@ -61,6 +61,7 @@ export default NextAuth({
         token.permissions = user.user.permissions;
         token.id = user.user.id;
         token.username = user.user.username;
+        token.corporateAdminEmail = user.corporateAdminEmail
       }
       return token;
     },
@@ -72,6 +73,7 @@ export default NextAuth({
         permissions: token.permissions,
         id: token.id,
         username: token.username,
+        corporateAdminEmail: token.corporateAdminEmail
       };
       return session;
     },

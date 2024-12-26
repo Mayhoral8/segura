@@ -17,7 +17,7 @@ const SignOutModal = () => {
 
   return (
     <AnimateModal isVisible={showSignOutModal}>
-      <div className="bg-white w-[30%] h-[45%] rounded-md grid grid-flow-row items-center justify-center gap-y-4 px-10">
+      <div className="bg-white w-[30%] h-[45%] rounded-md grid grid-flow-row items-center justify-center  px-10 ">
         <h2 className="font-bold text-3xl text-center">Sign Out</h2>
         <p className="text-lg">Are you sure you want to sign out?</p>
         <div className="flex flex-row gap-x-4 justify-center">

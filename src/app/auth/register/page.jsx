@@ -2,14 +2,33 @@
 
 // next
 
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Form, Formik, ErrorMessage, Field } from "formik";
 import AnimateButton from "../../../components/@extended/AnimateButton";
 import { ConfigContext } from "../../../contexts/ConfigContext";
 import Link from "next/link";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
+import ErrorModal from "../../../components/ErrorModal";
+import { useSession } from "next-auth/react";
+import { CgSpinner } from "react-icons/cg";
+
+// asset import
+import Logo from "@/assets/auth/logo.svg";
+import Symbol from "@/assets/auth/seguraSymbol.svg";
+import Google from "@/assets/auth/Google.svg";
+import Twitter from "@/assets/auth/Twitter.svg";
+import Facebook from "@/assets/auth/Facebook.svg";
+
+// material-ui
+// import Grid from "@mui/material/Grid";
+// import Link from "@mui/material/Link";
+// import Stack from "@mui/material/Stack";
+// import Typography from "@mui/material/Typography";
+
 import * as Yup from "yup";
+import Image from "next/image";
+import { toast } from "sonner";
 
 export default function SignIn() {
   const { spinner, errorModal } = useContext(ConfigContext);
@@ -17,17 +36,36 @@ export default function SignIn() {
   const { setShowErrorModal, setErrorMsg } = errorModal;
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
+  
+  const [ previousLocation, setPreviousLocation ]  = useState("")
   const router = useRouter();
+  const { data: session, status } = useSession();
+  
+
+  useEffect(()=>{
+    const lastVisitedPage = localStorage.getItem("lastVisitedPage")
+    if (lastVisitedPage) setPreviousLocation(lastVisitedPage)
+    if (status !== "unauthenticated") {
+      router.push(previousLocation); // Perform navigation after render
+    }
+}, [status, previousLocation, router])
+
+
+  const hasNumber = (number) => new RegExp(/[0-9]/).test(number);
+
+  // has mix of small and capitals
+  const hasMixed = (number) =>
+    new RegExp(/[a-z]/).test(number) && new RegExp(/[A-Z]/).test(number);
+
+  // has special chars
+  const hasSpecial = (number) => new RegExp(/[!#@$%^&*)(+=._-]/).test(number);
 
   const initialValues = {
-    username: "",
-    password: "",
+    businessName: "",
     email: "",
-    firstname: "",
-    lastname: "",
     phoneNumber: "",
-    officeAddress: "",
+    officeCountry: "",
+    password: "",
     confirmPassword: "",
   };
 
@@ -40,9 +78,9 @@ export default function SignIn() {
   };
 
   const schema = Yup.object().shape({
-    username: Yup.string().max(12).required("Username is required"),
-    firstname: Yup.string().max(255).required("First Name is required"),
-    lastname: Yup.string().max(255).required("Last Name is required"),
+    businessName: Yup.string().max(12).required("Business name is required"),
+    // firstname: Yup.string().max(255).required("First Name is required"),
+    // lastname: Yup.string().max(255).required("Last Name is required"),
     email: Yup.string()
       .email("Must be a valid email")
       .max(255)
@@ -50,227 +88,288 @@ export default function SignIn() {
     // homeAddress: Yup.string()
     //   .max(255)
     //   .required("Home address is required"),
-    officeAddress: Yup.string().max(255).required("Office address is required"),
+    officeCountry: Yup.string().max(255).required("Office country is required"),
     phoneNumber: Yup.string().max(13).required("Phone number is required"),
     password: Yup.string()
+      .min(8, "Password must be between 8 to 20 characters")
+      .max(20, "Password must be between 8 to 20 characters")
       .required("Password is required")
       .test(
         "no-leading-trailing-whitespace",
         "Password cannot start or end with spaces",
         (value) => value === value.trim()
       )
-      .max(10, "Password must be less than 10 characters"),
+      .test(
+        "has-special-char",
+        "Password must contain at least one special character",
+        (value) => value && hasSpecial(value)
+      )
+      .test(
+        "has-mixed", // Name of the test
+        "Password must contain lower and upper case letter(s)", // Error message
+        (value) => value && hasMixed(value) // Validation logic
+      )
+      .test(
+        "has-number", // Name of the test
+        "Password must contain a number", // Error message
+        (value) => value && hasNumber(value) // Validation logic
+      ),
     confirmPassword: Yup.string()
       .required("Confirm Password is required")
       .oneOf([Yup.ref("password")], "Password must match"),
   });
-
+if(status === "unauthenticated"){
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={schema}
-      onSubmit={async (values, { setSubmitting }) => {
-        const trimmedEmail = values.email.trim();
-        setShowSpinner(true);
-        try {
-          const response = await fetch(
-            `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/registerCorporateAdmin`,
-            {
-              method: "POST",
-              body: JSON.stringify({
-                firstName: values.firstname,
-                lastName: values.lastname,
-                email: trimmedEmail,
-                username: values.username,
-                phoneNumber: values.phoneNumber,
-                officeAddress: values.officeAddress,
-                password: values.password,
-                confirmPassword: values.confirmPassword,
-                permissionLists: [
-                  "PERMISSION_ACCOUNT_CREATE",
-                  "PERMISSION_USER_VIEW",
-                  "PERMISSION_CORPORATE_CREATE",
-                ],
-                corporateId: "12345",
-                isCorporate: "true",
-                isVerified: "false",
-                userStatus: "INACTIVE",
-              }),
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
-          if (response.ok) {
-            setShowSpinner(false);
+    <div className="flex">
+      <ErrorModal/>
+      <div className="h-screen bg-[#272643] w-[35%] relative flex flex-col justify-between p-5 text-white overflow-hidden">
+        <div className="relative z-10">
+          <Image src={Logo} alt="segura logo" />
+        </div>
+        <div className="relative z-10">
+          <h3 className="font-semibold mb- text-[50px]">Create an account</h3>
+          <p className="text-[#D9D9D9] max-w-[400px]">
+            Join now to experience secure, scalable and innovative banking
+            tailored to your business needs.
+          </p>
+          <div className="text-[18px] mt-5 mb-3 font-bold">
+            Password recommendations
+          </div>
+          <ul className="list-disc ml-5">
+            <li>Minimum 8 characters</li>
+            <li>Maximum 20 characters</li>
+            <li>
+              <span className="text-green-500">
+                At least 1 lowercase (a - z)
+              </span>
+            </li>
+            <li>
+              <span className="text-green-500">
+                At least 1 uppercase (A - Z)
+              </span>
+            </li>
+            <li>At least 1 number (0 - 8)</li>
+            <li>At least 1 symbol (%, &, @, etc.)</li>
+          </ul>
+        </div>
+        <div className="mx-auto justify-self-center relative z-10">
+          <p className="text-[#8C8C8C] text-[12px]">
+            This site is protected by RE-CAPTCHA and the Google{" "}
+            <span className="underline">Privacy Policy</span>
+          </p>
+        </div>
+        <div className="absolute z-0 bottom-[0px] -right-24">
+          <Image src={Symbol} alt="symbol" className="scale-75 opacity-40" />
+        </div>
+      </div>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={schema}
+        onSubmit={async (values, { setSubmitting }) => {
+          console.log("p");
+          const trimmedEmail = values.email.trim();
+          setShowSpinner(true);
+          try {
+            const response = await fetch(
+              `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/registerCorporateAdmin`,
+              {
+                method: "POST",
+                body: JSON.stringify({
+                  businessName: values.businessName,
+                  email: trimmedEmail,
+                  officeCountry: values.officeCountry,
+                  phoneNumber: values.phoneNumber,
+                  password: values.password,
+                  confirmPassword: values.confirmPassword,
+                }),
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+
             const responseData = await response.json();
-            console.log(responseData);
+            if (!response.ok) {
+              console.log(response);
+             throw new Error(responseData.responseMessage)
+            }
+            setShowSpinner(false);
             toast.success("Registration successful");
             router.push("/auth/login");
-          } else {
+          } catch (err) {
+            console.log(err.message);
             setShowSpinner(false);
             setShowErrorModal(true);
-            setErrorMsg(response.error);
+            setErrorMsg(err.message);
           }
-        } catch (err) {
-          setShowSpinner(false);
-          setShowErrorModal(true);
-          setErrorMsg(response.error);
-        }
-      }}
-    >
-      <section className=" items-center flex justify-center bottom-0 right-0 top-0 left-0 ">
-        <article className="mt-16 lg:w-[40%] h-[75%] flex flex-col justify-center gap-y-4 py-10 border shadow-md rounded-md px-8 mb-10">
-          <div className="flex justify-between items-center ">
-            <h2 className="text-2xl font-bold">Register</h2>
-            <Link href="/auth/login">
-              <span className="text-sm text-[#2c698d]">
-                Already have an account?
-              </span>
-            </Link>
-          </div>
-
-          <Form className="flex flex-col rounded-md">
-            <article className="grid grid-cols-2 gap-x-4 justify-between w-full">
-              <div className="flex flex-col gap-y-2 ">
-                <label htmlFor="firstname"> First Name</label>
-                <Field
-                  name="firstname"
-                  type="text"
-                  placeholder="First Name"
-                  className="border focus:outline-none px-1 text-xs h-8 rounded-sm"
-                />
-                <span className="text-red-500 text-xs">
-                  <ErrorMessage name="firstname" />
-                </span>
-              </div>
-              <div className="flex flex-col gap-y-2 ">
-                <label htmlFor="lastname"> Last Name</label>
-                <Field
-                  name="lastname"
-                  type="text"
-                  placeholder="Last Name"
-                  className="border focus:outline-none px-1 text-xs h-8 rounded-sm"
-                />
-                <span className="text-red-500 text-xs">
-                  <ErrorMessage name="lastname" />
-                </span>
-              </div>
-            </article>
-            <article className="grid grid-cols-2 gap-x-4 justify-between w-full">
-              <div className="flex flex-col gap-y-2 ">
-                <label htmlFor="username">Username</label>
-                <Field
-                  name="username"
-                  type="text"
-                  placeholder="Username"
-                  className="border focus:outline-none px-1 text-xs h-8 rounded-sm"
-                />
-                <span className="text-red-500 text-xs">
-                  <ErrorMessage name="username" />
-                </span>
-              </div>
-              <div className="flex flex-col gap-y-2 ">
-                <label htmlFor="phoneNumber">Phone Number</label>
-                <Field
-                  name="phoneNumber"
-                  type="text"
-                  placeholder="Phone Number"
-                  className="border focus:outline-none px-1 text-xs h-8 rounded-sm"
-                />
-                <span className="text-red-500 text-xs">
-                  <ErrorMessage name="phoneNumber" />
-                </span>
-              </div>
-            </article>
-            <div className="flex flex-col gap-y-2 ">
-              <label htmlFor="email">Email</label>
-              <Field
-                name="email"
-                type="text"
-                placeholder="Email"
-                className="border focus:outline-none px-1 text-xs h-8 rounded-sm"
-              />
-              <span className="text-red-500 text-xs">
-                <ErrorMessage name="email" />
-              </span>
+        }}
+      >
+        <section className="items-center h-screen w-[65%]  flex justify-center bottom-0 right-0 top-0 left-0 relative">
+          <article className="h-full w-[620px] flex flex-col justify-center gap-y-4 py-10 px-8">
+            <div className="flex justify-between items-center ">
+              <h2 className="text-2xl font-bold">Sign Up</h2>
             </div>
 
-            <div className="flex flex-col gap-y-2 ">
-              <label htmlFor="officeAddress">Office Address</label>
-              <Field
-                name="officeAddress"
-                type="text"
-                placeholder="Office Address"
-                className="border focus:outline-none px-1 text-xs h-8 rounded-sm"
-              />
-              <span className="text-red-500 text-xs">
-                <ErrorMessage name="officeAddress" />
-              </span>
-            </div>
-            <div className="grid grid-rows-3 ">
-              <label htmlFor="password">Password</label>
-              <div className=" flex justify-between items-center border focus:outline-none px-1 text-xs h-8 rounded-sm">
-                <Field
-                  name="password"
-                  type={showPassword ? "text" : "password"}
-                  className="w-full h-full focus:outline-none"
-                />
-                {showPassword ? (
-                  <IoMdEyeOff
-                    className="text-lg cursor-pointer"
-                    onClick={handleShowPassword}
+            <Form className="flex flex-col rounded-md">
+              <div className="flex w-full justify-between">
+                <div className="flex flex-col w-[48%] gap-y-2 mb-2">
+                  <label
+                    htmlFor="businessName"
+                    className="text-[#8C8C8C] text-sm"
+                  >
+                    Business/Company Name
+                  </label>
+                  <Field
+                    name="businessName"
+                    type="text"
+                    placeholder="Enter company name"
+                    className="border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px]"
                   />
-                ) : (
-                  <IoMdEye
-                    className="text-lg cursor-pointer"
-                    onClick={handleShowPassword}
+                  <span className="text-red-500 text-xs">
+                    <ErrorMessage name="businessName" />
+                  </span>
+                </div>
+                <div className="flex flex-col w-[48%] gap-y-2 mb-2">
+                  <label htmlFor="email" className="text-[#8C8C8C] text-sm">
+                    Email
+                  </label>
+                  <Field
+                    name="email"
+                    type="text"
+                    placeholder="Enter email"
+                    className="border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px]"
                   />
-                )}
+                  <span className="text-red-500 text-xs">
+                    <ErrorMessage name="email" />
+                  </span>
+                </div>
               </div>
-              <span className="text-red-500 text-xs">
-                <ErrorMessage name="password" />
-              </span>
-            </div>
-            <div className="grid grid-rows-3 ">
-              <label htmlFor="confirmPassword">Confirm Password</label>
-              <div className=" flex justify-between items-center border focus:outline-none px-1 text-xs h-8 rounded-sm">
-                <Field
-                  name="confirmPassword"
-                  type={showConfirmPassword ? "text" : "password"}
-                  className="w-full h-full focus:outline-none"
-                />
-                {showConfirmPassword ? (
-                  <IoMdEyeOff
-                    className="text-lg cursor-pointer"
-                    onClick={handleShowConfirmPassword}
+              <div className="flex w-full justify-between">
+                <div className="flex flex-col w-[48%] gap-y-2 mb-2">
+                  <label
+                    htmlFor="officeCountry"
+                    className="text-[#8C8C8C] text-sm"
+                  >
+                    Country
+                  </label>
+                  <Field
+                    name="officeCountry"
+                    type="text"
+                    placeholder="officeCountry"
+                    className="border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px]"
                   />
-                ) : (
-                  <IoMdEye
-                    className="text-lg cursor-pointer"
-                    onClick={handleShowConfirmPassword}
+                  <span className="text-red-500 text-xs">
+                    <ErrorMessage name="officeCountry" />
+                  </span>
+                </div>
+                <div className="flex flex-col w-[48%] gap-y-2 mb-2">
+                  <label
+                    htmlFor="phoneNumber"
+                    className="text-[#8C8C8C] text-sm"
+                  >
+                    Phone Number
+                  </label>
+                  <Field
+                    name="phoneNumber"
+                    type="text"
+                    placeholder="Enter Phone Number"
+                    className="border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px]"
                   />
-                )}
+                  <span className="text-red-500 text-xs">
+                    <ErrorMessage name="phoneNumber" />
+                  </span>
+                </div>
               </div>
-              <span className="text-red-500 text-xs">
-                <ErrorMessage name="confirmPassword" />
-              </span>
-            </div>
-            <div className="flex justify-between text-sm ">
-              <span>Keep me signed in</span>
-              <span>Forgot password</span>
-            </div>
-            <AnimateButton>
-              <button
-                type="submit"
-                className="w-full border block h-10 bg-[#2c698d] text-white rounded-md mt-4"
+              <div className="flex w-full justify-between">
+                <div className="mb-3 w-[48%] text-[#8C8C8C]">
+                  <label htmlFor="password">Password</label>
+                  <div className="flex bg-white justify-between items-center border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px]">
+                    <Field
+                      name="password"
+                      type={showPassword ? "text" : "password"}
+                      className="w-full h-full focus:outline-none"
+                    />
+                    {showPassword ? (
+                      <IoMdEyeOff
+                        className="text-lg cursor-pointer"
+                        onClick={handleShowPassword}
+                      />
+                    ) : (
+                      <IoMdEye
+                        className="text-lg cursor-pointer"
+                        onClick={handleShowPassword}
+                      />
+                    )}
+                  </div>
+                  <span className="text-red-500 text-xs">
+                    <ErrorMessage name="password" />
+                  </span>
+                </div>
+                <div className="mb-2 w-[48%] text-[#8C8C8C]">
+                  <label htmlFor="confirmPassword">Confirm Password</label>
+                  <div className="flex justify-between bg-white items-center border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px]">
+                    <Field
+                      name="confirmPassword"
+                      type={showConfirmPassword ? "text" : "password"}
+                      className="w-full h-full focus:outline-none"
+                    />
+                    {showConfirmPassword ? (
+                      <IoMdEyeOff
+                        className="text-lg cursor-pointer"
+                        onClick={handleShowConfirmPassword}
+                      />
+                    ) : (
+                      <IoMdEye
+                        className="text-lg cursor-pointer"
+                        onClick={handleShowConfirmPassword}
+                      />
+                    )}
+                  </div>
+                  <span className="text-red-500 text-xs">
+                    <ErrorMessage name="confirmPassword" />
+                  </span>
+                </div>
+              </div>
+              <AnimateButton>
+                <button
+                  type="submit"
+                  className="border block h-9 w-[200px] bg-[#2c698d] text-white rounded-[4px] mt-2 ml-auto justify-self-end"
+                >
+                  Next
+                </button>
+              </AnimateButton>
+              <Link
+                href="/auth/login"
+                className="mt-10 mx-auto justify-self-center"
               >
-                Register
-              </button>
-            </AnimateButton>
-          </Form>
-        </article>
-      </section>
-    </Formik>
+                <span className="text-sm text-[#2c698d]">
+                  Already have an account?
+                  <span className="font-semibold text-base"> Login</span>
+                </span>
+              </Link>
+            </Form>
+          </article>
+          <div className="flex items-center absolute bottom-[20px] gap-[40px]">
+            <p className="text-[#8C8C8C] text-[12px] underline">
+              Terms and Conditions
+            </p>
+            <p className="text-[#8C8C8C] text-[12px] underline">
+              Privacy Policy
+            </p>
+            <p className="text-[#8C8C8C] text-[12px] underline">
+              CA Privacy Notice
+            </p>
+          </div>
+        </section>
+      </Formik>
+    </div>
   );
+}else{
+  return (
+    <div className="top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-[rgba(0,0,0,0.36)] z-50 fixed ">
+      <CgSpinner className=" text-6xl animate-spin text-[#2c698d] " />
+    </div>
+  );
+}
+
 }

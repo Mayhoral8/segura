@@ -10,7 +10,7 @@ export const AnimateModal = ({ children, isVisible }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center bg-[rgba(0,0,0,0.6)] z-50"
+          className="fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center bg-[rgba(0,0,0,0.6)] z-50 backdrop-blur-sm"
         >
           {children}
         </motion.div>
@@ -55,7 +55,7 @@ export const AnimateDropdown = ({ children, isVisible }) => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.1, ease: "easeOut" }}
-          className="absolute border mt-12 text-sm flex-col rounded-md w-[222px] bg-white  transition-transform shadow-sm z-10`"
+          className=""
         >
           {children}
         </motion.div>
