@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useReducer } from "react";
+import React, { useState } from "react";
 import TableComponent from "../../../../components/Table";
 import { RiSwapFill } from "react-icons/ri";
 import { AnimateDropdown } from "../../../../components/Animate";
@@ -39,7 +39,7 @@ const ConvertFunds = () => {
     },
   });
 
-  const [showReqFundForm, setShowReqFundForm] = useState(false);
+  
 
   const handleShowWallets = (type) => {
     type === "toCurrency"

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import SignInForm from "./form";
 import bgImg from "../../../assets/Login/login-bg.png";
 import OTP from "../../../components/Auth/Login/OTP";
@@ -11,7 +11,7 @@ import Logo from "@/assets/auth/logo.svg";
 import Symbol from "@/assets/auth/seguraSymbol.svg";
 import Image from "next/image";
 
-const layout = () => {
+const Layout = () => {
   const [previousLocation, setPreviousLocation] = useState("");
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -64,4 +64,4 @@ const layout = () => {
   }
 };
 
-export default layout;
+export default Layout;

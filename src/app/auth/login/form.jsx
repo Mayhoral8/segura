@@ -1,7 +1,7 @@
 "use client";
 
 // next
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import { ConfigContext } from "../../../contexts/ConfigContext";
 import { useRouter } from "next/navigation";
 import { Form, Formik, ErrorMessage, Field } from "formik";
@@ -9,7 +9,6 @@ import AnimateButton from "../../../components/@extended/AnimateButton";
 import { useSession } from "next-auth/react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
-import { CgSpinner } from "react-icons/cg";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import ErrorModal from "../../../components/ErrorModal";
 import { FcGoogle } from "react-icons/fc";
@@ -147,7 +146,7 @@ export default function SignInForm() {
             <div className="flex items-center justify-center">
               <Link href="/auth/register">
                 <span className="text-sm text-center text-[#2c698d]">
-                  Don't have an account?
+                  Don&apos;t have an account?
                 </span>
               </Link>
             </div>

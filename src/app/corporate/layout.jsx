@@ -3,7 +3,6 @@
 import React from "react";
 
 import SignOutModal from "../auth/signoutModal";
-import VerifiedIcon from "@mui/icons-material/Verified";
 import Sidebar from "./sidebar";
 import TopBar from "./topbar";
 

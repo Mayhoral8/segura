@@ -1,10 +1,10 @@
 "use client";
 import React, { useState } from "react";
-import { AnimateModal } from "../../../../components/Animate";
+import { AnimateModal , AnimateSlide } from "../../../../components/Animate";
 import RequestFundingForm from "./RequestFundingForm";
 // import { HiMiniXMark } from "react-icons/hi2";
 import RequestFundingInfo from "./RequestFundingInfo";
-import { AnimateSlide } from "../../../../components/Animate";
+
 
 const RequestFundingFormWrapper = ({ showReqFundForm, setShowReqFundForm }) => {
   const [currFormIndex, setCurrFormIndex] = useState<number>(1);

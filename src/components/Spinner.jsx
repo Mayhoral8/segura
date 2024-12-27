@@ -1,6 +1,6 @@
+"use client"
 import React, { useContext } from "react";
 import { ConfigContext } from "../contexts/ConfigContext";
-import { PiSpinnerGapBold } from "react-icons/pi";
 import { CgSpinner } from "react-icons/cg";
 
 export default function Spinner() {

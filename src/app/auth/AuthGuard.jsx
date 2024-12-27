@@ -7,12 +7,13 @@ import { CgSpinner } from "react-icons/cg";
 import { ConfigContext } from "../../contexts/ConfigContext";
 
 const AuthGuard = ({ children }) => {
-  const { previousLocation } = useContext(ConfigContext);
+  
   const router = useRouter();
   const { data: session, status } = useSession();
 
   useEffect(() => {
     if (status === "unauthenticated") {
+      localStorage.removeItem("lastVisitedPage")
       router.push("/auth/login");
       return;
     }
@@ -21,9 +22,9 @@ const AuthGuard = ({ children }) => {
       const permissions = session?.user?.permissions || [];
 
       // Determine redirection path based on permissions
-      const isCorporateAdmin = permissions.some(
-        (permission) => permission.name === "PERMISSION_CORPORATE_CREATE"
-      );
+      // const isCorporateAdmin = permissions.some(
+      //   (permission) => permission.name === "PERMISSION_CORPORATE_CREATE"
+      // );
 
      
     }

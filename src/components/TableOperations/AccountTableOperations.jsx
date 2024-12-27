@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useState, Suspense } from "react";
 import { ConfigContext } from "../../contexts/ConfigContext";
 import { useFilterTable } from "../../hooks/useFilterTable";
 import { useSearchParams } from "next/navigation";
@@ -84,6 +84,8 @@ const AccountTableOperations = () => {
   }, []);
 
   return (
+    <Suspense fallback={<div>Loading...</div>}>
+
     <main>
       <div className="flex items-center gap-x-1">
         <h2>Filters</h2>
@@ -122,6 +124,8 @@ const AccountTableOperations = () => {
         </article>
       </section>
     </main>
+    </Suspense>
+
   );
 };
 

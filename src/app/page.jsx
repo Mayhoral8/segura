@@ -1,4 +1,5 @@
 // pages/_app.js
+import React from "react";
 import Image from "next/image";
 import Navbar from "./navbar";
 import HeroIllustration from "@/assets/landingPage/hero illustration.svg";

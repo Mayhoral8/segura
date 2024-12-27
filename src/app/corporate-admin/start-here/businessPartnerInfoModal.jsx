@@ -120,7 +120,7 @@ const BusinessParnerInfoModal = ({
                         console.log(response.error);
                         throw new Error(response.error);
                       }
-                      toast.success("Details Update Succesful!");
+                      toast.success("Details Update Succesfully!");
                       queryClient.invalidateQueries(["primaryBusinessInfo"]);
                       toggleForm()
 

@@ -1,3 +1,4 @@
+"use client"
 import React, { useReducer, useState, useContext } from "react";
 import { ConfigContext } from "../../contexts/ConfigContext";
 import { FaXmark } from "react-icons/fa6";

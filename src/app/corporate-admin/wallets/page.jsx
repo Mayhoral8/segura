@@ -62,7 +62,7 @@ const Page = () => {
             } h-full flex items-end w-32 justify-center cursor-pointer`}
             onClick={() => handleActiveTab("MY_WALLET")}
           >
-            <h2 className="pb-3" font-medium>
+            <h2 className="pb-3 font-medium">
               My wallet
             </h2>
           </article>
