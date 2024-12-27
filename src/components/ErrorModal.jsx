@@ -1,3 +1,4 @@
+"use client"
 import React, { useContext } from "react";
 import { ConfigContext } from "../contexts/ConfigContext";
 import { BiSolidError } from "react-icons/bi";

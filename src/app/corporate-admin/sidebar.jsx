@@ -1,9 +1,8 @@
+"use client"
 import React, { useEffect, useReducer, useContext, useState } from "react";
 import Link from "next/link";
 import { ConfigContext } from "../../contexts/ConfigContext";
 import { usePathname } from "next/navigation";
-import { useSearchParams } from "next/navigation";
-import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import Image from "next/image";
 
 // assets import
@@ -20,7 +19,6 @@ import Avatar from "../../avatar.png";
 import RightArrow from "../../assets/adminDashboard/rightArrow.svg";
 
 const Sidebar = () => {
-  const searchParams = useSearchParams();
   const { setShowSignOutModal, check } = useContext(ConfigContext);
   const [showDropdown, setShowDropDown] = useState(false);
 
@@ -178,7 +176,7 @@ const Sidebar = () => {
     } else if (pathname.includes("/corporate-admin/wallets")) {
       return dispatch({ type: "WALLETS" });
     }
-  }, [pathname, searchParams]);
+  }, [pathname]);
 
   const handleDispatch = (type) => {
     dispatch({ type });

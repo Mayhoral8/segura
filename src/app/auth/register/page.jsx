@@ -1,11 +1,11 @@
 "use client";
 
 // next
-
+import React from "react";
 import { useState, useContext, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Form, Formik, ErrorMessage, Field } from "formik";
-import AnimateButton from "../../../components/@extended/AnimateButton";
+// import AnimateButton from "../../../components/@extended/AnimateButton";
 import { ConfigContext } from "../../../contexts/ConfigContext";
 import Link from "next/link";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
@@ -13,13 +13,11 @@ import ErrorModal from "../../../components/ErrorModal";
 import { useSession } from "next-auth/react";
 import { CgSpinner } from "react-icons/cg";
 import { countryData } from "../../../config/countryData";
-
+import { AnimateDropdown } from "../../../components/Animate";
+import { RxCaretDown } from "react-icons/rx";
 // asset import
 import Logo from "@/assets/auth/logo.svg";
 import Symbol from "@/assets/auth/seguraSymbol.svg";
-import Google from "@/assets/auth/Google.svg";
-import Twitter from "@/assets/auth/Twitter.svg";
-import Facebook from "@/assets/auth/Facebook.svg";
 
 // material-ui
 // import Grid from "@mui/material/Grid";
@@ -38,9 +36,26 @@ export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  const [isCountryListVisible, setIsCountryListVisible] = useState(false);
+  const [dialCode, setDialCode] = useState("+1");
+
   const [previousLocation, setPreviousLocation] = useState("");
+  const [countries, setCountries] = useState(countryData);
   const router = useRouter();
   const { data: session, status } = useSession();
+
+  const handleCountryChange = (keyword) => {
+    setCountries(() => {
+      return countries.filter((country) => {
+        return country.name.startsWith(keyword);
+      });
+    });
+  };
+  const [keyWord, setkeyWord] = useState("");
+
+  const handleInputChange = () => {
+    setkeyWord(e.target.value);
+  };
 
   useEffect(() => {
     const lastVisitedPage = localStorage.getItem("lastVisitedPage");
@@ -76,6 +91,17 @@ export default function SignIn() {
     setShowConfirmPassword(!showConfirmPassword);
   };
 
+  const handleKeywordChange = (e) => {
+    setkeyWord(e.target.value);
+    setCountries(() => {
+      return countryData.filter(({ name }, i) => {
+        return name.toUpperCase().startsWith(e.target.value.toUpperCase());
+      });
+    });
+  };
+  const showCountryList = () => {
+    setIsCountryListVisible(!isCountryListVisible);
+  };
   const schema = Yup.object().shape({
     businessName: Yup.string().max(30).required("Business name is required"),
     // firstname: Yup.string().max(255).required("First Name is required"),
@@ -88,7 +114,10 @@ export default function SignIn() {
     //   .max(255)
     //   .required("Home address is required"),
     officeCountry: Yup.string().max(255).required("Office country is required"),
-    phoneNumber: Yup.string().max(13).required("Phone number is required"),
+    phoneNumber: Yup.string()
+      .max(24, "Phone number can not be more than 24 characters")
+      .min(8, "Phone Number must be at least 8 characters")
+      .required("Phone number is required"),
     password: Yup.string()
       .min(8, "Password must be between 8 to 20 characters")
       .max(20, "Password must be between 8 to 20 characters")
@@ -203,173 +232,218 @@ export default function SignIn() {
             }
           }}
         >
-          <section className="items-center h-screen w-[65%]  flex justify-center bottom-0 right-0 top-0 left-0 relative">
-            <article className="h-full w-[620px] flex flex-col justify-center gap-y-4 py-10 px-8">
-              <div className="flex justify-between items-center ">
-                <h2 className="text-2xl font-bold">Sign Up</h2>
-              </div>
+          {({ setFieldValue }) => (
+            <section className="items-center h-screen w-[65%]  flex justify-center bottom-0 right-0 top-0 left-0 relative">
+              <article className="h-full w-[620px] flex flex-col justify-center gap-y-4 py-10 px-8">
+                <div className="flex justify-between items-center ">
+                  <h2 className="text-2xl font-bold">Sign Up</h2>
+                </div>
 
-              <Form className="flex flex-col rounded-md">
-                <div className="flex w-full justify-between">
-                  <div className="flex flex-col w-[48%] gap-y-2 mb-2">
-                    <label
-                      htmlFor="businessName"
-                      className="text-[#8C8C8C] text-sm"
-                    >
-                      Business/Company Name
-                    </label>
-                    <Field
-                      name="businessName"
-                      type="text"
-                      placeholder="Enter company name"
-                      className="border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px]"
-                    />
-                    <span className="text-red-500 text-xs">
-                      <ErrorMessage name="businessName" />
-                    </span>
-                  </div>
-                  <div className="flex flex-col w-[48%] gap-y-2 mb-2">
-                    <label htmlFor="email" className="text-[#8C8C8C] text-sm">
-                      Email
-                    </label>
-                    <Field
-                      name="email"
-                      type="text"
-                      placeholder="Enter email"
-                      className="border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px]"
-                    />
-                    <span className="text-red-500 text-xs">
-                      <ErrorMessage name="email" />
-                    </span>
-                  </div>
-                </div>
-                <div className="flex w-full justify-between">
-                  <div className="flex flex-col w-[48%] gap-y-2 mb-2">
-                    <label
-                      htmlFor="officeCountry"
-                      className="text-[#8C8C8C] text-sm"
-                    >
-                      Country
-                    </label>
-                    <Field
-                      name="officeCountry"
-                      as="select"
-                      type="text"
-                      placeholder="officeCountry"
-                      className="border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px] text-gray-950"
-                    >
-                      <option value="" defaultValue="" className="italic">--Select Country--</option>
-                      {countryData.map((country, i) => {
-                        
-                        const countryName = country.name
-                        return (
-                          <option key={i} value={country.name} className="text-gray-950">{countryName}</option>
-                        );
-                      })}
-                    </Field>
-                    <span className="text-red-500 text-xs">
-                      <ErrorMessage name="officeCountry" />
-                    </span>
-                  </div>
-                  <div className="flex flex-col w-[48%] gap-y-2 mb-2">
-                    <label
-                      htmlFor="phoneNumber"
-                      className="text-[#8C8C8C] text-sm"
-                    >
-                      Phone Number
-                    </label>
-                    <Field
-                      name="phoneNumber"
-                      type="text"
-                      placeholder="Enter Phone Number"
-                      className="border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px]"
-                    />
-                    <span className="text-red-500 text-xs">
-                      <ErrorMessage name="phoneNumber" />
-                    </span>
-                  </div>
-                </div>
-                <div className="flex w-full justify-between">
-                  <div className="mb-3 w-[48%] text-[#8C8C8C]">
-                    <label htmlFor="password" className="text-sm">Password</label>
-                    <div className="flex bg-white justify-between items-center border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px]">
+                <Form className="flex flex-col rounded-md">
+                  <div className="flex w-full justify-between">
+                    <div className="flex flex-col w-[48%] gap-y-2 mb-2">
+                      <label
+                        htmlFor="businessName"
+                        className="text-[#8C8C8C] text-sm"
+                      >
+                        Business/Company Name
+                      </label>
                       <Field
-                        name="password"
-                        type={showPassword ? "text" : "password"}
-                        className="w-full h-full focus:outline-none"
+                        name="businessName"
+                        type="text"
+                        placeholder="Enter company name"
+                        className="border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px]"
                       />
-                      {showPassword ? (
-                        <IoMdEyeOff
-                          className="text-lg cursor-pointer"
-                          onClick={handleShowPassword}
-                        />
-                      ) : (
-                        <IoMdEye
-                          className="text-lg cursor-pointer"
-                          onClick={handleShowPassword}
-                        />
-                      )}
+                      <span className="text-red-500 text-xs">
+                        <ErrorMessage name="businessName" />
+                      </span>
                     </div>
-                    <span className="text-red-500 text-xs">
-                      <ErrorMessage name="password" />
-                    </span>
-                  </div>
-                  <div className="mb-2 w-[48%] text-[#8C8C8C]">
-                    <label htmlFor="confirmPassword" className="text-sm">Confirm Password</label>
-                    <div className="flex justify-between bg-white items-center border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px]">
+                    <div className="flex flex-col w-[48%] gap-y-2 mb-2">
+                      <label htmlFor="email" className="text-[#8C8C8C] text-sm">
+                        Email
+                      </label>
                       <Field
-                        name="confirmPassword"
-                        type={showConfirmPassword ? "text" : "password"}
-                        className="w-full h-full focus:outline-none"
+                        name="email"
+                        type="text"
+                        placeholder="Enter email"
+                        className="border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px]"
                       />
-                      {showConfirmPassword ? (
-                        <IoMdEyeOff
-                          className="text-lg cursor-pointer"
-                          onClick={handleShowConfirmPassword}
-                        />
-                      ) : (
-                        <IoMdEye
-                          className="text-lg cursor-pointer"
-                          onClick={handleShowConfirmPassword}
-                        />
-                      )}
+                      <span className="text-red-500 text-xs">
+                        <ErrorMessage name="email" />
+                      </span>
                     </div>
-                    <span className="text-red-500 text-xs">
-                      <ErrorMessage name="confirmPassword" />
-                    </span>
                   </div>
-                </div>
-                {/* <AnimateButton> */}
+                  <div className="flex w-full justify-between">
+                    <div className="flex flex-col w-[48%] gap-y-2 mb-2">
+                      <label
+                        htmlFor="officeCountry"
+                        className="text-[#8C8C8C] text-sm"
+                      >
+                        Country
+                      </label>
+                      <div className="border w-full flex items-center">
+                        <Field
+                          name="officeCountry"
+                          type="text"
+                          placeholder="Enter or select a country"
+                          className="border-[#D9D9D9] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px] text-gray-950 w-full"
+                        />
+                        <RxCaretDown
+                          className="text-lg cursor-pointer"
+                          onClick={showCountryList}
+                        />
+                      </div>
+
+                      <AnimateDropdown isVisible={isCountryListVisible}>
+                        <article className="absolute border  text-xs flex-col rounded-md w-[300px] bg-white  transition-transform shadow-sm z-30 ml-[-30px]  h-[200px] overflow-y-auto ">
+                          <div>
+                            <input
+                              value={keyWord}
+                              onChange={handleKeywordChange}
+                              className="border w-[300px] fixed mb-5 h-10 focus:outline-none px-1 "
+                            />
+                          </div>
+                          <div className="mt-10 flex flex-col">
+                            {countries.map((country, i) => {
+                              const countryName = country.name;
+                              const dialCode = country.dial_code;
+
+                              return (
+                                <span
+                                  key={i}
+                                  value={country.name}
+                                  onClick={() => {
+                                    setFieldValue("officeCountry", countryName),
+                                      showCountryList();
+                                    setDialCode(dialCode);
+                                  }}
+                                  className="text-gray-950 p-2 cursor-pointer "
+                                >
+                                  {countryName}
+                                </span>
+                              );
+                            })}
+                          </div>
+                        </article>
+                      </AnimateDropdown>
+                      <span className="text-red-500 text-xs">
+                        <ErrorMessage name="officeCountry" />
+                      </span>
+                    </div>
+                    <div className="flex flex-col w-[48%] gap-y-2 mb-2">
+                      <label
+                        htmlFor="phoneNumber"
+                        className="text-[#8C8C8C] text-sm"
+                      >
+                        Phone Number
+                      </label>
+                      <div className="w-full flex items-center ">
+                        <input
+                          value={dialCode}
+                          onChange={(e) => setDialCode(e.target.value)}
+                          className="text-center border h-full w-[15%] text-[#8C8C8C] text-xs"
+                        />
+
+                        <Field
+                          name="phoneNumber"
+                          type="text"
+                          placeholder="Enter Phone Number"
+                          className="border-[#D9D9D9] border-[1px] border-l-0 border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px] w-[85%] rounded-l-none"
+                        />
+                      </div>
+                      <span className="text-red-500 text-xs">
+                        <ErrorMessage name="phoneNumber" />
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex w-full justify-between">
+                    <div className="mb-3 w-[48%] text-[#8C8C8C]">
+                      <label htmlFor="password" className="text-sm">
+                        Password
+                      </label>
+                      <div className="flex bg-white justify-between items-center border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px]">
+                        <Field
+                          name="password"
+                          type={showPassword ? "text" : "password"}
+                          className="w-full h-full focus:outline-none"
+                          placeholder="Enter your password"
+                        />
+                        {showPassword ? (
+                          <IoMdEyeOff
+                            className="text-lg cursor-pointer"
+                            onClick={handleShowPassword}
+                          />
+                        ) : (
+                          <IoMdEye
+                            className="text-lg cursor-pointer"
+                            onClick={handleShowPassword}
+                          />
+                        )}
+                      </div>
+                      <span className="text-red-500 text-xs">
+                        <ErrorMessage name="password" />
+                      </span>
+                    </div>
+                    <div className="mb-2 w-[48%] text-[#8C8C8C]">
+                      <label htmlFor="confirmPassword" className="text-sm">
+                        Confirm Password
+                      </label>
+                      <div className="flex justify-between bg-white items-center border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px]">
+                        <Field
+                          name="confirmPassword"
+                          type={showConfirmPassword ? "text" : "password"}
+                          className="w-full h-full focus:outline-none"
+                          placeholder="Confirm Password"
+                        />
+                        {showConfirmPassword ? (
+                          <IoMdEyeOff
+                            className="text-lg cursor-pointer"
+                            onClick={handleShowConfirmPassword}
+                          />
+                        ) : (
+                          <IoMdEye
+                            className="text-lg cursor-pointer"
+                            onClick={handleShowConfirmPassword}
+                          />
+                        )}
+                      </div>
+                      <span className="text-red-500 text-xs">
+                        <ErrorMessage name="confirmPassword" />
+                      </span>
+                    </div>
+                  </div>
+                  {/* <AnimateButton> */}
                   <button
                     type="submit"
                     className="border block h-9 w-[200px] bg-[#2c698d] text-white rounded-[4px] mt-2 ml-auto justify-self-end"
                   >
                     Next
                   </button>
-                {/* </AnimateButton> */}
-                <Link
-                  href="/auth/login"
-                  className="mt-10 mx-auto justify-self-center"
-                >
-                  <span className="text-sm text-[#2c698d]">
-                    Already have an account?
-                    <span className="font-semibold"> Login</span>
-                  </span>
-                </Link>
-              </Form>
-            </article>
-            <div className="flex items-center absolute bottom-[20px] gap-[40px]">
-              <p className="text-[#8C8C8C] text-[12px] underline">
-                Terms and Conditions
-              </p>
-              <p className="text-[#8C8C8C] text-[12px] underline">
-                Privacy Policy
-              </p>
-              <p className="text-[#8C8C8C] text-[12px] underline">
-                CA Privacy Notice
-              </p>
-            </div>
-          </section>
+                  {/* </AnimateButton> */}
+                  <Link
+                    href="/auth/login"
+                    className="mt-10 mx-auto justify-self-center"
+                  >
+                    <span className="text-sm text-[#2c698d]">
+                      Already have an account?
+                      <span className="font-semibold"> Login</span>
+                    </span>
+                  </Link>
+                </Form>
+              </article>
+              <div className="flex items-center absolute bottom-[20px] gap-[40px]">
+                <p className="text-[#8C8C8C] text-[12px] underline">
+                  Terms and Conditions
+                </p>
+                <p className="text-[#8C8C8C] text-[12px] underline">
+                  Privacy Policy
+                </p>
+                <p className="text-[#8C8C8C] text-[12px] underline">
+                  CA Privacy Notice
+                </p>
+              </div>
+            </section>
+          )}
         </Formik>
       </div>
     );

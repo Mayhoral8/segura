@@ -1,4 +1,5 @@
-import React, { useEffect, useReducer, useContext, useState } from "react";
+"use client"
+import React, { useEffect, useReducer, useContext, useState, Suspense } from "react";
 import Link from "next/link";
 import { ConfigContext } from "../../contexts/ConfigContext";
 import { usePathname } from "next/navigation";
@@ -10,11 +11,10 @@ import GroupIcon from "@mui/icons-material/Group";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
-import { useSearchParams } from "next/navigation";
 
 
 const Sidebar = () => {
-  const searchParams = useSearchParams();
+  
   const { setShowSignOutModal, check } = useContext(ConfigContext);
   const [showDropdown, setShowDropDown] = useState(false);
 
@@ -125,11 +125,11 @@ const Sidebar = () => {
     } else if (pathname === "/corporate/user-management") {
       return dispatch({ type: "USER_MANAGEMENT" });
     } else if (pathname.includes("/corporate/accounts")) {
-      return dispatch({ type: "ACCOUNTS" });
+    
     } else if (pathname.includes("/corporate/wallets")) {
       return dispatch({ type: "WALLETS" });
     }
-  }, [pathname, searchParams]);
+}, [pathname]);
 
   const handleDispatch = (type) => {
     dispatch({ type });

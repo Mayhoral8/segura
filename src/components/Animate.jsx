@@ -1,3 +1,4 @@
+"use client"
 import React, { useContext, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ConfigContext } from "../contexts/ConfigContext";

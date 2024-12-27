@@ -1,7 +1,5 @@
 "use client";
-import React, { useContext } from "react";
-import { ConfigContext } from "../../../contexts/ConfigContext";
-import { IoCheckmarkCircleOutline } from "react-icons/io5";
+import React from "react";
 import { FcGoogle } from "react-icons/fc";
 import { GrFacebookOption } from "react-icons/gr";
 import { FaSquareXTwitter } from "react-icons/fa6";

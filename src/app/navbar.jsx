@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useContext, useReducer, useEffect } from "react";
+import React, { useState, useReducer, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -13,15 +13,10 @@ import Logo from "@/assets/landingPage/logo.svg";
 const Navbar = () => {
   const pathname = usePathname();
   const [openNavBar, setOpenNavBar] = useState(false);
-  const [portalMenuOpen, setPortalMenuOpen] = useState(false);
+  
   const router = useRouter();
 
-  const handleLogout = () => {
-    console.log("dswe");
-    localStorage.removeItem("authData");
-    localStorage.removeItem("ResultUrl");
-    router.push("/portals/login");
-  };
+  
 
   const initialState = {
     admissionsIsActive: false,

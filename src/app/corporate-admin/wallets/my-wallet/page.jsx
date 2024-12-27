@@ -1,3 +1,4 @@
+"use client"
 import React, { useContext } from "react";
 import { Avatar } from "@mui/material";
 import { FaEuroSign, FaPoundSign } from "react-icons/fa";

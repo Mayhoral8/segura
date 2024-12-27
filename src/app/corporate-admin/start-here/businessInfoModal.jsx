@@ -10,9 +10,7 @@ import * as Yup from "yup";
 
 // assets import
 import BackArrow from "../../../assets/adminDashboard/arrowback.svg";
-import FileInputIcon from "../../../assets/adminDashboard/fileIcon.svg";
 import Image from "next/image";
-import Uploader from "../../../components/Uploader";
 
 const BusinessInfoModal = ({
   handleToggleBusinessInfoModal,
@@ -44,7 +42,7 @@ const BusinessInfoModal = ({
     businessSize: Yup.string().max(255).required("Business size is required"),
   });
 
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const { setShowSpinner } = useContext(ConfigContext).spinner;
 
   const queryClient = useQueryClient();

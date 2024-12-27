@@ -16,7 +16,7 @@ import { useSession } from "next-auth/react"
 import Modal from "../../../components/modal";
 
 const Dashboard = () => {
-  const { data: session, status } = useSession()
+  const { data: session } = useSession()
 
   console.log(session);
   function createData(date, senderReceiver, amount, description, status) {
