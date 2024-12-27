@@ -13,7 +13,8 @@ stages:
 
 - stage: build_for_dev
   displayName: Build artifact for dev environment
-  condition: and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/uat'))
+  condition: and(always(), or(eq(variables['Build.SourceBranch'], 'refs/heads/uat'), startsWith(variables['Build.SourceBranch'], 'refs/heads/feature/')))
+
   jobs:
   - job: build_dev
     displayName: 'Develop build for develop branch'
