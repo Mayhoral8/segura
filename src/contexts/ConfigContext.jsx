@@ -41,6 +41,9 @@ function ConfigProvider({ children }) {
   const [errorMsg, setErrorMsg] = useState("");
 
   const [showOtpModal, setShowOtpmodal] = useState(false);
+  const [governmentIdfile, setGovernmentIdFile] = useState(null);
+  const [passportFile, setPassportFile] = useState(null);
+  const [proofOfAddressFile, setProofOfAddressFile] = useState(null);
 
   const [showLoginSuccessModal, setShowLoginSuccessModal] = useState(false);
   const [previousLocation, setPreviousLocation] = useState();
@@ -57,7 +60,40 @@ function ConfigProvider({ children }) {
       setPreviousLocation(pathname);
     }
   }, [pathname]);
+  const [directorsDocs, setDirectorsDocs] = useState([
+    {
+      name: "Passport Photograph",
+      url: "test.com",
+    },
+    {
+      name: "Government Id",
+      url: "test.com",
+    },
+    {
+      name: "Proof Of Address",
+      url: "test.com",
+    },
+  ]);
 
+  const [corporateDocs, setCorporateDocs] = useState([
+    {
+      name: "Certificate of Incorporation",
+      url: ""
+    },
+    {
+      name: "Memorandum & Articles of Assosciation",
+      url: ""
+    }, 
+    {
+      name: "Statement of Share Capital",
+      url: ""
+    },
+    {
+      name: "Approval for Account Opening",
+      url: ""
+    }
+  ])
+const [file, setFile] = useState(null)
   return (
     <ConfigContext.Provider
       value={{
@@ -106,7 +142,19 @@ function ConfigProvider({ children }) {
           setShowCurrencySelectionModal,
           showSuccessfulWalletSetupModal,
           setShowSuccessfulWalletSetupModal,
-        }
+        },
+        file,
+        setFile,
+        directorsDocs,
+        setDirectorsDocs,
+        corporateDocs,
+        setCorporateDocs,
+        governmentIdfile,
+        setGovernmentIdFile,
+        proofOfAddressFile,
+        setProofOfAddressFile,
+        passportFile,
+        setPassportFile,
       }}
     >
       {children}

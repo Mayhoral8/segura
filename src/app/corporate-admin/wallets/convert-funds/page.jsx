@@ -26,7 +26,7 @@ const ConvertFunds = () => {
   });
   const [toCurrency, setToCurrency] = useState({
     dollar: {
-      isActive: true,
+      isActive: false,
     },
     euro: {
       isActive: false,
@@ -35,7 +35,7 @@ const ConvertFunds = () => {
       isActive: false,
     },
     naira: {
-      isActive: false,
+      isActive: true,
     },
   });
 
@@ -162,7 +162,7 @@ const ConvertFunds = () => {
               />
               <div className="border w-[20%] flex items-center">
                 <div
-                  className="flex flex-row rounded-lg items-center cursor-pointer gap-x-2"
+                  className="flex flex-row rounded-lg items-center cursor-pointer"
                   onClick={() => handleShowWallets("fromCurrency")}
                 >
                   <Avatar
@@ -192,8 +192,9 @@ const ConvertFunds = () => {
                 </div>
                 <div className="ml-[-130px] mt-[-45px]">
                   <AnimateDropdown isVisible={showFromCurrencyWallets}>
+                  <article className="absolute border  text-sm flex-col rounded-md w-[222px] bg-white  transition-transform shadow-sm z-30 ml-[-78px] mt-12">
                     <div
-                      className="flex flex-row  items-center hover:bg-[#e3f6f5] cursor-pointer text-xs "
+                       className={`${!toCurrency.dollar.isActive ? "flex" :"hidden"} flex flex-row  items-center hover:bg-[#e3f6f5] cursor-pointer text-xs `}
                       onClick={() => {
                         handleChangeCurrency("DOLLAR", "fromCurrency"),
                           handleShowWallets("fromCurrency");
@@ -203,7 +204,7 @@ const ConvertFunds = () => {
                       <span>Us Dollar ($)</span>
                     </div>
                     <div
-                      className="flex flex-row  items-center hover:bg-[#e3f6f5] cursor-pointer text-xs"
+                      className={`${!toCurrency.euro.isActive ? "flex" :"hidden"} flex flex-row  items-center hover:bg-[#e3f6f5] cursor-pointer text-xs`}
                       onClick={() => {
                         handleChangeCurrency("EURO", "fromCurrency"),
                           handleShowWallets("fromCurrency");
@@ -214,7 +215,7 @@ const ConvertFunds = () => {
                       {/* (<TbCurrencyPound /> ) */}
                     </div>
                     <div
-                      className="flex flex-row  items-center hover:bg-[#e3f6f5] cursor-pointer text-xs"
+                      className={`${!toCurrency.pounds.isActive ? "flex" :"hidden"} flex flex-row  items-center hover:bg-[#e3f6f5] cursor-pointer text-xs`}
                       onClick={() => {
                         handleChangeCurrency("POUNDS", "fromCurrency"),
                           handleShowWallets("fromCurrency");
@@ -225,7 +226,7 @@ const ConvertFunds = () => {
                       {/* (<FaEuroSign />) */}
                     </div>
                     <div
-                      className="flex flex-row  items-center hover:bg-[#e3f6f5] cursor-pointer text-xs"
+                      className={`${!toCurrency.naira.isActive ? "flex" :"hidden"} flex flex-row  items-center hover:bg-[#e3f6f5] cursor-pointer text-xs`}
                       onClick={() => {
                         handleChangeCurrency("NAIRA", "fromCurrency"),
                           handleShowWallets("fromCurrency");
@@ -235,6 +236,7 @@ const ConvertFunds = () => {
                       <span>Nigeria Naira</span>
                       {/* (<FaNairaSign />) */}
                     </div>
+                    </article>
                   </AnimateDropdown>
                 </div>
               </div>
@@ -254,7 +256,7 @@ const ConvertFunds = () => {
               />
               <div className="border w-[20%] flex items-center ">
                 <div
-                  className="flex flex-row  rounded-lg items-center cursor-pointer gap-x-2"
+                  className="flex flex-row  rounded-lg items-center cursor-pointer "
                   onClick={() => handleShowWallets("toCurrency")}
                 >
                   <Avatar
@@ -285,8 +287,9 @@ const ConvertFunds = () => {
                 </div>
                 <div className="ml-[-130px] mt-[-45px]">
                   <AnimateDropdown isVisible={showToCurrencyWallets}>
+                  <article className="absolute border  text-sm flex-col rounded-md w-[222px] bg-white  transition-transform shadow-sm z-30 ml-[-78px] mt-12">
                     <div
-                      className="flex flex-row  items-center hover:bg-[#e3f6f5] cursor-pointer text-xs "
+                      className={`${!fromCurrency.dollar.isActive ? "flex" :"hidden"} flex flex-row  items-center hover:bg-[#e3f6f5] cursor-pointer text-xs `}
                       onClick={() => {
                         handleChangeCurrency("DOLLAR", "toCurrency"),
                           handleShowWallets("toCurrency");
@@ -296,7 +299,7 @@ const ConvertFunds = () => {
                       <span>Us Dollar ($)</span>
                     </div>
                     <div
-                      className="flex flex-row  items-center hover:bg-[#e3f6f5] cursor-pointer text-xs"
+                      className={`${!fromCurrency.euro.isActive ? "flex" :"hidden"} flex flex-row  items-center hover:bg-[#e3f6f5] cursor-pointer text-xs`}
                       onClick={() => {
                         handleChangeCurrency("EURO", "toCurrency"),
                           handleShowWallets("toCurrency");
@@ -304,10 +307,9 @@ const ConvertFunds = () => {
                     >
                       <Avatar src="https://img.freepik.com/premium-vector/european-union-logo-vector-illustration-glossy-button_118339-2135.jpg?w=740" />
                       <span>Euro</span>
-                      {/* (<TbCurrencyPound /> ) */}
                     </div>
                     <div
-                      className="flex flex-row  items-center hover:bg-[#e3f6f5] cursor-pointer text-xs"
+                      className={`${!fromCurrency.pounds.isActive ? "flex" :"hidden"} flex flex-row  items-center hover:bg-[#e3f6f5] cursor-pointer text-xs`}
                       onClick={() => {
                         handleChangeCurrency("POUNDS", "toCurrency"),
                           handleShowWallets("toCurrency");
@@ -318,7 +320,7 @@ const ConvertFunds = () => {
                       {/* (<FaEuroSign />) */}
                     </div>
                     <div
-                      className="flex flex-row  items-center hover:bg-[#e3f6f5] cursor-pointer text-xs"
+                      className={`${!fromCurrency.naira.isActive ? "flex" :"hidden"} flex flex-row  items-center hover:bg-[#e3f6f5] cursor-pointer text-xs`}
                       onClick={() => {
                         handleChangeCurrency("NAIRA", "toCurrency"),
                           handleShowWallets("toCurrency");
@@ -328,6 +330,7 @@ const ConvertFunds = () => {
                       <span>Nigeria Naira</span>
                       {/* (<FaNairaSign />) */}
                     </div>
+                    </article>
                   </AnimateDropdown>
                 </div>
               </div>

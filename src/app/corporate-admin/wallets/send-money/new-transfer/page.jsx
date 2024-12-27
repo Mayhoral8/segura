@@ -1,3 +1,4 @@
+"use client"
 import React, {useState} from 'react'
 import SameCurrency from './SameCurrency';
 import InternationalTransfer from './InternationalTransfer';

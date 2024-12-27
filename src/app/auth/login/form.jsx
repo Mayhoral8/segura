@@ -71,7 +71,7 @@ export default function SignInForm() {
             );
 
             
-            router.push("/corporate-admin/dashboard");
+            router.push("/corporate-admin/start-here");
             
             setShowSpinner(false);
           } catch (error) {
