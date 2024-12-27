@@ -28,7 +28,7 @@ stages:
         workingDirectory: $(System.DefaultWorkingDirectory)
         script:  |
           touch .env
-          echo -e "NEXTAUTH_URL=https://segura-web-dev.segura-pay.com/\nNEXT_PUBLIC_API_BASE_URL=https://api-dev.segura-pay.com\nNEXTAUTH_SECRET='H21wSC9aRWtzjUmyTVYnmHEW8VUHBYaqabpivffY/8E='"
+          echo -e "NEXTAUTH_URL=https://segura-web-dev.segura-pay.com/\nNEXT_PUBLIC_API_BASE_URL=https://api-dev.segura-pay.com\nAUTH_SECRET=H21wSC9aRWtzjUmyTVYnmHEW8VUHBYaqabpivffY/8E="
           cat .env
     
   
