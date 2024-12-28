@@ -18,8 +18,8 @@ const Layout = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  const lastVisitedPage = localStorage.getItem("lastVisitedPage");
   useEffect(() => {
+    const lastVisitedPage = localStorage.getItem("lastVisitedPage");
     if (lastVisitedPage) setPreviousLocation(lastVisitedPage);
     if (status !== "unauthenticated" && lastVisitedPage) {
       router.push(lastVisitedPage); // Perform navigation after render
