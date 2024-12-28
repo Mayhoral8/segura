@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 // next
 import { SessionProvider } from "next-auth/react";
 
+import { Suspense } from "react";
 // project import
 
 import Toast from "../components/Toast";
@@ -26,11 +27,13 @@ export default function ProviderWrapper({ children }) {
     <ReactQueryProvider>
       <ReactQueryDevtools initialIsOpen={false} />
       <SessionProvider refetchInterval={0}>
+      <Suspense fallback={null}>
         <ConfigProvider>
           <Spinner />
           <Toast />
           {children}
         </ConfigProvider>
+        </Suspense>
       </SessionProvider>
     </ReactQueryProvider>
   );
