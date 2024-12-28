@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, Suspense } from "react";
 import { ConfigContext } from "../../../../../contexts/ConfigContext";
 import { useRouter, useSearchParams } from "next/navigation"; // Next.js router
 import { IoCheckmarkCircleOutline } from "react-icons/io5";
@@ -60,6 +60,7 @@ const VerifyEmailPage = () => {
   };
 
   return (
+    <Suspense fallback={<div>Loading...</div>}>
     <div className="fixed flex items-center justify-center bottom-0 right-0 left-0 top-0 bg-[#0000006c] backdrop-blur-sm" style={{
       backgroundImage: `url(${mainBg.src})`,
       backgroundSize: `cover`,
@@ -91,6 +92,7 @@ const VerifyEmailPage = () => {
         </article>
       )}
     </div>
+    </Suspense>
   );
 };
 
