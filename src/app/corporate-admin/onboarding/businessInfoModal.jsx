@@ -1,7 +1,7 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ConfigContext } from "../../../contexts/ConfigContext";
-import { Form, Formik, ErrorMessage, Field } from "formik";
+import { Form, Formik, ErrorMessage, Field, useFormikContext } from "formik";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
@@ -12,7 +12,7 @@ import * as Yup from "yup";
 // assets import
 import BackArrow from "../../../assets/adminDashboard/arrowback.svg";
 import Image from "next/image";
-
+import { FaPen } from "react-icons/fa6";
 const BusinessInfoModal = ({
   handleToggleBusinessInfoModal,
   toggleBusinessInfoModal,
@@ -23,18 +23,18 @@ const BusinessInfoModal = ({
     useState("Limited Liability");
 
   const initialValues = {
-    businessName: "",
-    businessEmail: "",
-    describeBusiness: "",
-    businessType: "",
-    phoneNumber: "",
-    industrySector: "",
-    businessAddress: "",
-    businessWebsite: "",
-    businessSize: "",
-    country: "",
-    city: "",
-    bvn: "",
+    businessName: uploadedDetails?.businessName || "",
+    businessEmail: uploadedDetails?.email || "",
+    // describeBusiness: "",
+    businessType: uploadedDetails?.businessType || "",
+    phoneNumber: uploadedDetails?.phoneNumber || "",
+    industrySector: uploadedDetails?.industrySector || "",
+    businessAddress: uploadedDetails?.businessAddress || "",
+    businessWebsite: uploadedDetails?.businessWebsite || "",
+    businessSize: uploadedDetails?.totalEmployees || "",
+    // country: "",
+    // city: "",
+    // bvn: "",
   };
 
   const businessTypes = [
@@ -66,6 +66,68 @@ const BusinessInfoModal = ({
 
   const queryClient = useQueryClient();
 
+  const [editMode, setEditMode] = useState(false); // Default to false initially
+
+  useEffect(() => {
+    if (uploadedDetails) {
+      setEditMode(true); // Update editMode when uploadedDetails is populated
+    }
+  }, [uploadedDetails]);
+  // console.log(uploadedDetails, editMode, isDetailsUploaded);
+
+  const values = useFormikContext();
+  const updateDetails = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/onboarding/update-corporate?email=${session?.user?.corporateAdminEmail}`,
+        {
+          method: "PUT",
+          body: JSON.stringify({
+            businessName: values.businessName,
+            // businessEmail: values.businessEmail,
+            // describeBusiness: values.describeBusiness,
+            businessType: values.businessType,
+            industrySector: values.industrySector,
+            businessAddress: values.businessAddress,
+            businessWebsite: values.businessWebsite,
+            businessSize: values.businessSize,
+            agreeToTermsAndConditions: true,
+          }),
+          headers: {
+            Authorization: `Bearer ${session?.user?.accessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const responseData = await response.json();
+      console.log(responseData);
+      console.log(response);
+      if (!response.ok) {
+        // Handle the error (e.g., display an error message to the user)
+        console.log(response.error);
+        throw new Error(response.error);
+      }
+      toast.success("Details Update Succesful!");
+      queryClient.invalidateQueries(["list-of-directors"]);
+      handleToggleBusinessInfoModal();
+
+      setShowSpinner(false);
+    } catch (error) {
+      console.log(error);
+      console.log(error.message);
+      setShowSpinner(false);
+      setShowErrorModal(true);
+      setErrorMsg(error.message); // Handle unexpected errors
+    }
+  };
+
+  const handleEditMode = (type) => {
+    setEditMode(!editMode);
+    if (type) {
+      updateDetails();
+    }
+  };
+
   return (
     <>
       {toggleBusinessInfoModal && (
@@ -93,52 +155,55 @@ const BusinessInfoModal = ({
                 validationSchema={schema}
                 onSubmit={async (values, { setSubmitting }) => {
                   setShowSpinner(true);
-                  try {
-                    const response = await fetch(
-                      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/onboarding/update-corporate?email=${session?.user?.corporateAdminEmail}`,
-                      {
-                        method: "PUT",
-                        body: JSON.stringify({
-                          businessName: values.businessName,
-                          businessEmail: values.businessEmail,
-                          describeBusiness: values.describeBusiness,
-                          businessType: values.businessType,
-                          industrySector: values.industrySector,
-                          businessAddress: values.businessAddress,
-                          businessWebsite: values.businessWebsite,
-                          businessSize: values.businessSize,
-                          agreeToTermsAndConditions: true,
-                        }),
-                        headers: {
-                          Authorization: `Bearer ${session?.user?.accessToken}`,
-                          "Content-Type": "application/json",
-                        },
-                      }
-                    );
-                    const responseData = await response.json();
-                    console.log(responseData);
-                    console.log(response);
-                    if (!response.ok) {
-                      // Handle the error (e.g., display an error message to the user)
-                      console.log(response.error);
-                      throw new Error(response.error);
-                    }
-                    toast.success("Details Update Succesful!");
-                    queryClient.invalidateQueries(["list-of-directors"]);
-                    handleToggleBusinessInfoModal();
+                  console.log("Form Values:", values);
+                  // // setEditMode(!editMode);
+                  // try {
+                  //   const response = await fetch(
+                  //     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/onboarding/update-corporate?email=${session?.user?.corporateAdminEmail}`,
+                  //     {
+                  //       method: "PUT",
+                  //       body: JSON.stringify({
+                  //         businessName: values.businessName,
+                  //         // businessEmail: values.businessEmail,
+                  //         // describeBusiness: values.describeBusiness,
+                  //         businessType: values.businessType,
+                  //         industrySector: values.industrySector,
+                  //         businessAddress: values.businessAddress,
+                  //         businessWebsite: values.businessWebsite,
+                  //         businessSize: values.businessSize,
+                  //         agreeToTermsAndConditions: true,
+                  //       }),
+                  //       headers: {
+                  //         Authorization: `Bearer ${session?.user?.accessToken}`,
+                  //         "Content-Type": "application/json",
+                  //       },
+                  //     }
+                  //   );
+                  //   const responseData = await response.json();
+                  //   console.log(responseData);
+                  //   console.log(response);
+                  //   if (!response.ok) {
+                  //     // Handle the error (e.g., display an error message to the user)
+                  //     console.log(response.error);
+                  //     throw new Error(response.error);
+                  //   }
+                  //   toast.success("Details Update Succesful!");
+                  //   queryClient.invalidateQueries(["list-of-directors"]);
+                  //   handleToggleBusinessInfoModal();
 
-                    setShowSpinner(false);
-                  } catch (error) {
-                    console.log(error);
-                    console.log(error.message);
-                    setShowSpinner(false);
-                    setShowErrorModal(true);
-                    setErrorMsg(error.message); // Handle unexpected errors
-                  } finally {
-                    setSubmitting(false);
-                  }
+                  //   setShowSpinner(false);
+                  // } catch (error) {
+                  //   console.log(error);
+                  //   console.log(error.message);
+                  //   setShowSpinner(false);
+                  //   setShowErrorModal(true);
+                  //   setErrorMsg(error.message); // Handle unexpected errors
+                  // } finally {
+                  //   setSubmitting(false);
+                  // }
                 }}
               >
+                 {({ setFieldValue }) => (
                 <Form className=" mt-5 scroll-smooth">
                   <div className="flex w-full justify-between">
                     <div className="flex flex-col w-[48%] gap-y-2 mb-2">
@@ -148,60 +213,38 @@ const BusinessInfoModal = ({
                       >
                         Business Name
                       </label>
-                      {isDetailsUploaded ? (
-                        <Field
-                          name="businessName"
-                          type="text"
-                          readOnly={isDetailsUploaded}
-                          value={uploadedDetails?.businessName}
-                          placeholder="Enter Business Name"
-                          className="border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px]"
-                        />
-                      ) : (
-                        <Field
-                          name="businessName"
-                          type="text"
-                          placeholder="Enter Business Name"
-                          className="border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px]"
-                        />
-                      )}
-
+                      <Field
+                        name="businessName"
+                        type="text"
+                        readOnly={editMode}
+                        placeholder="Enter Business Name"
+                        className={`border-[#D9D9D9] text-[#8C8C8C] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px] border-[1px] ${
+                          editMode ? "bg-gray-100" : ""
+                        }`}
+                      />
                       <span className="text-red-500 text-xs">
-                        <ErrorMessage name="businessName" />
+                        {!editMode && <ErrorMessage name="businessName" />}
                       </span>
                     </div>
 
                     <div className="flex flex-col w-[48%] gap-y-2 mb-2">
                       <label
-                        htmlFor="company size"
+                        htmlFor="businessEmail"
                         className="text-[#8C8C8C] text-sm"
                       >
-                        Business Email Address
+                        Business Email
                       </label>
-                      <div className="border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px]">
-                        {isDetailsUploaded ? (
-                          <Field
-                            name="businessEmail"
-                            value={uploadedDetails?.businessEmail}
-                            readOnly={true}
-                            type="text"
-                            placeholder="Enter Business Email Address"
-                            className=" border-solid text-[#8C8C8C] focus:outline-none border-b px-3 text-xs h-10 rounded-[4px]"
-                          />
-                        ) : (
-                          <Field
-                            name="businessEmail"
-                            type="text"
-                            placeholder="Enter Business Email Address"
-                            readOnly={isDetailsUploaded}
-                            className="bg-white w-full h-full outline-none"
-                          />
-                        )}
-                      </div>
+                      <Field
+                        name="businessEmail"
+                        type="text"
+                        readOnly={false}
+                        placeholder="Enter Business Email"
+                        className={`border-[#D9D9D9] text-[#8C8C8C] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px] border-[1px] ${
+                          editMode ? "bg-gray-100" : ""
+                        }`}
+                      />
                       <span className="text-red-500 text-xs">
-                        {!isDetailsUploaded && (
-                          <ErrorMessage name="businessEmail" />
-                        )}
+                        {!editMode && <ErrorMessage name="businessEmail" />}
                       </span>
                     </div>
                   </div>
@@ -213,15 +256,14 @@ const BusinessInfoModal = ({
                       >
                         Describe Business
                       </label>
-                      {isDetailsUploaded ? (
+                      {editMode ? (
                         <textarea
                           name="describeBusiness"
-                          readOnly={isDetailsUploaded}
+                          readOnly={editMode}
                           as="textarea"
-                          value={uploadedDetails?.describeBusiness}
                           placeholder="Describe Business"
                           className={`border-[#D9D9D9] border-[1px] border-solid focus:outline-none p-2 text-xs h-[80px] rounded-[4px] ${
-                            isDetailsUploaded && "text-[#8C8C8C]"
+                            editMode && "text-[#8C8C8C]"
                           } resize-none`}
                         />
                       ) : (
@@ -234,78 +276,56 @@ const BusinessInfoModal = ({
                       )}
 
                       <span className="text-red-500 text-xs">
-                        {!isDetailsUploaded && (
-                          <ErrorMessage name="describeBusiness" />
-                        )}
+                        {!editMode && <ErrorMessage name="describeBusiness" />}
                       </span>
                     </div>
                   </div>
                   <div className="flex w-full justify-between">
                     <div className="flex flex-col w-[48%] gap-y-2 mb-2">
                       <label
-                        htmlFor="officeAddress"
+                        htmlFor="businessAddress"
                         className="text-[#8C8C8C] text-sm"
                       >
                         Business Address
                       </label>
-                      {isDetailsUploaded ? (
-                        <Field
-                          name="businessAddress"
-                          readOnly={isDetailsUploaded}
-                          type="text"
-                          value={uploadedDetails?.businessAddress}
-                          placeholder="Enter Business Address"
-                          className={`border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px] ${
-                            isDetailsUploaded && "text-[#8C8C8C]"
-                          } `}
-                        />
-                      ) : (
-                        <Field
-                          name="businessAddress"
-                          type="text"
-                          placeholder="Enter Business Address"
-                          className={`border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px]`}
-                        />
-                      )}
-
+                      <Field
+                        name="businessAddress"
+                        type="text"
+                        readOnly={editMode}
+                        placeholder="Enter Business Address"
+                        className={`border-[#D9D9D9] text-[#8C8C8C] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px] border-[1px] ${
+                          editMode ? "bg-gray-100" : ""
+                        }`}
+                      />
                       <span className="text-red-500 text-xs">
-                        {!isDetailsUploaded && (
-                          <ErrorMessage name="businessAddress" />
-                        )}
+                        {!editMode && <ErrorMessage name="businessAddress" />}
                       </span>
                     </div>
                     <div className="flex flex-col w-[48%] gap-y-2 mb-2">
                       <label
-                        htmlFor="officeAddress"
+                        htmlFor="businessWebsite"
                         className="text-[#8C8C8C] text-sm"
                       >
-                        Business Website (<i>if available</i>)
+                        Business Name
                       </label>
-                      {isDetailsUploaded ? (
-                        <Field
-                          name="businessWebsite"
-                          readOnly={isDetailsUploaded}
-                          value={uploadedDetails?.websiteUrl}
-                          type="text"
-                          placeholder="Enter Business Website"
-                          className={`border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px] ${
-                            isDetailsUploaded && "text-[#8C8C8C]"
-                          }`}
-                        />
-                      ) : (
-                        <Field
-                          name="businessWebsite"
-                          type="text"
-                          placeholder="Enter Business Website"
-                          className={`border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px] `}
-                        />
-                      )}
+                      <Field
+                        name="businessWebsite"
+                        type="text"
+                        readOnly={editMode}
+                        placeholder="Enter Business Website"
+                        className={`border-[#D9D9D9] text-[#8C8C8C] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px] border-[1px] ${
+                          editMode ? "bg-gray-100" : ""
+                        }`}
+                      />
+                      <span className="text-red-500 text-xs">
+                        {!editMode && <ErrorMessage name="businessWebsite" />}
+                      </span>
                     </div>
                   </div>
                   <div className="flex w-full justify-between">
                     <div className="flex flex-col w-[48%] gap-y-2 mb-2">
                       <label
-                        htmlFor="officeAddress"
+                        htmlFor="phoneNumber"
                         className="text-[#8C8C8C] text-sm"
                       >
                         Phone Number
@@ -313,11 +333,14 @@ const BusinessInfoModal = ({
                       <Field
                         name="phoneNumber"
                         type="text"
-                        placeholder="+234"
-                        className="border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px]"
+                        readOnly={editMode}
+                        placeholder="Enter Phone number"
+                        className={`border-[#D9D9D9] text-[#8C8C8C] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px] border-[1px] ${
+                          editMode ? "bg-gray-100" : ""
+                        }`}
                       />
                       <span className="text-red-500 text-xs">
-                        <ErrorMessage name="phoneNumber" />
+                        {!editMode && <ErrorMessage name="phoneNumber" />}
                       </span>
                     </div>
                     <div className="flex flex-col w-[48%] gap-y-2 mb-2">
@@ -395,10 +418,9 @@ const BusinessInfoModal = ({
                         Industry Sector
                       </label>
                       <div className="border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px]">
-                        {isDetailsUploaded ? (
+                        {editMode ? (
                           <Field
                             name="industrySector"
-                            value={uploadedDetails?.industrySector}
                             readOnly={true}
                             type="text"
                             className=" border-solid text-[#8C8C8C] focus:outline-none border-b px-3 text-xs h-10 rounded-[4px]"
@@ -407,7 +429,7 @@ const BusinessInfoModal = ({
                           <Field
                             name="industrySector"
                             as="select"
-                            readOnly={isDetailsUploaded}
+                            readOnly={editMode}
                             className="bg-white w-full h-full outline-none"
                           >
                             <option value="">--Select Industry--</option>
@@ -423,9 +445,7 @@ const BusinessInfoModal = ({
                         )}
                       </div>
                       <span className="text-red-500 text-xs">
-                        {!isDetailsUploaded && (
-                          <ErrorMessage name="industrySector" />
-                        )}
+                        {!editMode && <ErrorMessage name="industrySector" />}
                       </span>
                     </div>
                   </div>
@@ -438,10 +458,9 @@ const BusinessInfoModal = ({
                         Business/Company Size
                       </label>
                       <div className="border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px] text-[#8C8C8C]">
-                        {isDetailsUploaded ? (
+                        {editMode ? (
                           <Field
                             name="businessSize"
-                            value={uploadedDetails?.totalEmployees}
                             readOnly={true}
                             type="text"
                             className="border-[#D9D9D9] border-b  border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px]"
@@ -460,36 +479,24 @@ const BusinessInfoModal = ({
                         )}
                       </div>
                       <span className="text-red-500 text-xs">
-                        {!isDetailsUploaded && (
-                          <ErrorMessage name="businessSize" />
-                        )}
+                        {!editMode && <ErrorMessage name="businessSize" />}
                       </span>
                     </div>
                     <div className="flex flex-col w-[48%] gap-y-2 mb-2">
                       <label htmlFor="bvn" className="text-[#8C8C8C] text-sm">
-                        Bank Verification Number (<i>BVN</i>)
+                        Bvn
                       </label>
-                      <div className="border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px]">
-                        {isDetailsUploaded ? (
-                          <Field
-                            name="bbn"
-                            value={uploadedDetails?.bvn}
-                            readOnly={true}
-                            type="text"
-                            className=" border-solid text-[#8C8C8C] focus:outline-none border-b px-3 text-xs h-10 rounded-[4px]"
-                          />
-                        ) : (
-                          <Field
-                            name="businessType"
-                            type="text"
-                            placeholder="Enter 11 digits"
-                            readOnly={isDetailsUploaded}
-                            className="bg-white w-full h-full outline-none"
-                          />
-                        )}
-                      </div>
+                      <Field
+                        name="bvn"
+                        type="text"
+                        readOnly={editMode}
+                        placeholder="Enter Business Name"
+                        className={`border-[#D9D9D9] text-[#8C8C8C] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px] border-[1px] ${
+                          editMode ? "bg-gray-100" : ""
+                        }`}
+                      />
                       <span className="text-red-500 text-xs">
-                        {!isDetailsUploaded && <ErrorMessage name="bvn" />}
+                        {!editMode && <ErrorMessage name="bvn" />}
                       </span>
                     </div>
                   </div>
@@ -515,18 +522,32 @@ const BusinessInfoModal = ({
                       ))}
                     </div>
                   </div>
-                  <button
-                    disabled={isDetailsUploaded}
-                    className={`h-[36px] w-[100px] rounded-[4px] ${
-                      isDetailsUploaded
-                        ? "bg-[#D9D9D9] text-gray-400 border"
-                        : "bg-[#2C698D] text-white"
-                    }  block ml-auto absolute top-0 right-0`}
-                    type="submit"
-                  >
-                    Save
-                  </button>
+                  {editMode ? (
+                    <button
+                      // disabled={editMode}
+                      className={`h-[36px] w-[100px] rounded-[4px] ${"bg-[#2C698D] text-white"}  block ml-auto absolute top-0 right-0 cursor-pointer`}
+                      type="submit"
+                      
+                      name="action"
+                      value="submit"
+                      onClick={(e) => setFieldValue("action", e.target.value)}
+                    >
+                      Edit
+                    </button>
+                  ) : (
+                    <button
+                      // disabled={editMode}
+                      className={`h-[36px] w-[100px] rounded-[4px] ${"bg-[#2C698D] text-white"}  block ml-auto absolute top-0 right-0 cursor-pointer`}
+                      type="submit"
+                      name="action"
+                      value="submit"
+                      onClick={(e) => setFieldValue("action", e.target.value)}
+                    >
+                      Save
+                    </button>
+                  )}
                 </Form>
+                  )}
               </Formik>
             </div>
           </div>

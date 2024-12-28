@@ -10,17 +10,22 @@ import { CgSpinner } from "react-icons/cg";
 import Logo from "@/assets/auth/logo.svg";
 import Symbol from "@/assets/auth/seguraSymbol.svg";
 import Image from "next/image";
+import { signOut } from "next-auth/react";
+
 
 const Layout = () => {
   const [previousLocation, setPreviousLocation] = useState("");
   const { data: session, status } = useSession();
   const router = useRouter();
 
+  const lastVisitedPage = localStorage.getItem("lastVisitedPage");
   useEffect(() => {
-    const lastVisitedPage = localStorage.getItem("lastVisitedPage");
     if (lastVisitedPage) setPreviousLocation(lastVisitedPage);
-    if (status !== "unauthenticated" && previousLocation) {
-      router.push(previousLocation); // Perform navigation after render
+    if (status !== "unauthenticated" && lastVisitedPage) {
+      router.push(lastVisitedPage); // Perform navigation after render
+    }
+    if(status === "authenticated" && !lastVisitedPage){
+      router.push("/corporate-admin/onboarding")
     }
   }, [status, previousLocation, router]);
 
