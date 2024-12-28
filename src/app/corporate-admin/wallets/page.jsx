@@ -5,12 +5,14 @@ import SendMoney from "./send-money/page";
 import TopUpWallet from "./topup-wallet/page";
 import ConvertFunds from "./convert-funds/page";
 import TopBar from "../topbar";
+import BulkTransfer from "./bulk-transfer/page";
 
 const Page = () => {
   const [walletTab, setWalletTab] = useState({
     myWallets: true,
     sendMoney: false,
     topUpWallet: false,
+    bulkTransfers: false,
     convertFunds: false,
   });
 
@@ -21,6 +23,7 @@ const Page = () => {
           myWallets: true,
           sendMoney: false,
           topUpWallet: false,
+          bulkTransfers: false,
           convertFunds: false,
         })
       : type === "SEND_MONEY"
@@ -29,6 +32,7 @@ const Page = () => {
           myWallets: false,
           sendMoney: true,
           topUpWallet: false,
+          bulkTransfers: false,
           convertFunds: false,
         })
       : type === "TOP_UP_WALLET"
@@ -37,6 +41,16 @@ const Page = () => {
           myWallets: false,
           sendMoney: false,
           topUpWallet: true,
+          bulkTransfers: false,
+          convertFunds: false,
+        })
+      : type === "BULK_TRANSFERS"
+      ? setWalletTab({
+          ...walletTab,
+          myWallets: false,
+          sendMoney: false,
+          topUpWallet: false,
+          bulkTransfers: true,
           convertFunds: false,
         })
       : type === "CONVERT_FUNDS"
@@ -45,6 +59,7 @@ const Page = () => {
           myWallets: false,
           sendMoney: false,
           topUpWallet: false,
+          bulkTransfers: false,
           convertFunds: true,
         })
       : { ...walletTab };
@@ -86,12 +101,21 @@ const Page = () => {
           </article>
           <article
             className={`${
+              walletTab.bulkTransfers &&
+              " border-b-2 border-[#2C698D] text-[#2C698D]"
+            } h-full flex items-end w-32 justify-center cursor-pointer`}
+            onClick={() => handleActiveTab("BULK_TRANSFERS")}
+          >
+            <h2 className="pb-3 font-medium">Bulk Transfers</h2>
+          </article>
+          <article
+            className={`${
               walletTab.convertFunds &&
               " border-b-2 border-[#2C698D] text-[#2C698D]"
             } h-full flex items-end w-32 justify-center cursor-pointer`}
             onClick={() => handleActiveTab("CONVERT_FUNDS")}
           >
-            <h2 className="pb-3 font-medium">Convert funds</h2>
+            <h2 className="pb-3 font-medium">Convert Money</h2>
           </article>
         </section>
         {walletTab.myWallets ? (
@@ -100,6 +124,8 @@ const Page = () => {
           <SendMoney />
         ) : walletTab.topUpWallet ? (
           <TopUpWallet />
+        ) : walletTab.bulkTransfers ? (
+          <BulkTransfer />
         ) : (
           <ConvertFunds />
         )}

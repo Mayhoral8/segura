@@ -13,6 +13,8 @@ import TopBar from "../topbar";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { CgSpinner } from "react-icons/cg";
+import { RiCheckboxFill } from "react-icons/ri";
+import { RiCheckboxBlankLine } from "react-icons/ri";
 
 const StartHere = () => {
   const { spinner, errorModal } = useContext(ConfigContext);
@@ -137,45 +139,47 @@ const StartHere = () => {
     queryKey: ["list-of-directors"],
     queryFn: getListOfDirectors,
   });
-  const { data: mandatoryDocs } = useQuery({
+  const { data: mandatoryDocsRaw } = useQuery({
     queryKey: ["corporate-mandatory-docs"],
     queryFn: getMandatoryDocs,
   });
 
   const directorsList = directorsInfo?.data;
 
+  const mandatoryDocs = mandatoryDocsRaw?.data;
+
   const uploadedDetails = responseData?.data;
 
-  const isDetailsUploaded = uploadedDetails?.websiteUrl;
+  const isDetailsUploaded = uploadedDetails?.businessName;
 
   useEffect(() => {
     isLoading ? setShowSpinner(true) : setShowSpinner(false);
   }, [isLoading]);
 
   let corporateDocuments = [];
-  const certOfIncDoc = mandatoryDocs?.data?.map((doc, index) => {
+  mandatoryDocs?.map((doc, index) => {
     doc.documentName === "Certificate of Incorporation" &&
       doc.documentUrl &&
       corporateDocuments.push(doc);
   });
-  const memoDoc = mandatoryDocs?.data?.map((doc, index) => {
+  mandatoryDocs?.map((doc, index) => {
     doc.documentName === "Memorandum & Articles of Assosciation" &&
       doc.documentUrl &&
       corporateDocuments.push(doc);
   });
-  const statementOfShareDoc = mandatoryDocs?.data?.find((doc, index) => {
+  mandatoryDocs?.find((doc, index) => {
     doc.documentName === "Statement of Share Capital" &&
       doc.documentUrl &&
       corporateDocuments.push(doc);
   });
-  const approvalOfAccOpening = mandatoryDocs?.data?.find((doc, index) => {
+  mandatoryDocs?.find((doc, index) => {
     doc.documentName === "Approval for Account Opening" &&
       doc.documentUrl &&
       corporateDocuments.push(doc);
   });
   return (
     <>
-      <TopBar page="Start Here" />
+      <TopBar page="Onboarding" />
       <div className="px-8 py-4 min-h-screen flex flex-col">
         <BusinessInfoModal
           toggleBusinessInfoModal={toggleBusinessInfoModal}
@@ -209,57 +213,54 @@ const StartHere = () => {
         </div>
         <div className="flex flex-col w-full gap-5 mt-5">
           <div
-            className="bg-white h-[100px] rounded-[10px] px-[20px] py-[17px] flex flex-col justify-between cursor-pointer"
+            className="bg-white h-[100px] rounded-[10px] px-[20px] py-[17px] flex items-center justify-between cursor-pointer"
             onClick={handleToggleBusinessInfoModal}
           >
             <div className="flex items-center">
               <Image src={BusinessInfo} alt="" />
               <p className="ml-2">Business Information</p>
             </div>
-            <div className="flex items-center justify-between">
-              <div className="bg-[#F5F5F5] h-[8px] rounded-[4px] w-[91%]">
-                <div
-                  className={`bg-[#09DD49] ${
-                    isDetailsUploaded ? "w-[100%]" : "w-[0%]"
-                  }  h-full rounded-[8px]`}
-                ></div>
-              </div>
-              <p>{isDetailsUploaded ? "100%" : "0%"}</p>
-            </div>
+            <p className="text-4xl text-[#2C698D] ">
+              {isDetailsUploaded ? <RiCheckboxFill /> : <RiCheckboxBlankLine />}
+            </p>
           </div>
           <div
-            className="bg-white h-[100px] rounded-[10px] px-[20px] py-[17px] flex flex-col justify-between cursor-pointer"
+            className="bg-white h-[100px] rounded-[10px] px-[20px] py-[17px] flex items-center justify-between cursor-pointer"
             onClick={() => handleToggleBusinessParnerInfoModal()}
           >
             <div className="flex items-center">
               <Image src={BusinessPartnerInfo} alt="" />
               <p className="ml-2">Business Partner Information</p>
             </div>
-            <div className="flex items-center justify-between">
+            {/* <div className="flex items-center justify-between">
               <div className="bg-[#F5F5F5] h-[8px] rounded-[4px] w-[91%]">
                 <div className="bg-[#09DD49] w-[3%] h-full rounded-[8px]"></div>
               </div>
               <p>0%</p>
-            </div>
+            </div> */}
+            <p className="text-4xl text-[#2C698D] ">
+              {directorsList?.length >= 1 ? (
+                <RiCheckboxFill />
+              ) : (
+                <RiCheckboxBlankLine />
+              )}
+            </p>
           </div>
           <div
-            className="bg-white h-[100px] rounded-[10px] px-[20px] py-[17px] flex flex-col justify-between cursor-pointer"
+            className="bg-white h-[100px] rounded-[10px] px-[20px] py-[17px] flex items-center justify-between cursor-pointer"
             onClick={() => handleToggleMandatoryDocumentsModal()}
           >
             <div className="flex items-center">
               <Image src={MandatoryDouments} alt="" />
               <p className="ml-2">Mandatory Documents</p>
             </div>
-            <div className="flex items-center justify-between">
-              <div className="bg-[#F5F5F5] h-[8px] rounded-[4px] w-[91%]">
-                <div
-                  className={`bg-[#09DD49] w-[${
-                    (corporateDocuments?.length / 4) * 100
-                  }%] h-full rounded-[8px]`}
-                ></div>
-              </div>
-              <p>{(corporateDocuments?.length / 4) * 100}%</p>
-            </div>
+            <p className="text-4xl text-[#2C698D] ">
+              {mandatoryDocs?.length >= 1 ? (
+                <RiCheckboxFill />
+              ) : (
+                <RiCheckboxBlankLine />
+              )}
+            </p>
           </div>
           <button className="bg-[#2C698D] text-white w-[200px] h-[36px] rounded-[4px] ml-auto justify-self-end">
             Submit For Review

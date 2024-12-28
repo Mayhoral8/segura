@@ -70,7 +70,7 @@ const MandatoryDocumentsModal = ({
   });
 
   console.log(memoDoc);
-  
+
   return (
     <>
       {toggleMandatoryDocumentsModal && (
@@ -121,7 +121,7 @@ const MandatoryDocumentsModal = ({
 
                   {certOfIncDoc?.documentUrl ? (
                     <div
-                       // Ensure unique keys for each mapped item
+                      // Ensure unique keys for each mapped item
                       className="border h-[60px] rounded-md flex items-center justify-center text-[#787878] gap-x-2"
                     >
                       <span className="text-sm">Document Uploaded</span>
@@ -129,7 +129,7 @@ const MandatoryDocumentsModal = ({
                     </div>
                   ) : (
                     <Uploader
-                       // Use a unique key for this component as well
+                      // Use a unique key for this component as well
                       type="Certificate of Incorporation"
                       user="corporate"
                     />
@@ -143,7 +143,7 @@ const MandatoryDocumentsModal = ({
 
                   {memoDoc?.documentUrl ? (
                     <div
-                       // Ensure unique keys for each mapped item
+                      // Ensure unique keys for each mapped item
                       className="border h-[60px] rounded-md flex items-center justify-center text-[#787878] gap-x-2"
                     >
                       <span className="text-sm">Document Uploaded</span>
@@ -151,7 +151,7 @@ const MandatoryDocumentsModal = ({
                     </div>
                   ) : (
                     <Uploader
-                       // Use a unique key for this component as well
+                      // Use a unique key for this component as well
                       type="Memorandum & Articles of Assosciation"
                       user="corporate"
                     />
@@ -164,7 +164,7 @@ const MandatoryDocumentsModal = ({
                   </label>
                   {statementOfShareDoc?.documentUrl ? (
                     <div
-                       // Ensure unique keys for each mapped item
+                      // Ensure unique keys for each mapped item
                       className="border h-[60px] rounded-md flex items-center justify-center text-[#787878] gap-x-2"
                     >
                       <span className="text-sm">Document Uploaded</span>
@@ -172,13 +172,13 @@ const MandatoryDocumentsModal = ({
                     </div>
                   ) : (
                     <Uploader
-                       // Use a unique key for this component as well
+                      // Use a unique key for this component as well
                       type="Statement of Share Capital"
                       user="corporate"
                     />
                   )}
                 </div>
-                <div className="mb-3">
+                {/* <div className="mb-3">
                   <label htmlFor="" className="flex text-[#787878] text-[14px]">
                     <Image src={FileInputIcon} alt="" className="mr-2" />
                     Approval for Account Opening
@@ -198,7 +198,7 @@ const MandatoryDocumentsModal = ({
                       user="corporate"
                     />
                   )}
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

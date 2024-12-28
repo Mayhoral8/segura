@@ -34,7 +34,7 @@ const Sidebar = () => {
   const pathname = usePathname();
 
   const initialState = {
-    starthere: {
+    onboarding: {
       isActive: true,
     },
     dashboard: {
@@ -59,10 +59,10 @@ const Sidebar = () => {
 
   const reducerFunc = (state, action) => {
     switch (action.type) {
-      case "START_HERE": {
+      case "ONBOARDING": {
         return {
           ...state,
-          starthere: { isActive: true },
+          onboarding: { isActive: true },
           dashboard: { isActive: false },
           userManagement: { isActive: false },
           wallets: { isActive: false },
@@ -74,7 +74,7 @@ const Sidebar = () => {
       case "DASHBOARD": {
         return {
           ...state,
-          starthere: { isActive: false },
+          onboarding: { isActive: false },
           dashboard: { isActive: true },
           userManagement: { isActive: false },
           wallets: { isActive: false },
@@ -86,7 +86,7 @@ const Sidebar = () => {
       case "USER_MANAGEMENT": {
         return {
           ...state,
-          starthere: { isActive: false },
+          onboarding: { isActive: false },
           dashboard: { isActive: false },
           userManagement: { isActive: true },
           wallets: { isActive: false },
@@ -98,7 +98,7 @@ const Sidebar = () => {
       case "WALLETS": {
         return {
           ...state,
-          starthere: { isActive: false },
+          onboarding: { isActive: false },
           dashboard: { isActive: false },
           userManagement: { isActive: false },
           wallets: { isActive: true },
@@ -110,7 +110,7 @@ const Sidebar = () => {
       case "AUDITS_LOG": {
         return {
           ...state,
-          starthere: { isActive: false },
+          onboarding: { isActive: false },
           dashboard: { isActive: false },
           userManagement: { isActive: false },
           wallets: { isActive: false },
@@ -122,7 +122,7 @@ const Sidebar = () => {
       case "HELP": {
         return {
           ...state,
-          starthere: { isActive: false },
+          onboarding: { isActive: false },
           dashboard: { isActive: false },
           userManagement: { isActive: false },
           wallets: { isActive: false },
@@ -134,7 +134,7 @@ const Sidebar = () => {
       case "SETTINGS": {
         return {
           ...state,
-          starthere: { isActive: false },
+          onboarding: { isActive: false },
           dashboard: { isActive: false },
           userManagement: { isActive: false },
           wallets: { isActive: false },
@@ -146,7 +146,7 @@ const Sidebar = () => {
       case "DEFAULT": {
         return {
           ...state,
-          starthere: { isActive: true },
+          onboarding: { isActive: true },
           dashboard: { isActive: false },
           userManagement: { isActive: false },
           wallets: { isActive: false },
@@ -162,8 +162,8 @@ const Sidebar = () => {
   const [state, dispatch] = useReducer(reducerFunc, initialState);
 
   useEffect(() => {
-    if (pathname === "/corporate-admin/start-here") {
-      return dispatch({ type: "USER_MANAGEMENT" });
+    if (pathname === "/corporate-admin/onboarding") {
+      return dispatch({ type: "ONBOARDING" });
     } else if (pathname === "/corporate-admin/dashboard") {
       return dispatch({ type: "DASHBOARD" });
     } else if (pathname.includes("/corporate-admin/settings")) {
@@ -193,17 +193,17 @@ const Sidebar = () => {
       </div>
       <section className="flex flex-row lg:flex-col lg:gap-y-1 w-full overflow-y-auto scrollbar-hide h-[400px]">
         <Link
-          href="/corporate-admin/start-here"
-          onClick={() => handleDispatch("START_HERE")}
+          href="/corporate-admin/onboarding"
+          onClick={() => handleDispatch("ONBOARDING")}
           className={`w-full h-[44px] flex items-center pl-[20px] justify-center  ${
-            state.starthere.isActive
+            state.onboarding.isActive
               ? "bg-[#e3f6f5] text-[#2C698D]"
               : "text-[#787878]"
           } `}
         >
           <div className="flex flex-col w-full text-[14px] gap-x-1 lg:flex-row items-center  ">
             <Image src={StartHereIcon} alt="start here" />
-            <span className="ml-1">Start Here</span>
+            <span className="ml-1">Onboarding</span>
           </div>
         </Link>
 

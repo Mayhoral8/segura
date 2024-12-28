@@ -13,7 +13,8 @@ stages:
 
 - stage: build_for_dev
   displayName: Build artifact for dev environment
-  condition: and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/uat'))
+  condition: and(always(), or(eq(variables['Build.SourceBranch'], 'refs/heads/uat'), startsWith(variables['Build.SourceBranch'], 'refs/heads/feature/')))
+
   jobs:
   - job: build_dev
     displayName: 'Develop build for develop branch'
@@ -27,7 +28,7 @@ stages:
         workingDirectory: $(System.DefaultWorkingDirectory)
         script:  |
           touch .env
-          echo -e "NEXTAUTH_URL=http://segura-web-dev.segura-pay.com\nNEXT_PUBLIC_API_BASE_URL=https://api-dev.segura-pay.com"
+          echo -e "NEXTAUTH_URL=https://segura-web-dev.segura-pay.com/\nNEXT_PUBLIC_API_BASE_URL=https://api-dev.segura-pay.com\nAUTH_SECRET=H21wSC9aRWtzjUmyTVYnmHEW8VUHBYaqabpivffY/8E="
           cat .env
     
   

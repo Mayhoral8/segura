@@ -72,15 +72,15 @@ const Cashdepositmodal = ({
                           {wallet.currency}
                         </p>
                       </div>
-                      <p className="text-sm text-gray-500 mt-1">
+                      <div className="text-sm text-gray-500 mt-1">
                         <p className="text-[12px]">Account Name</p>
                         <p className="text-gray-800 font-semibold text-base">
                           {wallet.accountName}
                         </p>
-                      </p>
+                      </div>
                       <div className="text-gray-500 mt-1">
                         <p className="text-[12px]">Account Number</p>
-                        <p className="text-gray-800 font-semibold text-[24px] flex items-center">
+                        <div className="text-gray-800 font-semibold text-[24px] flex items-center">
                           {wallet.accountNumber}
                           <div
                             onClick={() =>
@@ -90,7 +90,7 @@ const Cashdepositmodal = ({
                           >
                             <Image src={Copy} alt="copy" />
                           </div>
-                        </p>
+                        </div>
                       </div>
                     </div>
                   </div>

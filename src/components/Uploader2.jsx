@@ -72,7 +72,7 @@ const Uploader = ({ type, user }) => {
   };
 
   return (
-    <div className="h-[60px] border-[#F0F0F0] border-[2px] bg-[#f5f5f5] rounded-[4px] mt-2 flex items-center justify-center">
+    <div className="h-[254px] w-[468px] border-[#F0F0F0] border-[2px] bg-[#f5f5f5] rounded-[4px] mt-2 flex items-center justify-center">
       <label className="text-center text-[12px] w-[202px]">
         {file && type === inputName && (
           <span className="-mt-[50px] mr-1">

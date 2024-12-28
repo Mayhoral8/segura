@@ -5,6 +5,7 @@ import { Form, Formik, ErrorMessage, Field } from "formik";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
+import { FaPen } from "react-icons/fa6";
 
 import * as Yup from "yup";
 
@@ -47,7 +48,6 @@ const BusinessInfoModal = ({
 
   const queryClient = useQueryClient();
 
-  
   return (
     <>
       {toggleBusinessInfoModal && (
@@ -134,7 +134,7 @@ const BusinessInfoModal = ({
                         readOnly={isDetailsUploaded}
                         value={uploadedDetails?.businessName}
                         placeholder="Enter Business Name"
-                        className="border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px]"
+                        className="border-[#D9D9D9] text-[#8C8C8C]  border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px]"
                       />
                     ) : (
                       <Field
@@ -145,9 +145,7 @@ const BusinessInfoModal = ({
                       />
                     )}
 
-                    <span className="text-red-500 text-xs">
-                      <ErrorMessage name="businessName" />
-                    </span>
+                    {!isDetailsUploaded && <ErrorMessage name="businessName" />}
                   </div>
 
                   <div className="flex flex-col w-[48%] gap-y-2 mb-2">
@@ -174,7 +172,9 @@ const BusinessInfoModal = ({
                           className="bg-white w-full h-full outline-none"
                         >
                           <option value="">--Select--</option>
-                          <option value="Limited Liability">Limited Liability</option>
+                          <option value="Limited Liability">
+                            Limited Liability
+                          </option>
                           <option value="Partnership">Partnership</option>
                           <option value="Others">Others</option>
                         </Field>
@@ -212,7 +212,9 @@ const BusinessInfoModal = ({
                           className="bg-white w-full h-full outline-none"
                         >
                           <option value="">--Select--</option>
-                          <option value="Limited Liabilit">Limited Liability</option>
+                          <option value="Limited Liabilit">
+                            Limited Liability
+                          </option>
                           <option value="Partnership">Partnership</option>
                           <option value="Others">Others</option>
                         </Field>
@@ -349,3 +351,4 @@ const BusinessInfoModal = ({
 };
 
 export default BusinessInfoModal;
+
