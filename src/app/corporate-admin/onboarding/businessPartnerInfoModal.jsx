@@ -38,9 +38,10 @@ const BusinessParnerInfoModal = ({
     bvn: "",
   };
 
-  const {spinner, errorModal, file, directorsDocs} = useContext(ConfigContext)
-  const { setShowSpinner } = spinner
-  const {setShowErrorModal, setErrorMsg} = errorModal
+  const { spinner, errorModal, file, directorsDocs } =
+    useContext(ConfigContext);
+  const { setShowSpinner } = spinner;
+  const { setShowErrorModal, setErrorMsg } = errorModal;
 
   const schema = Yup.object().shape({
     fullName: Yup.string().max(30).required("Full name is required"),
@@ -54,9 +55,6 @@ const BusinessParnerInfoModal = ({
     email: Yup.string().max(255).required("Email is required"),
     bvn: Yup.string().max(255).required("BVN is required"),
   });
-
- 
-  
 
   const queryClient = useQueryClient();
   return (
@@ -83,7 +81,6 @@ const BusinessParnerInfoModal = ({
                       documents
                     </p>
                   </div>
-               
                 </div>
                 <Formik
                   initialValues={initialValues}
@@ -96,17 +93,19 @@ const BusinessParnerInfoModal = ({
                         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/onboarding/${corporateId}/add-directors`,
                         {
                           method: "POST",
-                          body: JSON.stringify([{
-                            fullName: values.fullName,
-                            title: values.title,
-                            dateOfBirth: "2024-12-26T07:41:07.200Z",
-                            nationality: values.nationality,
-                            residentialAddress: values.residentialAddress,
-                            phoneNumber: values.phoneNumber,
-                            email: values.email,
-                            bvn: values.bvn,
-                            documents: directorsDocs,
-                          }]),
+                          body: JSON.stringify([
+                            {
+                              fullName: values.fullName,
+                              title: values.title,
+                              dateOfBirth: "2024-12-26T07:41:07.200Z",
+                              nationality: values.nationality,
+                              residentialAddress: values.residentialAddress,
+                              phoneNumber: values.phoneNumber,
+                              email: values.email,
+                              bvn: values.bvn,
+                              documents: directorsDocs,
+                            },
+                          ]),
                           headers: {
                             Authorization: `Bearer ${session?.user?.accessToken}`,
                             "Content-Type": "application/json",
@@ -120,9 +119,9 @@ const BusinessParnerInfoModal = ({
                         console.log(response.error);
                         throw new Error(response.error);
                       }
-                      toast.success("Details Update Succesfully!");
+                      toast.success("Details Update Succesful!");
                       queryClient.invalidateQueries(["primaryBusinessInfo"]);
-                      toggleForm()
+                      toggleForm();
 
                       setShowSpinner(false);
                     } catch (error) {
@@ -136,7 +135,7 @@ const BusinessParnerInfoModal = ({
                     }
                   }}
                 >
-                  <Form className="overflow-y-scroll h-[320px]">
+                  <Form className="overflow-y-scroll bg-red h-[450px]">
                     <div className="flex w-full justify-between">
                       <div className="flex flex-col w-[48%] gap-y-2 mb-2">
                         <label
@@ -226,7 +225,7 @@ const BusinessParnerInfoModal = ({
                         </label>
                         <Field
                           name="dateOfBirth"
-                          type="text"
+                          type="date"
                           placeholder="00/00/1999"
                           className="border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px]"
                         />
@@ -330,7 +329,10 @@ const BusinessParnerInfoModal = ({
                             />
                             Passport Photograph
                           </label>
-                          <Uploader  type="Passport Photograph" user="director"/>
+                          <Uploader
+                            type="Passport Photograph"
+                            user="director"
+                          />
                         </div>
                         <div className="mb-3">
                           <label
@@ -344,7 +346,7 @@ const BusinessParnerInfoModal = ({
                             />
                             Valid Government ID
                           </label>
-                          <Uploader  type="Government Id" user="director"/>
+                          <Uploader type="Government Id" user="director" />
                         </div>
                         <div className="mb-3">
                           <label
@@ -358,15 +360,17 @@ const BusinessParnerInfoModal = ({
                             />
                             Proof of Address (Utility Bill)
                           </label>
-                          <Uploader type="Proof of Address" user="director"/>
+                          <Uploader type="Proof of Address" user="director" />
                         </div>
                       </div>
                     </div>
-                    <div className="border-t bg-white fixed bottom-0 h-12 mb-7 w-[61%] flex items-center justify-center  right-0 left-0 mx-auto">
-
-                    <button className="h-[36px] flex-shrink-0 w-[100px] rounded-[4px] bg-[#2C698D] text-white" type="submit">
-                    Add Partner
-                  </button>
+                    <div className="fixed bottom-[50px] w-max h-12 mb-7 flex items-center justify-center  right-0 left-0 mx-auto">
+                      <button
+                        className="h-[36px] flex-shrink-0 w-[120px] rounded-[4px] bg-[#2C698D] text-white"
+                        type="submit"
+                      >
+                        Submit
+                      </button>
                     </div>
                   </Form>
                 </Formik>
@@ -397,16 +401,17 @@ const BusinessParnerInfoModal = ({
                     {directorsList?.length >= 1 ? (
                       directorsList?.map((director, i) => {
                         return (
-                          <div key={i} className="h-[114px] rounded-[6px] border-2 border-[#F0F0F0] px-3 py-3">
+                          <div
+                            key={i}
+                            className="h-[114px] rounded-[6px] border-2 border-[#F0F0F0] px-3 py-3"
+                          >
                             <Image src={PartnerAvatar} alt="" />
                             <div className="flex justify-between items-center mt-2">
                               <div className="">
                                 <h4 className="text-[14px] font-semibold">
                                   {director.fullName}
                                 </h4>
-                                <p className="text-[12px]">
-                                  {director.email}
-                                </p>
+                                <p className="text-[12px]">{director.email}</p>
                               </div>
                               <Image src={DeleteIcon} alt="delete" />
                             </div>

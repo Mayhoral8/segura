@@ -69,9 +69,8 @@ export default function SignInForm() {
               (permission) => permission.name === "PERMISSION_CORPORATE_CREATE"
             );
 
-            
             router.push("/corporate-admin/start-here");
-            
+
             setShowSpinner(false);
           } catch (error) {
             console.log(error);
@@ -143,27 +142,12 @@ export default function SignInForm() {
                 </button>
               </AnimateButton>
             </Form>
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center text-sm text-center text-[#2c698d]">
+              Don&apos;t have an account?{" "}
               <Link href="/auth/register">
-                <span className="text-sm text-center text-[#2c698d]">
-                  Don&apos;t have an account?
-                </span>
+                <span className="font-bold ml-1"> Sign up</span>
               </Link>
             </div>
-            <article className="grid grid-cols-3 gap-x-4">
-              <div className="border  flex items-center justify-center gap-x-2 py-1 ">
-                <FcGoogle />
-                <span>Google</span>
-              </div>
-              <div className="border  flex items-center justify-center gap-x-2 py-1 ">
-                <FaSquareXTwitter />
-                <span>Twitter</span>
-              </div>
-              <div className="border  flex items-center justify-center gap-x-2 py-1 ">
-                <GrFacebookOption className="text-blue-600" />
-                <span>Facebook</span>
-              </div>
-            </article>
           </article>
         </section>
       </Formik>

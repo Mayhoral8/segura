@@ -175,7 +175,7 @@ const StartHere = () => {
   });
   return (
     <>
-      <TopBar page="Start Here" />
+      <TopBar page="Onboarding" />
       <div className="px-8 py-4 min-h-screen flex flex-col">
         <BusinessInfoModal
           toggleBusinessInfoModal={toggleBusinessInfoModal}
@@ -235,12 +235,12 @@ const StartHere = () => {
               <Image src={BusinessPartnerInfo} alt="" />
               <p className="ml-2">Business Partner Information</p>
             </div>
-            <div className="flex items-center justify-between">
+            {/* <div className="flex items-center justify-between">
               <div className="bg-[#F5F5F5] h-[8px] rounded-[4px] w-[91%]">
                 <div className="bg-[#09DD49] w-[3%] h-full rounded-[8px]"></div>
               </div>
               <p>0%</p>
-            </div>
+            </div> */}
           </div>
           <div
             className="bg-white h-[100px] rounded-[10px] px-[20px] py-[17px] flex flex-col justify-between cursor-pointer"
@@ -258,7 +258,7 @@ const StartHere = () => {
                   }%] h-full rounded-[8px]`}
                 ></div>
               </div>
-              <p>{(corporateDocuments?.length / 4) * 100}%</p>
+              <p>{(corporateDocuments?.length / 3) * 100}%</p>
             </div>
           </div>
           <button className="bg-[#2C698D] text-white w-[200px] h-[36px] rounded-[4px] ml-auto justify-self-end">

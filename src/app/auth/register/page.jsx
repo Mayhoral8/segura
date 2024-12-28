@@ -160,7 +160,8 @@ export default function SignIn() {
               Join now to experience secure, scalable and innovative banking
               tailored to your business needs.
             </p>
-            <div className="text-[18px] mt-5 mb-3 font-bold">
+            {/* <div className="">
+             <div className="text-[18px] mt-5 mb-3 font-bold">
               Password recommendations
             </div>
             <ul className="list-disc ml-5">
@@ -179,6 +180,7 @@ export default function SignIn() {
               <li>At least 1 number (0 - 8)</li>
               <li>At least 1 symbol (%, &, @, etc.)</li>
             </ul>
+            </div> */}
           </div>
           <div className="mx-auto justify-self-center relative z-10">
             <p className="text-[#8C8C8C] text-[12px]">
@@ -365,7 +367,7 @@ export default function SignIn() {
                         <Field
                           name="password"
                           type={showPassword ? "text" : "password"}
-                          className="w-full h-full focus:outline-none"
+                          className="w-full h-full focus:outline-none text-black"
                           placeholder="Enter your password"
                         />
                         {showPassword ? (
@@ -392,7 +394,7 @@ export default function SignIn() {
                         <Field
                           name="confirmPassword"
                           type={showConfirmPassword ? "text" : "password"}
-                          className="w-full h-full focus:outline-none"
+                          className="w-full h-full focus:outline-none text-black"
                           placeholder="Confirm Password"
                         />
                         {showConfirmPassword ? (
