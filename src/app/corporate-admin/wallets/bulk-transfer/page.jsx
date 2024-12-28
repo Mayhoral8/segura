@@ -208,13 +208,13 @@ const BulkTransfer = () => {
         </article>
       </section>
       <section className="flex flex-col w-[60%] border relative">
-        {navTab.uploadFiles ? (
+        {/* {navTab.uploadFiles ? (
           <UploadFile type="doc"/>
         ) : navTab.uploadStatus ? (
           <UploadStatus />
         ) : (
           <SavedFiles />
-        )}
+        )} */}
       </section>
     </main>
   );
