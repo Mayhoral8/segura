@@ -18,6 +18,7 @@ import { RxCaretDown } from "react-icons/rx";
 // asset import
 import Logo from "@/assets/auth/logo.svg";
 import Symbol from "@/assets/auth/seguraSymbol.svg";
+import Modal from "@/components/modal";
 
 // material-ui
 // import Grid from "@mui/material/Grid";
@@ -30,7 +31,7 @@ import Image from "next/image";
 import { toast } from "sonner";
 
 export default function SignIn() {
-  const { spinner, errorModal } = useContext(ConfigContext);
+  const { spinner, errorModal, showModal, setShowModal } = useContext(ConfigContext);
   const { setShowSpinner } = spinner;
   const { setShowErrorModal, setErrorMsg } = errorModal;
   const [showPassword, setShowPassword] = useState(false);
@@ -150,6 +151,7 @@ export default function SignIn() {
     return (
       <div className="flex">
         <ErrorModal />
+        <Modal/>
         <div className="h-screen bg-[#272643] w-[35%] relative flex flex-col justify-between p-5 text-white overflow-hidden">
           <div className="relative z-10">
             <Image src={Logo} alt="segura logo" />
@@ -208,7 +210,7 @@ export default function SignIn() {
                     businessName: values.businessName,
                     email: trimmedEmail,
                     officeCountry: values.officeCountry,
-                    phoneNumber: values.phoneNumber,
+                    phoneNumber: `${dialCode + values.phoneNumber}`,
                     password: values.password,
                     confirmPassword: values.confirmPassword,
                   }),
@@ -225,7 +227,8 @@ export default function SignIn() {
               }
               setShowSpinner(false);
               toast.success("Registration successful");
-              router.push("/auth/login");
+              setShowModal(true)
+              // router.push("/auth/login");
             } catch (err) {
               console.log(err.message);
               setShowSpinner(false);

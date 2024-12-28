@@ -54,6 +54,8 @@ function ConfigProvider({ children }) {
   const [showSuccessfulWalletSetupModal, setShowSuccessfulWalletSetupModal] =
     useState(false);
 
+    const [showModal, setShowModal] = useState(false)
+
   useEffect(() => {
     if (pathname.includes("/corporate") || session === "authenticated") {
       localStorage.setItem("lastVisitedPage", pathname);
@@ -155,6 +157,8 @@ const [file, setFile] = useState(null)
         setProofOfAddressFile,
         passportFile,
         setPassportFile,
+        showModal,
+        setShowModal
       }}
     >
       {children}
