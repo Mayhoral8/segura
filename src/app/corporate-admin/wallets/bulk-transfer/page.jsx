@@ -15,7 +15,7 @@ import USFlag from "../../../../assets/adminDashboard/UsFlag.svg";
 import CADFlag from "../../../../assets/adminDashboard/CADFlag.svg";
 import UKFlag from "../../../../assets/adminDashboard/UkFlag.svg";
 import POLFlag from "../../../../assets/adminDashboard/PolFlag.svg";
-import UploadFile from "./uploadFile/page";
+// import UploadFile from "./uploadFile/page";
 import UploadStatus from "./uploadStatus/page";
 import SavedFiles from "./savedFiles/page";
 import GreenAdd from "../../../../assets/adminDashboard/blueCross.svg";
