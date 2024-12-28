@@ -4,12 +4,9 @@ import { ConfigContext } from "../../../../../contexts/ConfigContext";
 import { Delete } from "@mui/icons-material";
 
 const UploadFile = ({ type }) => {
-  const { file, setFile, directorsDocs, setDirectorsDocs } =
-    useContext(ConfigContext);
+  const { file, setFile, directorsDocs, setDirectorsDocs } = useContext(ConfigContext);
   const [inputName, setInputName] = useState("");
-  const [fileName, setFileName] = useState(
-    "Drag and drop/Copy and paste file here"
-  );
+  const [fileName, setFileName] = useState("Drag and drop/Copy and paste file here");
 
   const handleChange = (e) => {
     const files = e.target.files;
@@ -18,15 +15,13 @@ const UploadFile = ({ type }) => {
     files[0] && setFileName(files[0].name);
     if (files.length >= 1) {
       setFile(files[0]);
-      handleUpload(files[0], type);
+      handleUpload(files[0], type); // Make sure `handleUpload` is defined or imported
     }
   };
 
   return (
     <div className="h-full w-full flex flex-col pt-[100px]">
-      <h3 className="mb-[30px] font-bold text-[#262626] text-[20px] text-center">
-        Bulk Transfer
-      </h3>
+      <h3 className="mb-[30px] font-bold text-[#262626] text-[20px] text-center">Bulk Transfer</h3>
       <p className="text-[14px] w-[468px] mx-auto self-center text-[#434343] text-left">
         Upload File For Bulk Payment
       </p>
@@ -52,7 +47,7 @@ const UploadFile = ({ type }) => {
             Upload File
           </span>
           <input
-            name={type}
+            name={type} // Ensure this is correct
             type="file"
             hidden
             onChange={handleChange}
