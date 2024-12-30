@@ -22,18 +22,18 @@ export const AnimateModal = ({ children, isVisible }) => {
 
 export const AnimateRightModal = ({ children, isVisible }) => {
   const { setShowAccountDetailsModal } = useContext(ConfigContext);
-  const modalRef = useRef();
-  const handleClickOutside = (e) => {
-    if (modalRef && !modalRef.current.contains(e.target.value)) {
-      setShowAccountDetailsModal(false);
-    }
-  };
+  // const modalRef = useRef();
+  // const handleClickOutside = (e) => {
+  //   if (modalRef && !modalRef.current.contains(e.target.value)) {
+  //     setShowAccountDetailsModal(false);
+  //   }
+  // };
   return (
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          ref={modalRef}
-          onClick={handleClickOutside}
+          // ref={modalRef}
+          // onClick={handleClickOutside}
           initial={{ x: "50%", opacity: 0 }}
           animate={{ x: "0%", opacity: 1 }}
           exit={{ x: "50%", opacity: 0 }}

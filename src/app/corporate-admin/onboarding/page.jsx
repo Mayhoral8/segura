@@ -26,7 +26,7 @@ const StartHere = () => {
     useState(false);
   const [toggleBusinessParnerInfoModal, setToggleBusinessParnerInfoModal] =
     useState(false);
-
+  const [emptyUploadDetails, setEmptyUploadDetails] = useState();
   const handleToggleBusinessInfoModal = () => {
     setToggleBusinessInfoModal(!toggleBusinessInfoModal);
   };
@@ -39,8 +39,9 @@ const StartHere = () => {
     setToggleBusinessParnerInfoModal(!toggleBusinessParnerInfoModal);
   };
 
+  
   const getPrimaryBusinessInfo = async () => {
-    console.log(session?.user);
+    
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/onboarding?corporateAdminEmail=${session?.user?.corporateAdminEmail}`,
@@ -52,6 +53,7 @@ const StartHere = () => {
       );
 
       const responseData = await response.json();
+   
 
       if (!response.ok) {
         console.log(response.error);
@@ -134,14 +136,17 @@ const StartHere = () => {
   } = useQuery({
     queryKey: ["primaryBusinessInfo"],
     queryFn: getPrimaryBusinessInfo,
+    enabled: !!session?.user?.accessToken
   });
   const { data: directorsInfo } = useQuery({
     queryKey: ["list-of-directors"],
     queryFn: getListOfDirectors,
+    enabled: !!session?.user?.accessToken
   });
   const { data: mandatoryDocsRaw } = useQuery({
     queryKey: ["corporate-mandatory-docs"],
     queryFn: getMandatoryDocs,
+    enabled: !!session?.user?.accessToken
   });
 
   const directorsList = directorsInfo?.data;
@@ -152,9 +157,25 @@ const StartHere = () => {
 
   const isDetailsUploaded = uploadedDetails?.businessName;
 
+  
   useEffect(() => {
     isLoading ? setShowSpinner(true) : setShowSpinner(false);
   }, [isLoading]);
+  
+  useEffect(()=>{
+    if(uploadedDetails){
+
+    setEmptyUploadDetails(
+      Object.values(uploadedDetails).filter((value) => {
+       return value === null
+      })
+    );
+  }
+
+  console.log(emptyUploadDetails);
+
+  }, [uploadedDetails])
+  console.log(emptyUploadDetails);
 
   let corporateDocuments = [];
   mandatoryDocs?.map((doc, index) => {
@@ -184,7 +205,7 @@ const StartHere = () => {
         <BusinessInfoModal
           toggleBusinessInfoModal={toggleBusinessInfoModal}
           handleToggleBusinessInfoModal={handleToggleBusinessInfoModal}
-          isDetailsUploaded={isDetailsUploaded}
+          isDetailsUploaded={emptyUploadDetails?.length >= 1 ? false : true}
           uploadedDetails={uploadedDetails}
         />
         <MandatoryDocumentsModal
@@ -221,7 +242,11 @@ const StartHere = () => {
               <p className="ml-2">Business Information</p>
             </div>
             <p className="text-4xl text-[#2C698D] ">
-              {isDetailsUploaded ? <RiCheckboxFill /> : <RiCheckboxBlankLine />}
+              {emptyUploadDetails?.length >= 1 ? (
+                <RiCheckboxBlankLine />
+              ) : (
+                <RiCheckboxFill />
+              )}
             </p>
           </div>
           <div

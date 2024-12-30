@@ -2,9 +2,11 @@
 import React, { useContext } from "react";
 import { ConfigContext } from "../../../contexts/ConfigContext";
 import Image from "next/image";
-import Uploader from "../../../components/Uploader2";
+import Uploader from "../../../components/Uploader";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
+import { Formik, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
 // assets import
 import BackArrow from "../../../assets/adminDashboard/arrowback.svg";
@@ -18,12 +20,14 @@ const MandatoryDocumentsModal = ({
   mandatoryDocs,
 }) => {
   const { data: session } = useSession();
-  const { corporateDocs, spinner } = useContext(ConfigContext);
+  const { corporateDocs, spinner, errorModal } = useContext(ConfigContext);
   const { setShowSpinner } = spinner;
+  const { setShowErrorModal, setErrorMsg } = errorModal;
   const queryClient = useQueryClient();
 
   const upload = async () => {
     const corporateId = localStorage.getItem("corporateId");
+    console.log(corporateDocs);
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/onboarding/${corporateId}/documents`,
@@ -52,24 +56,53 @@ const MandatoryDocumentsModal = ({
       console.log(error);
       console.log(error.message);
       setShowSpinner(false);
-      // setShowErrorModal(true);
-      // setErrorMsg(error.message);
+      setShowErrorModal(true);
+      setErrorMsg(error.message);
     }
   };
-  const certOfIncDoc = mandatoryDocs?.data?.find((doc, index) => {
-    return doc.documentName === "Certificate of Incorporation";
+  const certOfIncDoc = mandatoryDocs?.filter((doc, index) => {
+    return (
+      doc.documentName === "Certificate of Incorporation" &&
+      doc.documentUrl !== ""
+    );
   });
-  const memoDoc = mandatoryDocs?.data?.find((doc, index) => {
-    return doc.documentName === "Memorandum & Articles of Assosciation";
+  console.log(certOfIncDoc);
+  const memoDoc = mandatoryDocs?.filter((doc, index) => {
+    return (
+      doc.documentName === "Memorandum & Articles of Assosciation" &&
+      doc.documentUrl !== ""
+    );
   });
-  const statementOfShareDoc = mandatoryDocs?.data?.find((doc, index) => {
-    return doc.documentName === "Statement of Share Capital";
+  const statementOfShareDoc = mandatoryDocs?.filter((doc, index) => {
+    return (
+      doc.documentName === "Statement of Share Capital" &&
+      doc.documentUrl !== ""
+    );
   });
-  const approvalOfAccOpening = mandatoryDocs?.data?.find((doc, index) => {
-    return doc.documentName === "Approval for Account Opening";
+  const approvalOfAccOpening = mandatoryDocs?.data?.filter((doc, index) => {
+    return (
+      doc.documentName === "Approval for Account Opening" &&
+      doc.documentUrl !== ""
+    );
   });
 
   console.log(memoDoc);
+
+  const initialValues = {
+    certificateOfIncorporation: "",
+    memorandum: "",
+    statementOfShareDoc: "",
+  };
+
+  const schema = Yup.object().shape({
+    certificateOfIncorporation: Yup.string().required(
+      "Certificate of Incorporation is required"
+    ),
+    memorandum: Yup.string().required("Memorandum is required"),
+    statementOfShareDoc: Yup.string().required(
+      "Statement of share capital is required"
+    ),
+  });
 
   return (
     <>
@@ -88,12 +121,6 @@ const MandatoryDocumentsModal = ({
                   Mandatory documents
                 </h4>
               </div>
-              <button
-                className="h-[36px] w-[100px] rounded-[4px] bg-[#2C698D] text-white"
-                onClick={upload}
-              >
-                Save
-              </button>
             </div>
             <p className="text-[#787878] text-[14px] mt-1 mb-5">
               Fill the necessary fields below with details about yourself
@@ -112,73 +139,112 @@ const MandatoryDocumentsModal = ({
                   </li>
                 </ul>
               </div>
-              <div className="w-[50%]">
-                <div className="mb-3">
-                  <label htmlFor="" className="flex text-[#787878] text-[14px]">
-                    <Image src={FileInputIcon} alt="" className="mr-2" />
-                    Certificate of Incorporation
-                  </label>
+              <Formik
+                initialValues={initialValues}
+                validationSchema={schema}
+                onSubmit={async (values, { setSubmitting }) => {
+                  upload();
+                }}
+              >
+                {({ setFieldValue, setTouched, values }) => (
+                  <Form className="w-[50%]">
+                    <div className="w-full flex flex-col">
+                      <div className="mb-3 w-full">
+                        <label
+                          htmlFor=""
+                          className="flex text-[#787878] text-[14px]"
+                        >
+                          <Image src={FileInputIcon} alt="" className="mr-2" />
+                          Certificate of Incorporation
+                        </label>
 
-                  {certOfIncDoc?.documentUrl ? (
-                    <div
-                      // Ensure unique keys for each mapped item
-                      className="border h-[60px] rounded-md flex items-center justify-center text-[#787878] gap-x-2"
-                    >
-                      <span className="text-sm">Document Uploaded</span>
-                      <MdVerified className="text-green-400 text-2xl" />
-                    </div>
-                  ) : (
-                    <Uploader
-                      // Use a unique key for this component as well
-                      type="Certificate of Incorporation"
-                      user="corporate"
-                    />
-                  )}
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="" className="flex text-[#787878] text-[14px]">
-                    <Image src={FileInputIcon} alt="" className="mr-2" />
-                    Memorandum & Articles of Assosciation
-                  </label>
+                        {certOfIncDoc?.length >= 1 ? (
+                          <div
+                            // Ensure unique keys for each mapped item
+                            className="border h-[60px] rounded-md flex items-center justify-center text-[#787878] gap-x-2"
+                          >
+                            <span className="text-sm">Document Uploaded</span>
+                            <MdVerified className="text-green-400 text-2xl" />
+                          </div>
+                        ) : (
+                          <div className="flex flex-col gap-y-1">
+                            <Uploader
+                              // Use a unique key for this component as well
+                              type="certificateOfIncorporation"
+                              name="Certificate of Incorporation"
+                              owner="corporate"
+                              setFieldValue={setFieldValue}
+                            />
+                            <span className="text-red-500 text-xs">
+                              <ErrorMessage name="certificateOfIncorporation" />
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                      <div className="mb-3">
+                        <label
+                          htmlFor=""
+                          className="flex text-[#787878] text-[14px]"
+                        >
+                          <Image src={FileInputIcon} alt="" className="mr-2" />
+                          Memorandum & Articles of Assosciation
+                        </label>
 
-                  {memoDoc?.documentUrl ? (
-                    <div
-                      // Ensure unique keys for each mapped item
-                      className="border h-[60px] rounded-md flex items-center justify-center text-[#787878] gap-x-2"
-                    >
-                      <span className="text-sm">Document Uploaded</span>
-                      <MdVerified className="text-green-400 text-2xl" />
-                    </div>
-                  ) : (
-                    <Uploader
-                      // Use a unique key for this component as well
-                      type="Memorandum & Articles of Assosciation"
-                      user="corporate"
-                    />
-                  )}
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="" className="flex text-[#787878] text-[14px]">
-                    <Image src={FileInputIcon} alt="" className="mr-2" />
-                    Form CAC 2 (Statement of Share Capital)
-                  </label>
-                  {statementOfShareDoc?.documentUrl ? (
-                    <div
-                      // Ensure unique keys for each mapped item
-                      className="border h-[60px] rounded-md flex items-center justify-center text-[#787878] gap-x-2"
-                    >
-                      <span className="text-sm">Document Uploaded</span>
-                      <MdVerified className="text-green-400 text-2xl" />
-                    </div>
-                  ) : (
-                    <Uploader
-                      // Use a unique key for this component as well
-                      type="Statement of Share Capital"
-                      user="corporate"
-                    />
-                  )}
-                </div>
-                {/* <div className="mb-3">
+                        {certOfIncDoc?.length >= 1 ? (
+                          <div
+                            // Ensure unique keys for each mapped item
+                            className="border h-[60px] rounded-md flex items-center justify-center text-[#787878] gap-x-2"
+                          >
+                            <span className="text-sm">Document Uploaded</span>
+                            <MdVerified className="text-green-400 text-2xl" />
+                          </div>
+                        ) : (
+                          <div className="flex flex-col gap-y-1">
+                            <Uploader
+                              // Use a unique key for this component as well
+                              name="Memorandum & Articles of Assosciation"
+                              type="memorandum"
+                              owner="corporate"
+                              setFieldValue={setFieldValue}
+                            />
+                            <span className="text-red-500 text-xs">
+                              <ErrorMessage name="memorandum" />
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                      <div className="mb-3">
+                        <label
+                          htmlFor=""
+                          className="flex text-[#787878] text-[14px]"
+                        >
+                          <Image src={FileInputIcon} alt="" className="mr-2" />
+                          Form CAC 2 (Statement of Share Capital)
+                        </label>
+                        {statementOfShareDoc?.length >= 1 ? (
+                          <div
+                            // Ensure unique keys for each mapped item
+                            className="border h-[60px] rounded-md flex items-center justify-center text-[#787878] gap-x-2"
+                          >
+                            <span className="text-sm">Document Uploaded</span>
+                            <MdVerified className="text-green-400 text-2xl" />
+                          </div>
+                        ) : (
+                          <div className="flex flex-col gap-y-1">
+                            <Uploader
+                              // Use a unique key for this component as well
+                              type="statementOfShareDoc"
+                              name="Statement of Share Capital"
+                              owner="corporate"
+                              setFieldValue={setFieldValue}
+                            />
+                            <span className="text-red-500 text-xs">
+                              <ErrorMessage name="statementOfShareDoc" />
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                      {/* <div className="mb-3">
                   <label htmlFor="" className="flex text-[#787878] text-[14px]">
                     <Image src={FileInputIcon} alt="" className="mr-2" />
                     Approval for Account Opening
@@ -199,7 +265,16 @@ const MandatoryDocumentsModal = ({
                     />
                   )}
                 </div> */}
-              </div>
+                      <button
+                        type="submit"
+                        className="h-[36px] w-[100px] rounded-[4px] bg-[#2C698D] text-white"
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </Form>
+                )}
+              </Formik>
             </div>
           </div>
         </div>
