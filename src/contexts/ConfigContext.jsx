@@ -53,8 +53,11 @@ function ConfigProvider({ children }) {
     useState(false);
   const [showSuccessfulWalletSetupModal, setShowSuccessfulWalletSetupModal] =
     useState(false);
+    const [showDirectorDetails, setShowDirectorDetails] = useState(false)
 
     const [showModal, setShowModal] = useState(false)
+
+    const [directorInView, setDirectorInView] = useState({})
 
   useEffect(() => {
     if (pathname.includes("/corporate") || session === "authenticated") {
@@ -65,15 +68,15 @@ function ConfigProvider({ children }) {
   const [directorsDocs, setDirectorsDocs] = useState([
     {
       name: "Passport Photograph",
-      url: "test.com",
+      url: "",
     },
     {
       name: "Government Id",
-      url: "test.com",
+      url: "",
     },
     {
       name: "Proof Of Address",
-      url: "test.com",
+      url: "",
     },
   ]);
 
@@ -112,6 +115,8 @@ const [file, setFile] = useState(null)
         },
         showCorporateDetails,
         setShowCorporateDetails,
+        showDirectorDetails, 
+        setShowDirectorDetails,
 
         userContext: {
           userInView,
@@ -158,7 +163,9 @@ const [file, setFile] = useState(null)
         passportFile,
         setPassportFile,
         showModal,
-        setShowModal
+        setShowModal,
+        directorInView,
+        setDirectorInView
       }}
     >
       {children}

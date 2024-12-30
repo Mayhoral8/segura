@@ -33,7 +33,7 @@
     "**/*.ts",
     "**/*.tsx",
     "src/app/reactqueryProvider.jsx"
-  ],
+, "src/components/Onboarding/BusinessPartnerInfo.jsx"  ],
   "exclude": [
     "node_modules"
   ]

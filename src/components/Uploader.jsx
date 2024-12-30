@@ -3,18 +3,41 @@ import React, { useState, useContext } from "react";
 import { ConfigContext } from "../contexts/ConfigContext";
 import { useSession } from "next-auth/react";
 import { Delete } from "@mui/icons-material";
+import { toast } from "sonner";
 
-const Uploader = ({ type, user }) => {
+const Uploader = ({ type, owner, setFieldValue, name }) => {
   const { data: session } = useSession();
-  const { file, setFile, directorsDocs, setDirectorsDocs } = useContext(ConfigContext);
+  const {
+    file,
+    setFile,
+    directorsDocs,
+    setDirectorsDocs,
+    corporateDocs,
+    setCorporateDocs,
+    userContext,
+    directorInView,
+    setDirectorInView,
+  } = useContext(ConfigContext);
+  const { userInView, setUserInView } = userContext;
   const [inputName, setInputName] = useState("");
 
   const [fileName, setFileName] = useState(
     "Drag and drop/Copy and paste file here"
   );
 
-  console.log(directorsDocs);
+  const processDocuments = (document, url) => {
+    return document?.map((doc) => {
+      console.log(url, doc.name, type);
+      if (doc.name === name) {
+        return { ...doc, url };
+      } else {
+        return doc;
+      }
+    });
+  };
+
   const handleUpload = async (file, type) => {
+    console.log(directorInView);
     try {
       const formData = new FormData();
       formData.append("file", file);
@@ -29,30 +52,40 @@ const Uploader = ({ type, user }) => {
           },
         }
       );
-      const responseData = await response.json();
+
+      const { data: url } = await response.json();
       if (!response.ok) {
         console.log(response.error);
         throw new Error(response.error);
       }
-      console.log(responseData);
-      // toast.success("Details Update Succesful!");
+      // console.log(url);
 
-      const newDocuments = directorsDocs.map((doc) => {
-        // console.log(doc);
-        if (doc.name === type) {
-          return { ...doc, url: responseData.data };
-        } else {
-          return doc;
-        }
-      });
+      // console.log(owner);
+      if (owner === "director") {
+        const newDocuments = processDocuments(directorsDocs, url);
 
-      console.log(newDocuments);
-      setDirectorsDocs(newDocuments);
+        console.log(newDocuments);
+        setDirectorsDocs(newDocuments);
+      } else if (owner === "director-update") {
+        // const { documents } = directorInView;
+        const newDocuments = processDocuments(directorInView?.documents, url);
+
+        console.log(newDocuments);
+        setDirectorInView((prev) => {
+          return { ...prev, documents: newDocuments };
+        });
+      } else if(owner === "corporate") {
+        const newDocuments = processDocuments(corporateDocs, url);
+
+        console.log(newDocuments);
+        setCorporateDocs(newDocuments);
+      }
 
       // setShowSpinner(false);
     } catch (error) {
       console.log(error);
       console.log(error.message);
+      toast.error(error.message);
       // setShowSpinner(false);
       // setShowErrorModal(true);
       // setErrorMsg(error.message); // Handle unexpected errors
@@ -61,12 +94,12 @@ const Uploader = ({ type, user }) => {
 
   const handleChange = (e) => {
     const files = e.target.files;
-    console.log(e.target.name);
     setInputName(e.target.name);
     files[0] && setFileName(files[0].name);
     if (files.length >= 1) {
       setFile(files[0]);
-      handleUpload(files[0], type);
+      setFieldValue(type, files[0].name);
+      handleUpload(files[0], name);
     }
   };
 
@@ -97,7 +130,7 @@ const Uploader = ({ type, user }) => {
           type="file"
           hidden
           onChange={handleChange}
-          accept="image/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+          accept="image/*"
           className="input-field"
         />
       </label>

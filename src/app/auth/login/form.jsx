@@ -11,9 +11,6 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import ErrorModal from "../../../components/ErrorModal";
-import { FcGoogle } from "react-icons/fc";
-import { GrFacebookOption } from "react-icons/gr";
-import { FaSquareXTwitter } from "react-icons/fa6";
 import * as Yup from "yup";
 
 export default function SignInForm() {
@@ -41,6 +38,8 @@ export default function SignInForm() {
       .required("Email is required"),
     password: Yup.string().max(255).required("Password is required"),
   });
+
+  console.log(1735586276698 > 1735607875);
 
   return (
     <>
