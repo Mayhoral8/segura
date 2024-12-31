@@ -68,7 +68,7 @@ export default function SignInForm() {
               (permission) => permission.name === "PERMISSION_CORPORATE_CREATE"
             );
 
-            router.push("/corporate-admin/start-here");
+            router.push("/corporate-admin/onboarding");
 
             setShowSpinner(false);
           } catch (error) {

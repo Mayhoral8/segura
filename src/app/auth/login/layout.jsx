@@ -41,10 +41,6 @@ const Layout = () => {
                 Welcome back! You’ve been missed, Login to to access your
                 dashboard.
               </p>
-              <p className="mt-4 text-sm font-light relative z-10">
-                You have been missed, login to to access your Segura BaaS
-                dashboard.
-              </p>
             </div>
             <div className="absolute z-0 bottom-[0px] -right-24">
               <Image

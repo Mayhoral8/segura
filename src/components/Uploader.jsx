@@ -74,7 +74,7 @@ const Uploader = ({ type, owner, setFieldValue, name }) => {
         setDirectorInView((prev) => {
           return { ...prev, documents: newDocuments };
         });
-      } else if(owner === "corporate") {
+      } else if (owner === "corporate") {
         const newDocuments = processDocuments(corporateDocs, url);
 
         console.log(newDocuments);

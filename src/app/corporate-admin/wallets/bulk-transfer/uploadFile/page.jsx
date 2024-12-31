@@ -4,7 +4,7 @@ import { ConfigContext } from "../../../../../contexts/ConfigContext";
 import { Delete } from "@mui/icons-material";
 
 const UploadFile = () => {
-  return <>HI</>
+  return <>HI</>;
   // const { file, setFile, directorsDocs, setDirectorsDocs } = useContext(ConfigContext);
   // const [inputName, setInputName] = useState("");
   // const [fileName, setFileName] = useState("Drag and drop/Copy and paste file here");

@@ -4,7 +4,7 @@
 import React from "react";
 import { useState, useContext, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Form, Formik, ErrorMessage, Field } from "formik";
+import { Form, Formik, ErrorMessage, Field, useFormikContext } from "formik";
 // import AnimateButton from "../../../components/@extended/AnimateButton";
 import { ConfigContext } from "../../../contexts/ConfigContext";
 import Link from "next/link";
@@ -36,6 +36,7 @@ export default function SignIn() {
   const { setShowErrorModal, setErrorMsg } = errorModal;
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [passwordFocused, setPasswordFocused] = useState(false);
 
   const [isCountryListVisible, setIsCountryListVisible] = useState(false);
   const [dialCode, setDialCode] = useState("+1");
@@ -147,6 +148,109 @@ export default function SignIn() {
       .required("Confirm Password is required")
       .oneOf([Yup.ref("password")], "Password must match"),
   });
+
+  const TrackPassword = () => {
+    const [passwordValidation, setPasswordValidation] = useState({
+      hasNumber: false,
+      isUppercase: false,
+      isLowercase: false,
+      hasSpecial: false,
+      isTooShort: false,
+      isTooLong: false,
+    });
+    const { values, setFieldValue } = useFormikContext();
+    useEffect(() => {
+      const password = values.password || "";
+
+      setPasswordValidation({
+        hasNumber: hasNumber(password),
+        isUppercase: new RegExp(/[A-Z]/).test(password), //
+        isLowercase: new RegExp(/[a-z]/).test(password), //
+        hasSpecial: hasSpecial(password),
+        isTooShort: password.length >= 8,
+        isTooLong: password.length <= 20,
+      });
+    }, [values.password]);
+
+    return (
+      <>
+        {/* Password Rules */}
+        {passwordFocused && (
+          <div className="bg-[#F0F3FF] p-3 rounded-lg shadow-md text-sm absolute w-full top-[70px] ">
+            <ul className="list-disc pl-2">
+              <li>
+                <span
+                  className={
+                    passwordValidation.isTooShort
+                      ? "text-green-500"
+                      : "text-red-500"
+                  }
+                >
+                  Minimum 8 characters
+                </span>
+              </li>
+              <li>
+                <span
+                  className={
+                    passwordValidation.isTooLong
+                      ? "text-green-500"
+                      : "text-red-500"
+                  }
+                >
+                  Maximum 20 characters
+                </span>
+              </li>
+              <li>
+                <span
+                  className={
+                    passwordValidation.isLowercase
+                      ? "text-green-500"
+                      : "text-red-500"
+                  }
+                >
+                  At least 1 lowercase letter (a-z)
+                </span>
+              </li>
+              <li>
+                <span
+                  className={
+                    passwordValidation.isUppercase
+                      ? "text-green-500"
+                      : "text-red-500"
+                  }
+                >
+                  At least 1 uppercase letter (A-Z)
+                </span>
+              </li>
+              <li>
+                <span
+                  className={
+                    passwordValidation.hasNumber
+                      ? "text-green-500"
+                      : "text-red-500"
+                  }
+                >
+                  At least 1 number (0-9)
+                </span>
+              </li>
+              <li>
+                <span
+                  className={
+                    passwordValidation.hasSpecial
+                      ? "text-green-500"
+                      : "text-red-500"
+                  }
+                >
+                  At least 1 symbol (%&@, etc.)
+                </span>
+              </li>
+            </ul>
+          </div>
+        )}
+      </>
+    );
+  };
+
   if (status === "unauthenticated") {
     return (
       <div className="flex">
@@ -362,32 +466,40 @@ export default function SignIn() {
                     </div>
                   </div>
                   <div className="flex w-full justify-between">
-                    <div className="mb-3 w-[48%] text-[#8C8C8C]">
-                      <label htmlFor="password" className="text-sm">
-                        Password
-                      </label>
-                      <div className="flex bg-white justify-between items-center border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px]">
-                        <Field
-                          name="password"
-                          type={showPassword ? "text" : "password"}
-                          className="w-full h-full focus:outline-none text-black"
-                          placeholder="Enter your password"
-                        />
-                        {showPassword ? (
-                          <IoMdEyeOff
-                            className="text-lg cursor-pointer"
-                            onClick={handleShowPassword}
+                    <div className="relative w-[48%]">
+                      <div className="mb-3 w-full text-[#8C8C8C]">
+                        <label htmlFor="password" className="text-sm">
+                          Password
+                        </label>
+                        <div className="flex bg-white justify-between items-center border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px]">
+                          <Field
+                            name="password"
+                            type={showPassword ? "text" : "password"}
+                            className="w-full h-full focus:outline-none text-black"
+                            placeholder="Enter your password"
+                            onFocus={() => setPasswordFocused(true)}
+                            onBlur={() => setPasswordFocused(false)}
+                            onChange={(e) =>
+                              setFieldValue("password", e.target.value)
+                            }
                           />
-                        ) : (
-                          <IoMdEye
-                            className="text-lg cursor-pointer"
-                            onClick={handleShowPassword}
-                          />
-                        )}
+                          {showPassword ? (
+                            <IoMdEyeOff
+                              className="text-lg cursor-pointer"
+                              onClick={handleShowPassword}
+                            />
+                          ) : (
+                            <IoMdEye
+                              className="text-lg cursor-pointer"
+                              onClick={handleShowPassword}
+                            />
+                          )}
+                        </div>
+                        <span className="text-red-500 text-xs">
+                          <ErrorMessage name="password" />
+                        </span>
                       </div>
-                      <span className="text-red-500 text-xs">
-                        <ErrorMessage name="password" />
-                      </span>
+                      <TrackPassword />
                     </div>
                     <div className="mb-2 w-[48%] text-[#8C8C8C]">
                       <label htmlFor="confirmPassword" className="text-sm">
