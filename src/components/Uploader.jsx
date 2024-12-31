@@ -105,7 +105,7 @@ const Uploader = ({ type, owner, setFieldValue, name }) => {
 
   return (
     <div className="h-[60px] border-[#F0F0F0] border-[2px] bg-[#f5f5f5] rounded-[4px] mt-2 flex items-center justify-center">
-      <label className="text-center text-[12px] w-[202px]">
+      <div className="text-center text-[12px] w-[202px]">
         {file && type === inputName && (
           <span className="-mt-[50px] mr-1">
             <Delete
@@ -133,7 +133,7 @@ const Uploader = ({ type, owner, setFieldValue, name }) => {
           accept="image/*"
           className="input-field"
         />
-      </label>
+      </div>
     </div>
   );
 };
