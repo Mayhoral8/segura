@@ -86,7 +86,6 @@ const BusinessParnerInfoModal = ({
   const queryClient = useQueryClient();
 
   const handleViewDirectorDetails = (director) => {
-    console.log(director);
     setDirectorInView(director);
     setShowDirectorDetails(true);
   };
@@ -94,7 +93,7 @@ const BusinessParnerInfoModal = ({
     <>
       <BusinessPartnerInfo />
       {toggleBusinessParnerInfoModal && (
-        <div className="w-screen min-h-screen backdrop-blur-[7px] bg-[#0D1012B2] fixed py-[20px] bottom-0 right-0 top-0 left-0 z-40 flex items-center justify-center">
+        <div className="w-screen min-h-screen backdrop-blur-[7px] bg-[#0D1012B2] fixed py-[20px] bottom-0 right-0 top-0 left-0 z-30 flex items-center justify-center">
           <div className="bg-white h-[90vh] w-[784px] relative px-[100px] py-[50px]  overflow-y-hidden">
             {showForm ? (
               <div className="">
@@ -473,7 +472,6 @@ const BusinessParnerInfoModal = ({
                   <div className="w-full h-[300px] grid auto-rows-max grid-cols-2 gap-5 overflow-y-scroll bg-white border">
                     {directorsList?.length >= 1 ? (
                       directorsList?.map((director, i) => {
-                        console.log(director);
                         return (
                           <div
                             key={i}

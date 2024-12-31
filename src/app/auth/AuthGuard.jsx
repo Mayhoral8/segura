@@ -6,8 +6,10 @@ import { useRouter } from "next/navigation";
 import { CgSpinner } from "react-icons/cg";
 import { jwtDecode } from "jwt-decode";
 import { signOut } from "next-auth/react";
+import {ConfigContext} from "../../contexts/ConfigContext"
 
 const AuthGuard = ({ children }) => {
+  const {setShowSpinner, showSpinner} = useContext(ConfigContext).spinner
   const isJwtExpired = (token) => {
     try {
       const decoded = jwtDecode(token);
@@ -43,30 +45,19 @@ const AuthGuard = ({ children }) => {
       router.push("/auth/login");
       return;
     }
+    if(status === "loading"){
+      setShowSpinner(true)
+    }
 
-    // if (status === "authenticated" && session) {
-    //   const permissions = session?.user?.permissions || [];
-
-    //   // Determine redirection path based on permissions
-    //   // const isCorporateAdmin = permissions.some(
-    //   //   (permission) => permission.name === "PERMISSION_CORPORATE_CREATE"
-    //   // );
-    // }
+    // console.log(status);
   }, [status, session]);
 
   // Show loading spinner while session is being checked
-  if (status === "loading") {
-    return (
-      <div className="fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center bg-[#00000061]">
-        <CgSpinner className="animate-spin text-5xl text-[#2c698d]" />
-      </div>
-    );
-  }
-
-  // Render children only if authenticated
-  if (status === "authenticated") {
+ if (status === "authenticated") {
     return <>{children}</>;
   }
+
+
 
   // Render nothing while redirecting or if unauthenticated
   return null;

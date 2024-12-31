@@ -5,7 +5,14 @@ import { useSession } from "next-auth/react";
 import { Delete } from "@mui/icons-material";
 import { toast } from "sonner";
 
-const Uploader = ({ type, owner, setFieldValue, name }) => {
+const Uploader = ({
+  type,
+  owner,
+  name,
+  documentId,
+  handleUploadMode,
+  setFieldValue,
+}) => {
   const { data: session } = useSession();
   const {
     file,
@@ -14,11 +21,12 @@ const Uploader = ({ type, owner, setFieldValue, name }) => {
     setDirectorsDocs,
     corporateDocs,
     setCorporateDocs,
-    userContext,
     directorInView,
     setDirectorInView,
+    spinner,
   } = useContext(ConfigContext);
-  const { userInView, setUserInView } = userContext;
+  const { setShowSpinner } = spinner;
+
   const [inputName, setInputName] = useState("");
 
   const [fileName, setFileName] = useState(
@@ -26,6 +34,7 @@ const Uploader = ({ type, owner, setFieldValue, name }) => {
   );
 
   const processDocuments = (document, url) => {
+    console.log(document, url);
     return document?.map((doc) => {
       console.log(url, doc.name, type);
       if (doc.name === name) {
@@ -37,7 +46,8 @@ const Uploader = ({ type, owner, setFieldValue, name }) => {
   };
 
   const handleUpload = async (file, type) => {
-    console.log(directorInView);
+    setShowSpinner(true);
+
     try {
       const formData = new FormData();
       formData.append("file", file);
@@ -58,33 +68,64 @@ const Uploader = ({ type, owner, setFieldValue, name }) => {
         console.log(response.error);
         throw new Error(response.error);
       }
-      // console.log(url);
 
-      // console.log(owner);
       if (owner === "director") {
         const newDocuments = processDocuments(directorsDocs, url);
 
         console.log(newDocuments);
+        setShowSpinner(false);
+
         setDirectorsDocs(newDocuments);
       } else if (owner === "director-update") {
-        // const { documents } = directorInView;
-        const newDocuments = processDocuments(directorInView?.documents, url);
+        // const newDocuments = processDocuments(directorInView?.documents, url);
 
-        console.log(newDocuments);
-        setDirectorInView((prev) => {
-          return { ...prev, documents: newDocuments };
-        });
+        // console.log(newDocuments);
+        // setDirectorInView((prev) => {
+        //   return { ...prev, documents: newDocuments };
+        // });
+        try {
+          const response = await fetch(
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/onboarding/${documentId}/documents`,
+            {
+              method: "PUT",
+              body: JSON.stringify({
+                name,
+                url,
+              }),
+              headers: {
+                Authorization: `Bearer ${session?.user?.accessToken}`,
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          const responseData = await response.json();
+          if (!response.ok) {
+            throw new Error(response.error);
+          } else {
+            setShowSpinner(false);
+            toast.success(responseData.data);
+            console.log(type);
+            handleUploadMode(type);
+          }
+          // console.log(responseData);
+        } catch (err) {
+          setShowSpinner(false);
+          toast.error(err.message);
+        }
       } else if (owner === "corporate") {
         const newDocuments = processDocuments(corporateDocs, url);
 
         console.log(newDocuments);
+        setShowSpinner(false);
+
         setCorporateDocs(newDocuments);
       }
 
       // setShowSpinner(false);
     } catch (error) {
-      console.log(error);
-      console.log(error.message);
+      setShowSpinner(false);
+
       toast.error(error.message);
       // setShowSpinner(false);
       // setShowErrorModal(true);
@@ -98,8 +139,10 @@ const Uploader = ({ type, owner, setFieldValue, name }) => {
     files[0] && setFileName(files[0].name);
     if (files.length >= 1) {
       setFile(files[0]);
-      setFieldValue(type, files[0].name);
-      handleUpload(files[0], name);
+      if (owner !== "director-update") {
+        setFieldValue(type, files[0].name);
+      }
+      handleUpload(files[0], type);
     }
   };
 
@@ -126,7 +169,6 @@ const Uploader = ({ type, owner, setFieldValue, name }) => {
           Upload File
         </span>
         <input
-          name={type}
           type="file"
           hidden
           onChange={handleChange}

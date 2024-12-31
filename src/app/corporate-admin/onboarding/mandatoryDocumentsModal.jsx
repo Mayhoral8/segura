@@ -66,7 +66,7 @@ const MandatoryDocumentsModal = ({
       doc.documentUrl !== ""
     );
   });
-  console.log(certOfIncDoc);
+  
   const memoDoc = mandatoryDocs?.filter((doc, index) => {
     return (
       doc.documentName === "Memorandum & Articles of Assosciation" &&
@@ -86,7 +86,7 @@ const MandatoryDocumentsModal = ({
     );
   });
 
-  console.log(memoDoc);
+  
 
   const initialValues = {
     certificateOfIncorporation: "",
@@ -149,122 +149,38 @@ const MandatoryDocumentsModal = ({
                 {({ setFieldValue, setTouched, values }) => (
                   <Form className="w-[50%]">
                     <div className="w-full flex flex-col">
-                      <div className="mb-3 w-full">
-                        <label
-                          htmlFor=""
-                          className="flex text-[#787878] text-[14px]"
-                        >
-                          <Image src={FileInputIcon} alt="" className="mr-2" />
-                          Certificate of Incorporation
-                        </label>
-
-                        {certOfIncDoc?.length >= 1 ? (
-                          <div
-                            // Ensure unique keys for each mapped item
-                            className="border h-[60px] rounded-md flex items-center justify-center text-[#787878] gap-x-2"
-                          >
-                            <span className="text-sm">Document Uploaded</span>
-                            <MdVerified className="text-green-400 text-2xl" />
-                          </div>
-                        ) : (
-                          <div className="flex flex-col gap-y-1">
-                            <Uploader
-                              // Use a unique key for this component as well
-                              type="certificateOfIncorporation"
-                              name="Certificate of Incorporation"
-                              owner="corporate"
-                              setFieldValue={setFieldValue}
-                            />
-                            <span className="text-red-500 text-xs">
-                              <ErrorMessage name="certificateOfIncorporation" />
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                      <div className="mb-3">
-                        <label
-                          htmlFor=""
-                          className="flex text-[#787878] text-[14px]"
-                        >
-                          <Image src={FileInputIcon} alt="" className="mr-2" />
-                          Memorandum & Articles of Assosciation
-                        </label>
-
-                        {certOfIncDoc?.length >= 1 ? (
-                          <div
-                            // Ensure unique keys for each mapped item
-                            className="border h-[60px] rounded-md flex items-center justify-center text-[#787878] gap-x-2"
-                          >
-                            <span className="text-sm">Document Uploaded</span>
-                            <MdVerified className="text-green-400 text-2xl" />
-                          </div>
-                        ) : (
-                          <div className="flex flex-col gap-y-1">
-                            <Uploader
-                              // Use a unique key for this component as well
-                              name="Memorandum & Articles of Assosciation"
-                              type="memorandum"
-                              owner="corporate"
-                              setFieldValue={setFieldValue}
-                            />
-                            <span className="text-red-500 text-xs">
-                              <ErrorMessage name="memorandum" />
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                      <div className="mb-3">
-                        <label
-                          htmlFor=""
-                          className="flex text-[#787878] text-[14px]"
-                        >
-                          <Image src={FileInputIcon} alt="" className="mr-2" />
-                          Form CAC 2 (Statement of Share Capital)
-                        </label>
-                        {statementOfShareDoc?.length >= 1 ? (
-                          <div
-                            // Ensure unique keys for each mapped item
-                            className="border h-[60px] rounded-md flex items-center justify-center text-[#787878] gap-x-2"
-                          >
-                            <span className="text-sm">Document Uploaded</span>
-                            <MdVerified className="text-green-400 text-2xl" />
-                          </div>
-                        ) : (
-                          <div className="flex flex-col gap-y-1">
-                            <Uploader
-                              // Use a unique key for this component as well
-                              type="statementOfShareDoc"
-                              name="Statement of Share Capital"
-                              owner="corporate"
-                              setFieldValue={setFieldValue}
-                            />
-                            <span className="text-red-500 text-xs">
-                              <ErrorMessage name="statementOfShareDoc" />
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                      {/* <div className="mb-3">
-                  <label htmlFor="" className="flex text-[#787878] text-[14px]">
-                    <Image src={FileInputIcon} alt="" className="mr-2" />
-                    Approval for Account Opening
-                  </label>
-                  {approvalOfAccOpening?.documentUrl ? (
-                    <div
-                       // Ensure unique keys for each mapped item
-                      className="border h-[60px] rounded-md flex items-center justify-center text-[#787878] gap-x-2"
-                    >
-                      <span className="text-sm">Document Uploaded</span>
-                      <MdVerified className="text-green-400 text-2xl" />
-                    </div>
-                  ) : (
-                    <Uploader
-                       // Use a unique key for this component as well
-                      type="Approval for Account Opening"
-                      user="corporate"
-                    />
-                  )}
-                </div> */}
+                    {false &&
+            !uploadMode.governmentId ? (
+              <section className="h-24">
+                <span className="text-sm">Valid Government ID</span>
+                <article className="flex flex-col border h-20 justify-center  items-center px-2 rounded-md">
+                  <div className="  rounded-md flex items-center justify-center text-[#787878] gap-x-2">
+                    <span className="text-sm">Document Uploaded</span>
+                    <MdVerified className="text-green-400 text-2xl" />
+                  </div>
+                  <span
+                    className="text-[#1890FF] text-sm cursor-pointer"
+                    onClick={() => handleUploadMode("governmentId")}
+                  >
+                    Re-Upload
+                  </span>
+                </article>
+              </section>
+            ) : (
+              <div className="mb-3">
+                <label htmlFor="" className="flex text-[#787878] text-[14px]">
+                  <Image src={FileInputIcon} alt="" className="mr-2" />
+                  Valid Government ID
+                </label>
+                <Uploader
+                  type="governmentId"
+                  name="Government Id"
+                  owner="director-update"
+                  documentId={directorInView?.documents?.[1].id}
+                  handleUploadMode={handleUploadMode}
+                />
+              </div>
+            )}
                       <button
                         type="submit"
                         className="h-[36px] w-[100px] rounded-[4px] bg-[#2C698D] text-white"

@@ -39,7 +39,6 @@ export default function SignInForm() {
     password: Yup.string().max(255).required("Password is required"),
   });
 
-  console.log(1735586276698 > 1735607875);
 
   return (
     <>
@@ -56,7 +55,7 @@ export default function SignInForm() {
               password: values.password,
             });
 
-            console.log(response);
+            
             if (!response.ok) {
               // Handle the error (e.g., display an error message to the user)
               console.log(response.error);

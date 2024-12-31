@@ -9,8 +9,14 @@ import ErrorModal from "../../../../components/ErrorModal";
 import * as Yup from "yup";
 import Image from "next/image";
 import BackgroundImage from "../../../../assets/adminDashboard/setupPasswordBG.svg";
+import { useSearchParams } from "next/navigation";
 
 export default function SignInForm() {
+  const searchParams = useSearchParams();
+
+  const currentParams = new URLSearchParams(searchParams.toString());
+  const token = currentParams.get("token");
+
   const { spinner, errorModal } = useContext(ConfigContext);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -173,7 +179,31 @@ export default function SignInForm() {
   return (
     <>
       <ErrorModal />
-      <Formik initialValues={initialValues} validationSchema={schema}>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={schema}
+        onSubmit={async (values, { setSubmitting }) => {
+          try {
+            const response = await fetch(
+              `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/setupPassword`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  "Authorization-Token": token,
+                },
+              }
+            );
+            const responseData = await response.json();
+
+            if (!response.ok) {
+              throw new Error(responseData.responseMessage);
+            }
+          } catch (err) {
+            toast.error(err.message);
+          }
+        }}
+      >
         {({ setFieldValue }) => (
           <section className="relative flex justify-center w-screen h-screen items-center">
             <Image

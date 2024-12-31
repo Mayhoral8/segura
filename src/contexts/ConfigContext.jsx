@@ -58,6 +58,7 @@ function ConfigProvider({ children }) {
     const [showModal, setShowModal] = useState(false)
 
     const [directorInView, setDirectorInView] = useState({})
+    
 
   useEffect(() => {
     if (pathname.includes("/corporate") || session === "authenticated") {

@@ -181,13 +181,12 @@ const AddNewUserModal = ({ toggleNewUserModal, handleToggleNewUserModal }) => {
                           businessName: values.businessName,
                           fullName: values.fullName,
                           dateOfBirth: values.dateOfBirth,
-                          emailAddress: values.emailAddress,
-                          homeAddress: values.homeAddress,
+                          email: values.emailAddress,
+                          officeAdddress: values.homeAddress,
                           officeCountry: values.officeCountry,
                           department: values.department,
                           phoneNumber: values.phoneNumber,
-                          password: values.password,
-                          confirmPassword: values.confirmPassword,
+                          permissionLists: ["PERMISSION_ACCOUNT_VIEW"]
                         }),
                         headers: {
                           Authorization: `Bearer ${session?.user?.accessToken}`,
@@ -206,7 +205,7 @@ const AddNewUserModal = ({ toggleNewUserModal, handleToggleNewUserModal }) => {
                   }
                 }}
               >
-                {({ errors, touched }) => (
+                {({ errors, touched, values }) => (
                   <Form className="flex flex-col scroll-smooth scrollbar-hide">
                     {/* Your form fields go here */}
                     <div className="flex w-full justify-between">
@@ -247,7 +246,7 @@ const AddNewUserModal = ({ toggleNewUserModal, handleToggleNewUserModal }) => {
                         </span>
                       </div>
                     </div>
-
+                    {console.log(values)}
                     <div className="flex w-full justify-between">
                       <div className="flex flex-col w-[48%] gap-y-2 mb-2">
                         <label
