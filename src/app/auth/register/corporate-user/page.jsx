@@ -1,7 +1,7 @@
 "use client";
 
 // next
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useContext } from "react";
 import { ConfigContext } from "../../../../contexts/ConfigContext";
 import { Form, Formik, ErrorMessage, Field, useFormikContext } from "formik";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
@@ -10,8 +10,13 @@ import * as Yup from "yup";
 import Image from "next/image";
 import BackgroundImage from "../../../../assets/adminDashboard/setupPasswordBG.svg";
 import { useSearchParams } from "next/navigation";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { ConfigContext } from "../../../../contexts/ConfigContext";
 
 export default function SignInForm() {
+  const {setShowSpinner} = useContext(ConfigContext).spinner
+  const router = useRouter()
   const searchParams = useSearchParams();
 
   const currentParams = new URLSearchParams(searchParams.toString());
@@ -183,6 +188,7 @@ export default function SignInForm() {
         initialValues={initialValues}
         validationSchema={schema}
         onSubmit={async (values, { setSubmitting }) => {
+          setShowSpinner(true)
           try {
             const response = await fetch(
               `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/setupPassword`,
@@ -202,8 +208,13 @@ export default function SignInForm() {
 
             if (!response.ok) {
               throw new Error(responseData.responseMessage);
+            }else{
+              setShowSpinner(false)
+              toast.success("Password Setup Succesful!")
+              router.push("/auth/login")
             }
           } catch (err) {
+            setShowSpinner(false)
             toast.error(err.message);
           }
         }}
