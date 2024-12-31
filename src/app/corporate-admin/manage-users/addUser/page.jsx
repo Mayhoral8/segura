@@ -37,7 +37,7 @@ const Page = () => {
     const registerUser = async () => {
       try {
         const response = await fetch(
-          "https://api-dev.segura-pay.com/api/v1/users/registerCorporateUser",
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/users/registerCorporateUser`,
           {
             method: "POST",
             body: JSON.stringify(form),

@@ -15,12 +15,13 @@ import USFlag from "../../../../assets/adminDashboard/UsFlag.svg";
 import CADFlag from "../../../../assets/adminDashboard/CADFlag.svg";
 import UKFlag from "../../../../assets/adminDashboard/UkFlag.svg";
 import POLFlag from "../../../../assets/adminDashboard/PolFlag.svg";
-// import UploadFile from "./uploadFile/page";
+import UploadFile from "./uploadFile/page";
 import UploadStatus from "./uploadStatus/page";
 import SavedFiles from "./savedFiles/page";
 import GreenAdd from "../../../../assets/adminDashboard/blueCross.svg";
 import GreyAdd from "../../../../assets/adminDashboard/greyCross.svg";
 import SavedFilesIcon from "../../../../assets/adminDashboard/savedFiles.svg";
+import GreenSavedFilesIcon from "../../../../assets/adminDashboard/greensavedfiles.svg";
 // import CashDepositIcon from "../../../../assets/adminDashboard/cashDepositIcon.svg";
 // import CardTopUpIcon from "../../../../assets/adminDashboard/TopUpIcon.svg";
 // import RightArrow from "../../../../assets/adminDashboard/rightArrow.svg";
@@ -100,6 +101,11 @@ const BulkTransfer = () => {
     },
   ];
 
+  const uploadFilesSrc = navTab.uploadFiles ? GreenAdd : GreyAdd;
+  const uploadStatusSrc = navTab.uploadStatus ? GreenAdd : GreyAdd;
+  const savedFilesSrc = navTab.savedFiles
+    ? GreenSavedFilesIcon
+    : SavedFilesIcon;
   return (
     <main className=" flex bg-white  mt-4 mb-4 min-h-[800px]">
       <section className="w-[40%] flex flex-col mx-auto gap-y-10 px-8 py-16 border-r">
@@ -109,32 +115,46 @@ const BulkTransfer = () => {
               navTab.uploadFiles
                 ? "border-l-2 border-[#2C698D] text-[#2C698D] bg-[#E3F6F5]"
                 : "border-l-2 border-[#F0F0F0]"
-            } h-full flex items-center w-32 cursor-pointer`}
+            } h-full flex items-center w-[218px] cursor-pointer`}
             onClick={() => handleActiveTab("UPLOAD_FILES")}
           >
-            <h2 className="py-2 pl-5 font-medium">Upload File</h2>
+            <div className="py-2 pl-4 font-medium flex">
+              <Image
+                src={uploadFilesSrc}
+                alt="saved files icon"
+                className="mr-2"
+              />
+              <h2 className="">Upload File</h2>
+            </div>
           </article>
           <article
             className={`${
               navTab.uploadStatus
                 ? "border-l-2 border-[#2C698D] text-[#2C698D] bg-[#E3F6F5]"
                 : "border-l-2 border-[#F0F0F0]"
-            } h-full flex items-center w-32 cursor-pointer`}
+            } h-full flex items-center w-[218px] cursor-pointer`}
             onClick={() => handleActiveTab("UPLOAD_STATUS")}
           >
-            <h2 className="py-2 pl-5 font-medium">Upload Status</h2>
+            <div className="py-2 pl-4 font-medium flex">
+              <Image
+                src={uploadStatusSrc}
+                alt="saved files icon"
+                className="mr-2"
+              />
+              <h2 className="">Upload Status</h2>
+            </div>
           </article>
           <article
             className={`${
               navTab.savedFiles
                 ? "border-l-2 border-[#2C698D] text-[#2C698D] bg-[#E3F6F5]"
                 : "border-l-2 border-[#F0F0F0]"
-            } h-full flex items-center w-32 cursor-pointer`}
+            } h-full flex items-center w-[218px] cursor-pointer`}
             onClick={() => handleActiveTab("SAVED_FILES")}
           >
             <div className="py-2 pl-4 font-medium flex">
               <Image
-                src={SavedFilesIcon}
+                src={savedFilesSrc}
                 alt="saved files icon"
                 className="mr-2"
               />
@@ -208,13 +228,13 @@ const BulkTransfer = () => {
         </article>
       </section>
       <section className="flex flex-col w-[60%] border relative">
-        {/* {navTab.uploadFiles ? (
-          <UploadFile type="doc"/>
+        {navTab.uploadFiles ? (
+          <UploadFile type="doc" />
         ) : navTab.uploadStatus ? (
           <UploadStatus />
         ) : (
           <SavedFiles />
-        )} */}
+        )}
       </section>
     </main>
   );

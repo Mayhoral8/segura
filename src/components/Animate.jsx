@@ -38,7 +38,7 @@ export const AnimateRightModal = ({ children, isVisible }) => {
           animate={{ x: "0%", opacity: 1 }}
           exit={{ x: "50%", opacity: 0 }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          className="fixed top-0 bottom-0 left-0 right-0 flex items-center justify-end bg-[rgba(0,0,0,0.6)] z-50 h-full"
+          className="fixed top-0 bottom-0 left-0 right-0 flex items-center justify-end bg-[rgba(0,0,0,0.6)] z-40 h-full"
         >
           {children}
         </motion.div>

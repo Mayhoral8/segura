@@ -130,7 +130,7 @@ const StartHere = () => {
     }
   };
   const {
-    data: responseData,
+    data: primaryBusinessInfoRaw,
     error,
     isLoading,
   } = useQuery({
@@ -153,51 +153,17 @@ const StartHere = () => {
 
   const mandatoryDocs = mandatoryDocsRaw?.data;
 
-  const uploadedDetails = responseData?.data;
+  const primaryBusinessInfo = primaryBusinessInfoRaw?.data;
 
-  const isDetailsUploaded = uploadedDetails?.businessName;
-
+  console.log(primaryBusinessInfo?.businessInformation);
   
   useEffect(() => {
     isLoading ? setShowSpinner(true) : setShowSpinner(false);
   }, [isLoading]);
   
-  useEffect(()=>{
-    if(uploadedDetails){
 
-    setEmptyUploadDetails(
-      Object.values(uploadedDetails).filter((value) => {
-       return value === null
-      })
-    );
-  }
 
-  console.log(emptyUploadDetails);
-
-  }, [uploadedDetails])
-  console.log(emptyUploadDetails);
-
-  let corporateDocuments = [];
-  mandatoryDocs?.map((doc, index) => {
-    doc.documentName === "Certificate of Incorporation" &&
-      doc.documentUrl &&
-      corporateDocuments.push(doc);
-  });
-  mandatoryDocs?.map((doc, index) => {
-    doc.documentName === "Memorandum & Articles of Assosciation" &&
-      doc.documentUrl &&
-      corporateDocuments.push(doc);
-  });
-  mandatoryDocs?.find((doc, index) => {
-    doc.documentName === "Statement of Share Capital" &&
-      doc.documentUrl &&
-      corporateDocuments.push(doc);
-  });
-  mandatoryDocs?.find((doc, index) => {
-    doc.documentName === "Approval for Account Opening" &&
-      doc.documentUrl &&
-      corporateDocuments.push(doc);
-  });
+  const isSubmitForReview = primaryBusinessInfo?.businessInformation && primaryBusinessInfo?.partnersInformation && primaryBusinessInfo?.documentsUploaded
   return (
     <>
       <TopBar page="Onboarding" />
@@ -205,8 +171,7 @@ const StartHere = () => {
         <BusinessInfoModal
           toggleBusinessInfoModal={toggleBusinessInfoModal}
           handleToggleBusinessInfoModal={handleToggleBusinessInfoModal}
-          isDetailsUploaded={emptyUploadDetails?.length >= 1 ? false : true}
-          uploadedDetails={uploadedDetails}
+          primaryBusinessInfo={primaryBusinessInfo}
         />
         <MandatoryDocumentsModal
           handleToggleMandatoryDocumentsModal={
@@ -242,10 +207,10 @@ const StartHere = () => {
               <p className="ml-2">Business Information</p>
             </div>
             <p className="text-4xl text-[#2C698D] ">
-              {emptyUploadDetails?.length >= 1 ? (
-                <RiCheckboxBlankLine />
-              ) : (
+              {primaryBusinessInfo?.businessInformation? (
                 <RiCheckboxFill />
+                ) : (
+                <RiCheckboxBlankLine />
               )}
             </p>
           </div>
@@ -264,7 +229,7 @@ const StartHere = () => {
               <p>0%</p>
             </div> */}
             <p className="text-4xl text-[#2C698D] ">
-              {directorsList?.length >= 1 ? (
+              {primaryBusinessInfo?.partnersInformation ? (
                 <RiCheckboxFill />
               ) : (
                 <RiCheckboxBlankLine />
@@ -280,14 +245,14 @@ const StartHere = () => {
               <p className="ml-2">Mandatory Documents</p>
             </div>
             <p className="text-4xl text-[#2C698D] ">
-              {mandatoryDocs?.length >= 1 ? (
+              {primaryBusinessInfo?.documentsUploaded ? (
                 <RiCheckboxFill />
               ) : (
                 <RiCheckboxBlankLine />
               )}
             </p>
           </div>
-          <button className="bg-[#2C698D] text-white w-[200px] h-[36px] rounded-[4px] ml-auto justify-self-end">
+          <button disabled={!isSubmitForReview} className="bg-[#2C698D] text-white w-[200px] h-[36px] rounded-[4px] ml-auto justify-self-end">
             Submit For Review
           </button>
         </div>

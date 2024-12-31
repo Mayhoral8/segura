@@ -29,16 +29,28 @@ const VerifyEmailPage = () => {
     }
   }, [token]);
 
+  const redirectToSetPassword = (token)=>{
+    router.push(`/auth/register/corporate-user?token=${token}`);
+  }
+
+
+  const redirectToLogin = () => {
+    router.push("/auth/login");
+  };
+
   const verifyEmail = async (token) => {
     try {
       setLoading(true);
       const response = await fetch(
-        `https://api-dev.segura-pay.com/api/v1/auth/validateToken?token=${token}`
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/validateToken?token=${token}`
       );
       const responseData = await response.json();
-      if (response.ok) {
+      if (response.ok && responseData?.data?.isCorporate === true) {
+
         setVerified(true);
-      } else {
+      } else if(response.ok && responseData?.data?.isCorporate === false){
+        redirectToSetPassword(token)
+      }else {
         throw new Error(responseData.message || "Email verification failed.");
       }
     } catch (err) {
@@ -48,9 +60,8 @@ const VerifyEmailPage = () => {
     }
   };
 
-  const redirectToLogin = () => {
-    router.push("/auth/login");
-  };
+ 
+
 
   return (
     <Suspense fallback={<div>Loading...</div>}>

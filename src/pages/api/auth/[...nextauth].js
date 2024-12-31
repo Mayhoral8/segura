@@ -13,7 +13,7 @@ export default NextAuth({
         try {
          
           const response = await fetch(
-            "https://api-dev.segura-pay.com/api/v1/auth/login",
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/login`,
             {
               method: "POST",
               body: JSON.stringify({
