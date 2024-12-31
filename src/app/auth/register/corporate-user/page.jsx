@@ -188,6 +188,10 @@ export default function SignInForm() {
               `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/setupPassword`,
               {
                 method: "POST",
+                body: JSON.stringify({
+                  password: values.password,
+                  confirmPassword: values.confirmPassword
+                }),
                 headers: {
                   "Content-Type": "application/json",
                   "Authorization-Token": token,
