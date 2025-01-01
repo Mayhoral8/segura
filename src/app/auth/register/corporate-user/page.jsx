@@ -216,8 +216,8 @@ export default function SignInForm() {
             if (!response.ok) {
               throw new Error(responseData.responseMessage);
             }else{
-              setShowSpinner(false)
               toast.success("Password Setup Succesful!")
+              setShowSpinner(false)
               router.push("/auth/login")
             }
           } catch (err) {
