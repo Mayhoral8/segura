@@ -1,32 +1,24 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { Form, Formik, ErrorMessage, Field } from "formik";
 import { AnimateDropdown } from "../../../components/Animate";
 import { RxCaretDown } from "react-icons/rx";
 import { countryData } from "../../../config/countryData";
 import * as Yup from "yup";
-
+import { ConfigContext } from "@/contexts/ConfigContext";
 import BackArrow from "../../../assets/adminDashboard/arrowback.svg";
 import NoteIcon from "../../../assets/adminDashboard/information.svg";
 
 import Image from "next/image";
 import { useSession } from "next-auth/react";
+import { toast } from "sonner";
 
 const AddNewUserModal = ({ toggleNewUserModal, handleToggleNewUserModal }) => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const { setShowSpinner } = useContext(ConfigContext).spinner;
   const [isCountryListVisible, setIsCountryListVisible] = useState(false);
   const [keyWord, setkeyWord] = useState("");
   const [countries, setCountries] = useState(countryData);
-
-  const handleShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const handleShowConfirmPassword = () => {
-    setShowConfirmPassword(!showConfirmPassword);
-  };
 
   const initialValues = {
     businessName: "",
@@ -131,47 +123,8 @@ const AddNewUserModal = ({ toggleNewUserModal, handleToggleNewUserModal }) => {
               <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
-                // onSubmit={async (values, { setSubmitting }) => {
-                //   console.log("p");
-                //   const trimmedEmail = values.email.trim();
-                //   setShowSpinner(true);
-                //   try {
-                //     const response = await fetch(
-                //       `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/registerCorporateAdmin`,
-                //       {
-                //         method: "POST",
-                //         body: JSON.stringify({
-                //           businessName: values.businessName,
-                //           email: trimmedEmail,
-                //           officeCountry: values.officeCountry,
-                //           phoneNumber: values.phoneNumber,
-                //           password: values.password,
-                //           confirmPassword: values.confirmPassword,
-                //         }),
-                //         headers: {
-                //           "Content-Type": "application/json",
-                //         },
-                //       }
-                //     );
-
-                //     const responseData = await response.json();
-                //     if (!response.ok) {
-                //       console.log(response);
-                //       throw new Error(responseData.responseMessage);
-                //     }
-                //     setShowSpinner(false);
-                //     toast.success("Registration successful");
-                //     router.push("/auth/login");
-                //   } catch (err) {
-                //     console.log(err.message);
-                //     setShowSpinner(false);
-                //     setShowErrorModal(true);
-                //     setErrorMsg(err.message);
-                //   }
-                // }}
-
                 onSubmit={async (values) => {
-                  console.log("added");
+                  setShowSpinner(true);
                   try {
                     const response = await fetch(
                       `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/users/registerCorporateUser`,
@@ -186,7 +139,7 @@ const AddNewUserModal = ({ toggleNewUserModal, handleToggleNewUserModal }) => {
                           officeCountry: values.officeCountry,
                           department: values.department,
                           phoneNumber: values.phoneNumber,
-                          permissionLists: ["PERMISSION_ACCOUNT_VIEW"]
+                          permissionLists: ["PERMISSION_ACCOUNT_VIEW"],
                         }),
                         headers: {
                           Authorization: `Bearer ${session?.user?.accessToken}`,
@@ -194,13 +147,15 @@ const AddNewUserModal = ({ toggleNewUserModal, handleToggleNewUserModal }) => {
                         },
                       }
                     );
-
                     const responseData = await response.json();
                     if (!response.ok) {
                       console.log(response);
                       throw new Error(responseData.responseMessage);
                     }
+                    setShowSpinner(false);
+                    toast.success("User creation successful");
                   } catch (err) {
+                    setShowSpinner(false);
                     console.log(err.message);
                   }
                 }}

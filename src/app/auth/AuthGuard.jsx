@@ -32,6 +32,7 @@ const AuthGuard = ({ children }) => {
   const { data: session, status } = useSession();
 
   useEffect(() => {
+    console.log(status)
     if (session?.expires) {
       const currentTime = new Date().getTime() / 1000;
       const expiryTime = isJwtExpired(session?.user?.accessToken);
