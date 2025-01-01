@@ -31,7 +31,8 @@ import Image from "next/image";
 import { toast } from "sonner";
 
 export default function SignIn() {
-  const { spinner, errorModal, showModal, setShowModal } = useContext(ConfigContext);
+  const { spinner, errorModal, showModal, setShowModal } =
+    useContext(ConfigContext);
   const { setShowSpinner } = spinner;
   const { setShowErrorModal, setErrorMsg } = errorModal;
   const [showPassword, setShowPassword] = useState(false);
@@ -102,6 +103,7 @@ export default function SignIn() {
     });
   };
   const showCountryList = () => {
+    setkeyWord("")
     setIsCountryListVisible(!isCountryListVisible);
   };
   const schema = Yup.object().shape({
@@ -255,7 +257,7 @@ export default function SignIn() {
     return (
       <div className="flex">
         <ErrorModal />
-        <Modal/>
+        <Modal />
         <div className="h-screen bg-[#272643] w-[35%] relative flex flex-col justify-between p-5 text-white overflow-hidden">
           <div className="relative z-10">
             <Image src={Logo} alt="segura logo" />
@@ -331,7 +333,7 @@ export default function SignIn() {
               }
               setShowSpinner(false);
               toast.success("Registration successful");
-              setShowModal(true)
+              setShowModal(true);
               // router.push("/auth/login");
             } catch (err) {
               console.log(err.message);
@@ -394,13 +396,16 @@ export default function SignIn() {
                         <Field
                           name="officeCountry"
                           type="text"
+                          readOnly={true}
                           placeholder="Enter or select a country"
                           className="border-[#D9D9D9] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px] text-gray-950 w-full"
                         />
-                        <RxCaretDown
-                          className="text-lg cursor-pointer"
-                          onClick={showCountryList}
-                        />
+                        <div className="w-[15%] border  cursor-pointer  h-full flex items-center justify-center">
+                          <RxCaretDown
+                            className="text-2xl  "
+                            onClick={showCountryList}
+                          />
+                        </div>
                       </div>
 
                       <AnimateDropdown isVisible={isCountryListVisible}>
@@ -409,6 +414,7 @@ export default function SignIn() {
                             <input
                               value={keyWord}
                               onChange={handleKeywordChange}
+                              placeholder="Search..."
                               className="border w-[300px] fixed mb-5 h-10 focus:outline-none px-1 "
                             />
                           </div>
@@ -449,8 +455,9 @@ export default function SignIn() {
                       <div className="w-full flex items-center ">
                         <input
                           value={dialCode}
+                          readOnly={true}
                           onChange={(e) => setDialCode(e.target.value)}
-                          className="text-center border h-full w-[15%] text-[#8C8C8C] text-xs"
+                          className="text-center border h-full w-[15%] text-[#8C8C8C] text-xs focus:outline-none"
                         />
 
                         <Field

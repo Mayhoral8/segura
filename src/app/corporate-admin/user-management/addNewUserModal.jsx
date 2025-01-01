@@ -130,7 +130,7 @@ const AddNewUserModal = ({ toggleNewUserModal, handleToggleNewUserModal }) => {
       {toggleNewUserModal && (
         <div className="w-screen min-h-screen backdrop-blur-[7px] bg-[#0D1012B2] py-[20px] bottom-0 right-0 fixed top-0 left-0 z-30 flex items-center justify-center">
           <div className="bg-white h-[90vh] w-[784px] relative px-[100px] py-[50px] overflow-hidden">
-            <div className="overflow-scroll h-full">
+            <div className="overflow-y-scroll h-full">
               <div
                 className="absolute left-[50px] top-[35px] cursor-pointer z-[5000]"
                 onClick={() => handleToggleNewUserModal()}
@@ -204,7 +204,7 @@ const AddNewUserModal = ({ toggleNewUserModal, handleToggleNewUserModal }) => {
                   }
                 }}
               >
-                {({ errors, touched, setFieldValue }) => (
+                {({ errors, touched, values, setFieldValue }) => (
                   <Form className="flex flex-col scroll-smooth scrollbar-hide mt-[60px] 2xl:mt-[70px]">
                     {/* Your form fields go here */}
                     <div className="flex w-full justify-between">
@@ -245,7 +245,7 @@ const AddNewUserModal = ({ toggleNewUserModal, handleToggleNewUserModal }) => {
                         </span>
                       </div>
                     </div>
-                    {/* {console.log(values)} */}
+                    {console.log(values)}
                     <div className="flex w-full justify-between">
                       <div className="flex flex-col w-[48%] gap-y-2 mb-2">
                         <label
@@ -289,25 +289,6 @@ const AddNewUserModal = ({ toggleNewUserModal, handleToggleNewUserModal }) => {
                     <div className="flex w-full justify-between">
                       <div className="flex flex-col w-[48%] gap-y-2 mb-2">
                         <label
-                          htmlFor="homeAddress"
-                          className="text-[#8C8C8C] text-sm"
-                        >
-                          Home Address
-                        </label>
-                        <div className="border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px]">
-                          <Field
-                            name="homeAddress"
-                            type="text"
-                            placeholder="Enter Home Address"
-                            className="bg-white w-full h-full outline-none"
-                          />
-                        </div>
-                        <span className="text-red-500 text-xs">
-                          <ErrorMessage name="homeAddress" />
-                        </span>
-                      </div>
-                      <div className="flex flex-col w-[48%] gap-y-2 mb-2">
-                        <label
                           htmlFor="officeCountry"
                           className="text-[#8C8C8C] text-sm"
                         >
@@ -317,13 +298,16 @@ const AddNewUserModal = ({ toggleNewUserModal, handleToggleNewUserModal }) => {
                           <Field
                             name="officeCountry"
                             type="text"
+                            readOnly={true}
                             placeholder="Enter or select a country"
                             className="border-[#D9D9D9] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px] text-gray-950 w-full relative"
                           />
-                          <RxCaretDown
-                            className="text-lg cursor-pointer"
-                            onClick={showCountryList}
-                          />
+                          <div className="w-[15%] border  cursor-pointer  h-full flex items-center justify-center">
+                            <RxCaretDown
+                              className="text-2xl  "
+                              onClick={showCountryList}
+                            />
+                          </div>
                         </div>
 
                         <AnimateDropdown isVisible={isCountryListVisible}>
@@ -332,7 +316,8 @@ const AddNewUserModal = ({ toggleNewUserModal, handleToggleNewUserModal }) => {
                               <input
                                 value={keyWord}
                                 onChange={handleKeywordChange}
-                                placeholder="search country..."
+                                
+                                placeholder="Search Country..."
                                 className="border w-[300px] fixed mb-5 h-10 rounded-[4px] focus:outline-none px-1 "
                               />
                             </div>
@@ -366,9 +351,54 @@ const AddNewUserModal = ({ toggleNewUserModal, handleToggleNewUserModal }) => {
                           <ErrorMessage name="officeCountry" />
                         </span>
                       </div>
+                      <div className="flex flex-col w-[48%] gap-y-2 mb-2">
+                        <label
+                          htmlFor="phoneNumber"
+                          className="text-[#8C8C8C] text-sm"
+                        >
+                          Phone Number
+                        </label>
+                        <div className="w-full flex items-center ">
+                          <input
+                            value={dialCode}
+                            readOnly={true}
+                            onChange={(e) => setDialCode(e.target.value)}
+                            className="text-center border h-full w-[15%] text-[#8C8C8C] text-xs focus:outline-none"
+                          />
+
+                          <Field
+                            name="phoneNumber"
+                            type="text"
+                            placeholder="Enter Phone Number"
+                            className="border-[#D9D9D9] border-[1px] border-l-0 border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px] w-[85%] rounded-l-none"
+                          />
+                        </div>
+                        <span className="text-red-500 text-xs">
+                          <ErrorMessage name="phoneNumber" />
+                        </span>
+                      </div>
                     </div>
 
                     <div className="flex w-full justify-between">
+                      <div className="flex flex-col w-[48%] gap-y-2 mb-2">
+                        <label
+                          htmlFor="homeAddress"
+                          className="text-[#8C8C8C] text-sm"
+                        >
+                          Office Address
+                        </label>
+                        <div className="border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px]">
+                          <Field
+                            name="homeAddress"
+                            type="text"
+                            placeholder="Enter Home Address"
+                            className="bg-white w-full h-full outline-none"
+                          />
+                        </div>
+                        <span className="text-red-500 text-xs">
+                          <ErrorMessage name="homeAddress" />
+                        </span>
+                      </div>
                       <div className="flex flex-col w-[48%] gap-y-2 mb-2">
                         <label
                           htmlFor="department"
@@ -387,31 +417,6 @@ const AddNewUserModal = ({ toggleNewUserModal, handleToggleNewUserModal }) => {
                         </Field>
                         <span className="text-red-500 text-xs">
                           <ErrorMessage name="department" />
-                        </span>
-                      </div>
-                      <div className="flex flex-col w-[48%] gap-y-2 mb-2">
-                        <label
-                          htmlFor="phoneNumber"
-                          className="text-[#8C8C8C] text-sm"
-                        >
-                          Phone Number
-                        </label>
-                        <div className="w-full flex items-center ">
-                          <input
-                            value={dialCode}
-                            onChange={(e) => setDialCode(e.target.value)}
-                            className="text-center border h-full w-[15%] text-[#8C8C8C] text-xs"
-                          />
-
-                          <Field
-                            name="phoneNumber"
-                            type="text"
-                            placeholder="Enter Phone Number"
-                            className="border-[#D9D9D9] border-[1px] border-l-0 border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px] w-[85%] rounded-l-none"
-                          />
-                        </div>
-                        <span className="text-red-500 text-xs">
-                          <ErrorMessage name="phoneNumber" />
                         </span>
                       </div>
                     </div>
