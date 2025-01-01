@@ -49,7 +49,7 @@ const AddNewUserModal = ({ toggleNewUserModal, handleToggleNewUserModal }) => {
     fullName: "",
     dateOfBirth: "",
     emailAddress: "",
-    homeAddress: "",
+    officeAddress: "",
     officeCountry: "",
     department: "",
     phoneNumber: "",
@@ -68,7 +68,7 @@ const AddNewUserModal = ({ toggleNewUserModal, handleToggleNewUserModal }) => {
     emailAddress: Yup.string()
       .email("Invalid email format")
       .required("Email is required"),
-    homeAddress: Yup.string().required("Home Address is required"),
+    officeAddress: Yup.string().required("Home Address is required"),
     officeCountry: Yup.string().required("Country is required"),
     department: Yup.string().required("Department is required"),
     phoneNumber: Yup.string()
@@ -157,12 +157,12 @@ const AddNewUserModal = ({ toggleNewUserModal, handleToggleNewUserModal }) => {
                 onSubmit={async (values) => {
                   setShowSpinner(true);
                   try {
-                    const permissionsLists = Object.keys(validPermissions)
+                    const permissionLists = Object.keys(validPermissions)
                       .filter((key) => values[key])
                       .map((key) => validPermissions[key]);
 
                     // Validate permissions
-                    const invalidPermissions = permissionsLists.filter(
+                    const invalidPermissions = permissionLists.filter(
                       (permission) =>
                         !Object.values(validPermissions).includes(permission)
                     );
@@ -179,11 +179,11 @@ const AddNewUserModal = ({ toggleNewUserModal, handleToggleNewUserModal }) => {
                           fullName: values.fullName,
                           dateOfBirth: values.dateOfBirth,
                           email: values.emailAddress,
-                          officeAdddress: values.homeAddress,
+                          officeAdddress: values.officeAddress,
                           officeCountry: values.officeCountry,
                           department: values.department,
                           phoneNumber: values.phoneNumber,
-                          permissionsLists,
+                          permissionLists,
                         }),
                         headers: {
                           Authorization: `Bearer ${session?.user?.accessToken}`,
@@ -299,7 +299,7 @@ const AddNewUserModal = ({ toggleNewUserModal, handleToggleNewUserModal }) => {
                             name="officeCountry"
                             type="text"
                             readOnly={true}
-                            placeholder="Enter or select a country"
+                            placeholder="Select a country"
                             className="border-[#D9D9D9] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px] text-gray-950 w-full relative"
                           />
                           <div className="w-[15%] border  cursor-pointer  h-full flex items-center justify-center">
@@ -382,21 +382,21 @@ const AddNewUserModal = ({ toggleNewUserModal, handleToggleNewUserModal }) => {
                     <div className="flex w-full justify-between">
                       <div className="flex flex-col w-[48%] gap-y-2 mb-2">
                         <label
-                          htmlFor="homeAddress"
+                          htmlFor="officeAddress"
                           className="text-[#8C8C8C] text-sm"
                         >
                           Office Address
                         </label>
                         <div className="border-[#D9D9D9] border-[1px] border-solid focus:outline-none px-3 text-xs h-10 rounded-[4px]">
                           <Field
-                            name="homeAddress"
+                            name="officeAddress"
                             type="text"
-                            placeholder="Enter Home Address"
+                            placeholder="Enter Office Address"
                             className="bg-white w-full h-full outline-none"
                           />
                         </div>
                         <span className="text-red-500 text-xs">
-                          <ErrorMessage name="homeAddress" />
+                          <ErrorMessage name="officeAddress" />
                         </span>
                       </div>
                       <div className="flex flex-col w-[48%] gap-y-2 mb-2">
