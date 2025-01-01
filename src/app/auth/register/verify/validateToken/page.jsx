@@ -92,6 +92,7 @@ const VerifyEmailPage = () => {
               <div className="flex flex-col justify-center text-center gap-y-3">
                 <IoCheckmarkCircleOutline className="text-green-400 text-4xl mx-auto block" />
                 <h3 className="font-bold">Email Verification Successful</h3>
+                <p>Please setup your password and then Login</p>
                 <button
                   onClick={()=>redirectToSetPassword(token)}
                   className="border p-1 bg-[#2c698d] text-white rounded-md"
