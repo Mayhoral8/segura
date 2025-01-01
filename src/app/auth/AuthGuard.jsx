@@ -31,8 +31,8 @@ const AuthGuard = ({ children }) => {
   const router = useRouter();
   const { data: session, status } = useSession();
 
+  console.log(status)
   useEffect(() => {
-    console.log(status)
     if (session?.expires) {
       const currentTime = new Date().getTime() / 1000;
       const expiryTime = isJwtExpired(session?.user?.accessToken);
@@ -46,9 +46,9 @@ const AuthGuard = ({ children }) => {
       router.push("/auth/login");
       return;
     }
-    if(status === "loading"){
-      setShowSpinner(true)
-    }
+    // if(status === "loading"){
+    //   setShowSpinner(true)
+    // }
 
     // console.log(status);
   }, [status, session]);

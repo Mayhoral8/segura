@@ -101,7 +101,7 @@ const AddNewUserModal = ({ toggleNewUserModal, handleToggleNewUserModal }) => {
   return (
     <>
       {toggleNewUserModal && (
-        <div className="w-screen min-h-screen backdrop-blur-[7px] bg-[#0D1012B2] py-[20px] bottom-0 right-0 fixed top-0 left-0 z-50 flex items-center justify-center">
+        <div className="w-screen min-h-screen backdrop-blur-[7px] bg-[#0D1012B2] py-[20px] bottom-0 right-0 fixed top-0 left-0 z-30 flex items-center justify-center">
           <div className="bg-white h-[90vh] w-[784px] relative px-[100px] py-[50px] overflow-hidden">
             <div className="overflow-scroll h-full">
               <div

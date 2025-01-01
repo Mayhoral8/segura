@@ -61,7 +61,7 @@ function ConfigProvider({ children }) {
     
 
   useEffect(() => {
-    if (!pathname.includes("/register/corporate-user") || session === "authenticated") {
+    if (pathname !== "/auth/register/corpoarte-user" && pathname.includes("/corporate") || session === "authenticated") {
       localStorage.setItem("lastVisitedPage", pathname);
       setPreviousLocation(pathname);
     }
