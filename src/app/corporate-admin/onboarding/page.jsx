@@ -172,6 +172,7 @@ const StartHere = () => {
           toggleBusinessInfoModal={toggleBusinessInfoModal}
           handleToggleBusinessInfoModal={handleToggleBusinessInfoModal}
           primaryBusinessInfo={primaryBusinessInfo}
+          isDetailsUploaded={primaryBusinessInfo?.businessInformation}
         />
         <MandatoryDocumentsModal
           handleToggleMandatoryDocumentsModal={

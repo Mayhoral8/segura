@@ -17,24 +17,24 @@ const BusinessInfoModal = ({
   handleToggleBusinessInfoModal,
   toggleBusinessInfoModal,
   isDetailsUploaded,
-  uploadedDetails,
+  primaryBusinessInfo,
 }) => {
   const [selectedBusinessType, setSelectedBusinessType] =
     useState("Limited Liability");
 
   const initialValues = {
-    businessName: uploadedDetails?.businessName || "",
-    businessEmail: uploadedDetails?.businessEmail || "",
+    businessName: primaryBusinessInfo?.businessName || "",
+    businessEmail: primaryBusinessInfo?.businessEmail || "",
     // describeBusiness: "",
-    businessType: uploadedDetails?.businessType || "",
-    businessPhoneNumber: uploadedDetails?.businessPhoneNumber || "",
-    industrySector: uploadedDetails?.industrySector || "",
-    businessAddress: uploadedDetails?.businessAddress || "",
-    businessWebsite: uploadedDetails?.businessWebsite || "",
-    businessSize: uploadedDetails?.businessSize || "",
-    country: uploadedDetails?.country || "",
-    city: uploadedDetails?.city || "",
-    bvn: uploadedDetails?.bvn || "",
+    businessType: primaryBusinessInfo?.businessType || "",
+    businessPhoneNumber: primaryBusinessInfo?.businessPhoneNumber || "",
+    industrySector: primaryBusinessInfo?.industrySector || "",
+    businessAddress: primaryBusinessInfo?.businessAddress || "",
+    businessWebsite: primaryBusinessInfo?.businessWebsite || "",
+    businessSize: primaryBusinessInfo?.businessSize || "",
+    country: primaryBusinessInfo?.country || "",
+    city: primaryBusinessInfo?.city || "",
+    bvn: primaryBusinessInfo?.bvn || "",
   };
 
   const businessTypes = [

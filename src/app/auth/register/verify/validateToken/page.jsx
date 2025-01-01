@@ -47,9 +47,9 @@ const VerifyEmailPage = () => {
       const responseData = await response.json();
       if (response.ok && responseData?.data?.isCorporate === true) {
 
-        setVerified(true);
+       return setVerified(true);
       } else if(response.ok && responseData?.data?.isCorporate === false){
-        redirectToSetPassword(token)
+        return redirectToSetPassword(token)
       }else {
         throw new Error(responseData.message || "Email verification failed.");
       }
