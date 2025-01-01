@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { ConfigContext } from "../../../contexts/ConfigContext";
 import Image from "next/image";
 import Uploader from "../../../components/Uploader";
@@ -14,35 +14,35 @@ import FileInputIcon from "../../../assets/adminDashboard/fileIcon.svg";
 import { MdVerified } from "react-icons/md";
 import { useQueryClient } from "@tanstack/react-query";
 
-const [uploadMode, setUploadMode] = useState({
-  photographOfPassport: false,
-  governmentId: false,
-  proofOfAddress: false,
-});
-const handleUploadMode = (type) => {
-  type === "photographOfPassport"
-    ? setUploadMode(() => {
-        return {
-          ...uploadMode,
-          photographOfPassport: !uploadMode.photographOfPassport,
-        };
-      })
-    : type === "governmentId"
-    ? setUploadMode(() => {
-        return { ...uploadMode, governmentId: !uploadMode.governmentId };
-      })
-    : type === "proofOfAddress"
-    ? setUploadMode(() => {
-        return { ...uploadMode, proofOfAddress: !uploadMode.proofOfAddress };
-      })
-    : setUploadMode(uploadMode);
-};
 
 const MandatoryDocumentsModal = ({
   toggleMandatoryDocumentsModal,
   handleToggleMandatoryDocumentsModal,
   mandatoryDocs,
 }) => {
+  const [uploadMode, setUploadMode] = useState({
+    photographOfPassport: false,
+    governmentId: false,
+    proofOfAddress: false,
+  });
+  const handleUploadMode = (type) => {
+    type === "photographOfPassport"
+      ? setUploadMode(() => {
+          return {
+            ...uploadMode,
+            photographOfPassport: !uploadMode.photographOfPassport,
+          };
+        })
+      : type === "governmentId"
+      ? setUploadMode(() => {
+          return { ...uploadMode, governmentId: !uploadMode.governmentId };
+        })
+      : type === "proofOfAddress"
+      ? setUploadMode(() => {
+          return { ...uploadMode, proofOfAddress: !uploadMode.proofOfAddress };
+        })
+      : setUploadMode(uploadMode);
+  };
   const { data: session } = useSession();
   const { corporateDocs, spinner, errorModal } = useContext(ConfigContext);
   const { setShowSpinner } = spinner;
