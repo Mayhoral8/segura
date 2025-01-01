@@ -38,6 +38,7 @@ const AuthGuard = ({ children }) => {
       const expiryTime = isJwtExpired(session?.user?.accessToken);
 
       if (currentTime > expiryTime) {
+        localStorage.removeItem("corporateId")
         signOut(); // Automatically log the user out
       }
     }

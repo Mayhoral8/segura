@@ -15,6 +15,7 @@ const SignOutModal = () => {
   };
   const handleSignOut = () => {
     localStorage.removeItem("lastVisitedPage");
+    localStorage.removeItem("corporateId")
     queryClient.clear();
     signOut({ callbackUrl: "/auth/login" });
   };

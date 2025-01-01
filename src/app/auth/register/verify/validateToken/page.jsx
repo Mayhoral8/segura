@@ -6,6 +6,7 @@ import { IoCheckmarkCircleOutline } from "react-icons/io5";
 import { FaCircleXmark } from "react-icons/fa6";
 import mainBg from "../../../../../assets/forgot-password/main-bg.png";
 import { CgSpinner } from "react-icons/cg";
+import AnimateButton from "@/components/@extended/AnimateButton";
 
 const VerifyEmailPage = () => {
   const { setShowSpinner } = useContext(ConfigContext).spinner;
@@ -25,7 +26,7 @@ const VerifyEmailPage = () => {
       // Call API to verify email with the token
       verifyEmail(token);
     } else {
-      setError("Invalid verification link.");
+      setError("Invalid or expired token.");
       setLoading(false);
     }
   }, [token]);
@@ -78,27 +79,33 @@ const VerifyEmailPage = () => {
         ) : (
           <article className="bg-white w-[30%] h-[40%] flex flex-col items-center justify-center">
             {verified && isCorporate ? (
-              <div className="flex flex-col justify-center text-center gap-y-3">
+              <div className="flex flex-col justify-center text-center gap-y-3 py-2">
                 <IoCheckmarkCircleOutline className="text-green-400 text-4xl mx-auto block" />
                 <h3 className="font-bold">Email Verification Successful</h3>
-                <button
-                  onClick={redirectToLogin}
-                  className="border p-1 bg-[#2c698d] text-white rounded-md"
-                >
-                  Login
-                </button>
+                <AnimateButton>
+                  <button
+                    onClick={redirectToLogin}
+                    className="border p-2 bg-[#2c698d] text-white rounded-md"
+                  >
+                    Login
+                  </button>
+                </AnimateButton>
               </div>
             ) : verified && !isCorporate ? (
-              <div className="flex flex-col justify-center text-center gap-y-3">
+              <div className="flex flex-col justify-center text-center gap-y-4 py-2">
                 <IoCheckmarkCircleOutline className="text-green-400 text-4xl mx-auto block" />
-                <h3 className="font-bold">Email Verification Successful</h3>
-                <p>Please setup your password and then Login</p>
-                <button
-                  onClick={()=>redirectToSetPassword(token)}
-                  className="border p-1 bg-[#2c698d] text-white rounded-md"
-                >
-                  Setup Password
-                </button>
+                <h3 className="font-bold text-lg">
+                  Email Verification Successful
+                </h3>
+                <p className="">Please setup your password and then Login</p>
+                <AnimateButton>
+                  <button
+                    onClick={() => redirectToSetPassword(token)}
+                    className="border p-2 bg-[#2c698d] text-white rounded-md"
+                  >
+                    Setup Password
+                  </button>
+                </AnimateButton>
               </div>
             ) : (
               <div className="flex flex-col justify-center text-center gap-y-2">
