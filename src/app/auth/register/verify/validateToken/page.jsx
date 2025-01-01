@@ -11,6 +11,7 @@ const VerifyEmailPage = () => {
   const { setShowSpinner } = useContext(ConfigContext).spinner;
   const [loading, setLoading] = useState(true);
   const [verified, setVerified] = useState(false);
+  const [isCorporate, setIsCorporate] = useState(false);
   const [error, setError] = useState(null);
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -29,10 +30,9 @@ const VerifyEmailPage = () => {
     }
   }, [token]);
 
-  const redirectToSetPassword = (token)=>{
+  const redirectToSetPassword = (token) => {
     router.push(`/auth/register/corporate-user?token=${token}`);
-  }
-
+  };
 
   const redirectToLogin = () => {
     router.push("/auth/login");
@@ -46,11 +46,12 @@ const VerifyEmailPage = () => {
       );
       const responseData = await response.json();
       if (response.ok && responseData?.data?.isCorporate === true) {
-
-       return setVerified(true);
-      } else if(response.ok && responseData?.data?.isCorporate === false){
-        return redirectToSetPassword(token)
-      }else {
+        setIsCorporate(true);
+        setVerified(true);
+      } else if (response.ok && responseData?.data?.isCorporate === false) {
+        setIsCorporate(false);
+        setVerified(true);
+      } else {
         throw new Error(responseData.message || "Email verification failed.");
       }
     } catch (err) {
@@ -59,9 +60,6 @@ const VerifyEmailPage = () => {
       setLoading(false);
     }
   };
-
- 
-
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -79,7 +77,7 @@ const VerifyEmailPage = () => {
           </div>
         ) : (
           <article className="bg-white w-[30%] h-[40%] flex flex-col items-center justify-center">
-            {verified ? (
+            {verified && isCorporate ? (
               <div className="flex flex-col justify-center text-center gap-y-3">
                 <IoCheckmarkCircleOutline className="text-green-400 text-4xl mx-auto block" />
                 <h3 className="font-bold">Email Verification Successful</h3>
@@ -88,6 +86,17 @@ const VerifyEmailPage = () => {
                   className="border p-1 bg-[#2c698d] text-white rounded-md"
                 >
                   Login
+                </button>
+              </div>
+            ) : verified && !isCorporate ? (
+              <div className="flex flex-col justify-center text-center gap-y-3">
+                <IoCheckmarkCircleOutline className="text-green-400 text-4xl mx-auto block" />
+                <h3 className="font-bold">Email Verification Successful</h3>
+                <button
+                  onClick={redirectToSetPassword}
+                  className="border p-1 bg-[#2c698d] text-white rounded-md"
+                >
+                  Setup Password
                 </button>
               </div>
             ) : (

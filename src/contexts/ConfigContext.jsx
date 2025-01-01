@@ -59,9 +59,8 @@ function ConfigProvider({ children }) {
 
     const [directorInView, setDirectorInView] = useState({})
     
-
   useEffect(() => {
-    if (!pathname.includes("/register/corporate-user") || session === "authenticated") {
+    if (pathname !== "/auth/register/corporate-user" && pathname.includes("/corporate") || session === "authenticated") {
       localStorage.setItem("lastVisitedPage", pathname);
       setPreviousLocation(pathname);
     }
