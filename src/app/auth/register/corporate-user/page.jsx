@@ -27,6 +27,12 @@ export default function SignInForm() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [passwordFocused, setPasswordFocused] = useState(false);
 
+  useEffect(()=>{
+    if (!token){
+      return router.push("/auth/login")
+    }
+  })
+
   const hasNumber = (number) => new RegExp(/[0-9]/).test(number);
 
   // has mix of small and capitals
@@ -59,6 +65,7 @@ export default function SignInForm() {
       isTooLong: false,
     });
     const { values, setFieldValue } = useFormikContext();
+  
     useEffect(() => {
       const password = values.password || "";
 
