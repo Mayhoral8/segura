@@ -216,8 +216,8 @@ export default function SignInForm() {
             if (!response.ok) {
               throw new Error(responseData.responseMessage);
             }else{
-              setShowSpinner(false)
               toast.success("Password Setup Succesful!")
+              setShowSpinner(false)
               router.push("/auth/login")
             }
           } catch (err) {
@@ -233,7 +233,7 @@ export default function SignInForm() {
               alt="background image"
               className="absolute w-full"
             />
-            <article className=" w-[500px] h-max flex flex-col justify-center gap-y-4 py-10 px-8 relative z-50 bg-white">
+            <article className=" w-[500px] h-max flex flex-col justify-center gap-y-4 py-10 px-8 relative z-30 bg-white">
               <div className="flex justify-between items-center ">
                 <h2 className="text-2xl font-bold">Set up your password</h2>
               </div>
